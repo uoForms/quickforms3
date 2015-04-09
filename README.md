@@ -1,0 +1,5 @@
+# quickforms3
+
+Mobile Forms Apps are very popular and widely used to collect data. However, traditional web development tools like .Net and J2EE take a generic approach to such applications that leads to high code complexity and poor quality assurance. Business Intelligence (BI) portals and dashboards provide interactive reports that allow one to flexibly explore, analyze and visualize data. However, they are usually defined independently of the sources of data, which requires complex ETL processes to integrate and transform data for reporting. We have developed an application framework that flexibly integrates mobile forms apps and BI dashboards. Three case studies were conducted to evaluate the framework. They demonstrated how BI applications that integrate mobile forms data could be developed with less effort, less complexity, more consistency, and better ease of use. More importantly, the application framework provides the ability to seamlessly integrate data collection and reporting in a single mobile app.
+
+![alt text](https://github.com/quickforms/quickforms3/wiki/images/quickforms architecture.png)
