@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Testing QuickFroms2.js</title>
+	
+	<script src="jquery-1.7.1.min.js"></script>
+    <script src ="jquery-ui-1.10.0.custom.min.js"></script>
+	<link rel="stylesheet" href="test/QUnit.css" />
+	<script src="test/QUnit.js"></script>
+	<script src="quickforms2Test.js"></script>
+
+	<script>
+	
+	test("Add an Option", function() {
+		
+		equal(putLookup("palis3", "initiative","","educationFormDesign.html"), "");
+		equal(putLookup("palis3", "initiative","New option 1","educationFormDesign.html"), "success");
+		equal(putLookup("palis3", "initiative","New option 2","educationFormDesign.html"), undefined);
+	});
+	
+	test("Delete an Option", function() {
+		
+		equal(deleteRow("palis3", "initiative","12","educationFormDesign.html"), "success");
+		equal(deleteRow("palis3", "initiative","13","educationFormDesign.html"), "success");
+		equal(deleteRow("palis3", "initiative","14","educationFormDesign.html"), "success");
+	});
+	
+	/*test("Edit an Option", function() {
+		
+		equal(putLookup("palis3", "initiative","","educationFormDesign.html"), "");
+		equal(putLookup("palis3", "initiative","New option 1","educationFormDesign.html"), "success");
+		equal(putLookup("palis3", "initiative","New option 2","educationFormDesign.html"), undefined);
+	});*/
+	
+	</script>
+</head>
+<body>
+	<div id="qunit"></div>
+</body>
+</html>

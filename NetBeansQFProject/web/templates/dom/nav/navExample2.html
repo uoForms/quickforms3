@@ -1,0 +1,60 @@
+<!doctype html>
+<!-- Copyright (c) 2014 Austin Chamney, achamney@gmail.com.
+    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class="ui-mobile-rendering">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<link rel="stylesheet" href="/quickforms/css/quickforms/quickforms.css" />
+	<script src = "/quickforms/js/require.min.js" ></script>
+
+</head>
+<body>	
+<div data-role="page" id = "mynext">
+	<script type = "text/javascript">
+		require(['/quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+                                setCookie('userRole','Administrator','1');
+				require(['dom/navControl'],
+					function(){
+						quickforms.loadNav('nav.html','nav');
+                                                quickforms.loadNav('navUsers.html','navUser');
+					});
+			});
+		});
+	</script>
+	<div data-role="header" data-id="foo1" data-position="fixed"><h1>Header (Page 2)</h1></div>
+	<div data-role="content">
+		<h3>User Independent Navigation</h3>
+		<div id = 'nav'></div>
+		
+                <h3>User Dependent Navigation</h3>
+                <div id = 'navUser'></div>
+	</div>
+	<div data-role="footer"><h1>Footer</h1></div>
+</div>
+</body>
+</html>
+<!--
+The external navbar HTML below (nav.html)
+
+<div data-role="navbar">
+	<ul>
+            <li><a href="navExample.html" rel="external">Nav Example 1</a></li>
+            <li><a href="navExample2.html" rel="external">Nav Example 2</a></li>
+			<li><a href="../../../templates.html" rel="external">Back</a></li>
+	</ul>
+</div><!-- /navbar -->
+
+<!--
+The external navbar HTML below (navUsers.html)
+
+<div data-role="navbar">
+	<ul>
+            <li qf-users = 'Administrator'><a href="navExample.html" rel="external">Nav Example 1</a></li>
+            <li qf-users = 'User'><a href="navExample2.html" rel="external">Nav Example 2</a></li>
+            <li qf-users = 'Administrator,User'><a href="../../../templates.html" rel="external">Back</a></li>
+	</ul>
+</div><!-- /navbar -->

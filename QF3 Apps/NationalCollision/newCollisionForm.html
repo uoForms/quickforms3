@@ -1,0 +1,108 @@
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class = "ui-mobile-rendering">
+  <head>
+   <meta name="viewport" content="width=device-width, initial-scale=1">    
+   <link rel="stylesheet" href="/quickforms/css/quickforms/quickforms.css" />
+   <script src = "/quickforms/js/require.min.js" ></script>
+  </head>
+    <body> 
+   <script type="text/javascript">
+         require(['/quickforms/js/quickforms.js'],function(){
+                        quickforms.registerReadyFunction(function()
+                        {
+                                // Do quickforms module loading here
+                                
+                                require(['dom/form/checkbox','dom/form/select','dom/form/date','dom/form/text'],// Add this module to the list
+                                function(){// ADD FACT TABEL NAME!
+                                quickforms.parseForm( //formId*, app, fact*, callback
+                                                        {formId:'mainForm',fact:'CollisionsPerPassenger'});
+														
+                                        });
+                        });
+                        
+                });
+        </script>
+		
+       <div data-role="page" id="form">
+          <div data-role="header">
+                    <h1>New Collision Data Form</h1>
+          </div><!-- /header -->
+       <div data-role="content">
+           <form id ="mainForm" method="POST" action="putFact">
+                                     
+          <!--ADD FORM ELEMENTS HERE-->
+                
+			<!--<label for = "Gender">Gender</label>
+			<select id = "Gender" name = "Gender" remember><option></option></select>
+			<label for = "AgeRange">Age Range</label>
+			<select id = "AgeRange" name = "AgeRange" remember><option></option></select>
+			
+			
+			<label for = "DayOfWeek">Day</label>
+			<select id = "DayOfWeek" name = "DayOfWeek" remember><option></option></select>
+			<label for = "Month">Month</label>
+			<select id = "Month" name = "Month" remember><option></option></select>
+			<label for = "Year">Year</label>
+			<select id = "Year" name = "Year" remember><option></option></select>
+			
+			
+			
+			
+			<label for = "CollisionConfiguration">Collision Configuration</label>
+			<select id = "CollisionConfiguration" name = "CollisionConfiguration" remember><option></option></select>
+			<label for = "RoadAlignment">Road Alignment</label>
+			<select id = "RoadAlignment" name = "RoadAlignment" remember><option></option></select>
+			<label for = "RoadSurface">Road Surface</label>
+			<select id = "RoadSurface" name = "RoadSurface" remember><option></option></select>
+			<label for = "RoadwayConfiguration">Roadway Configuration</label>
+			<select id = "RoadwayConfiguration" name = "RoadwayConfiguration" remember><option></option></select>
+			<label for = "TrafficControl">Traffic Control</label>
+			<select id = "TrafficControl" name = "TrafficControl" remember><option></option></select>
+			<label for = "WeatherConditions">Weather Conditions</label>
+			<select id = "WeatherConditions" name = "WeatherConditions" remember><option></option></select>
+			
+			
+			<label for = "VehicleType">Vehicle Type</label>
+			<select id = "VehicleType" name = "VehicleType" remember><option></option></select>
+			<label for = "VehicleModelYear">Vehicle Model by Year</label>
+			<select id = "VehicleModelYear" name = "VehicleModelYear" remember><option></option></select>-->
+			
+           <label for="Year">Enter Year Key</label>   
+			 <input type="text" id="Year" name="Year" maxlength = "200"/>  
+			 <label for="Month">Enter Month Key</label>   
+			 <input type="text" id="Month" name="Month" maxlength = "200"/>  
+			 <label for="DayOfWeek">Enter Day of Week Key</label>   
+			 <input type="text" id="DayOfWeek" name="DayOfWeek" maxlength = "200"/>  
+			 <label for="Passenger">Enter Passenger Key</label>   
+			 <input type="text" id="Passenger" name="Passenger" maxlength = "200"/>  
+			 <label for="Collision">Enter Collision Key</label>   
+			 <input type="text" id="Collision" name="Collision" maxlength = "200"/>  
+			 <label for="Vehicle">Enter Vehicle Key</label>   
+			 <input type="text" id="Vehicle" name="Vehicle" maxlength = "200"/>  
+		   
+		   
+			<label for="CollisionHour">Collision Hour</label>   
+			 <input type="text" id="CollisionHour" name="CollisionHour" maxlength = "200"/>  
+			 <label for="CollisionSeverity">Collision Severity</label>   
+			 <input type="text" id="CollisionSeverity" name="CollisionSeverity" maxlength = "200"/> 
+			 <label for="NumberOfVehicles">Number Of Vehicles Involved</label>   
+			 <input type="text" id="NumberOfVehicles" name="NumberOfVehicles" maxlength = "200"/> 
+			 <label for="MedicalTreatment">Medical Treatment</label>   
+			 <input type="text" id="MedicalTreatment" name="MedicalTreatment" maxlength = "200"/> 
+			 <label for="SafetyDevice">Safety Device</label>   
+			 <input type="text" id="SafetyDevice" name="SafetyDevice" maxlength = "200"/> 
+			 
+               <a href = "forms.html" onclick="quickforms.putFact(this,'forms.html');" data-role="button" data-icon="check" data-theme="b" data-inline="true">Submit</a>
+			   <a href = "forms.html" onclick="history.back()" rel="external" data-role="button" data-inline="true" data-icon="back">Back</a>
+			   
+             </div>
+                        
+           </form><!--/form-->
+      </div><!--/content-->
+   
+  <div data-role="footer">
+           <h4>-</h4>
+  </div><!--/footer--> 
+</div><!--/page-->
+</body>
+</html>

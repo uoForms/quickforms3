@@ -1,0 +1,21 @@
+<div id="CourseSelectionSummer" data-role="dialog" data-theme="c" > 
+  <body>
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#Required_Courses" data-theme="c">Required</a></li>
+				<li><a href="#ScienceElectives" data-theme="c">Science Elective</a></li>
+				<li><a href="#TechnicalElectives" data-theme="c">Technical Elective</a></li>
+				<li><a href="#EngineeringElectives" data-theme="c">Engineering Elective</a></li>
+			</ul>
+		</div>
+
+	<div id="Required_Courses" qf-lookup ="courseMulti" qf-type ="select" qf-filter="courseSemester=summer,courseType=Required,Department" qf-label-cols="courseLabel" multiple></div>
+	<div id="ScienceElectives" qf-lookup ="courseMulti" qf-type ="select" qf-filter="courseSemester=summer,courseType=ScienceElective,Department" qf-label-cols="courseLabel" multiple></div>
+	<div id="TechnicalElectives" qf-lookup ="courseMulti" qf-type ="select" qf-filter="courseSemester=summer,courseType=TechnicalElective,Department" qf-label-cols="courseLabel" multiple></div>
+	<div id="EngineeringElectives" qf-lookup ="courseMulti" qf-type ="select" qf-filter="courseSemester=summer,courseType=EngineeringElective,Department" qf-label-cols="courseLabel" multiple></div>
+
+
+
+
+  </body>
+</div>

@@ -1,0 +1,52 @@
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class = "ui-mobile-rendering">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<link rel="stylesheet" href="/quickforms/css/quickforms/quickforms.css" />
+	<script src = "/quickforms/js/require.min.js" ></script>
+</head>
+<body>
+<div data-role="page" id="loadQuickformsTemplate">
+	<script type="text/javascript">
+	require(['/quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+				require(['js/login'],// This is the only module needed
+					function(){
+						quickforms.setupLogin();
+					});
+			});
+		});
+	</script>
+	
+	<div class ="container">	
+			
+			<p id="app" style="font-size:x-large">SAID Login</p>
+			<hr />
+			<p id="versioning" style="color:gray"></p>
+            <form id="loginfrm">
+				<table border = "0" cellpadding="2"><tr>
+                <td><label for="username">Username:</label></td>
+                <td><input type="text" name="username" id="username" value=""  /></td>
+				</tr><tr>
+                <td><label for="password">Password:</label></td>
+                <td><input type="password" name="password" id="password" value="" /></td>
+				</tr><tr><td></td>
+				<td><input id="rememberMe" type="checkbox" name="rememberMe" />
+				<label for="rememberMe">Remember me next time.</label></td></tr>
+				<tr><td></td>
+                <td><input type="button" onclick = "quickforms.currentLogin.logIn()" value="Log In" href="#"/></td>
+				</tr></table>
+            </form>	
+			<hr />
+			<a href ="mailto:rppdevteam@gmail.com?Subject=Password%20reset">Forgot your password?</a>
+	</div>
+	<div align="center">
+	Copyright &copy; 2014 Quickforms
+	</div>
+	
+
+</div>
+</body>
+</html>

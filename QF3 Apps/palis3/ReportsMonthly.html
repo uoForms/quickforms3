@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title id="title">Palis - </title>
+		<link rel="stylesheet" href="css/jquery.mobile-1.1.1.min.css" />
+		<script src="js/jquery-1.7.1.min.js"></script>
+                <script src="js/quickforms.js"></script>
+                <script src="js/education.js"></script>
+                <script src="js/jquery.mobile-1.1.1.min.js"></script>
+                <style>
+                    tr:nth-child(odd) {background: #FFF}
+                </style>
+                <script type="text/javascript">
+                    function switchReport(report)
+                    {
+                        var reports = ['educationReport','monthlyReport','summaryReport'];
+                        if(report == 'monthly')
+							window.location = 'ReportsMonthly.html';
+							else
+						if(report == 'education')
+							window.location = 'Reports.html'; 
+							else
+						if(report == 'summary')
+							window.location = 'ReportsSummary.html'; 
+						else
+				if(report == 'summary2')
+				window.location = 'ReportsSummary2.html'; 
+                    }
+                </script>
+  </head>
+  <body onload="loadMonthlyReport()">
+    
+		<!-- Start of Page -->
+		
+		<!-- Page Header -->
+                <div data-role="header" data-position="inline" data-theme="a">
+                        <h1 id="header">Palis - </h1>
+                <a href="logout.html" rel="external" data-role="button" data-inline="true" data-theme="c" class="ui-btn-right">Logout</a>
+                </div>
+		<!-- /header -->
+		
+
+                <div data-role="navbar">
+                        <ul>
+                                <li id="patientsTab"><a href="patients.html" rel="external">Patients</a></li>
+                                <li><a href="education.html" rel="external" >Forms</a></li>
+                                <li><a href="Reports.html" rel="external" class="ui-btn-active ui-state-
+
+persist">Reports</a></li>
+                                <li><a href="teams.html" rel="external">Team</a></li>
+                        </ul>
+                </div><!-- /navbar -->
+		<div data-role="content" id="educationReport">
+                    <!-- Page Content -->
+                    <div data-role="collapsible" data-theme="b" data-content-theme="c">
+                    <h2>Choose a Report</h2>
+                        <ul data-role="listview" id="availableReports">
+                                <li><a href="#" onclick ="switchReport('education')" rel="external">Education Report</a></li>
+                                <li><a href="#" onclick ="switchReport('monthly')" rel="external">Monthly Report</a></li>
+                                <li><a href="#" onclick ="switchReport('summary')" rel="external">Consultation Registration Statistics</a></li>
+								<li><a href="#" onclick ="switchReport('summary2')" rel="external">Consultation Appointment Statistics</a></li>
+                        </ul>
+                    </div>
+                    <input type="hidden" id="monthSelectJSON" />
+			<label for="month">Year - Month</label>
+                    <select id="month" name ="month" onchange="changeMonthReport()">
+                        <option id="2013">2013</option>
+                        <option id="2012">2012</option>
+                        <option id="2011">2011</option>
+			</select>
+
+		<h1> Monthly Report </h1>
+		<h2>Education</h2>
+		<input type="button" onclick="window.clipboardData.setData('Text', $('#clipMonthlyEducation').val());" value="Copy to Clipboard" align="right"/>
+
+		 <div id ="MonthlyEducation" class="content-primary" data-theme="d">
+
+
+            <table cellpadding="2" cellspacing="0" border="1" class="display" id="EducationInitiative">
+                        <thead><tr class="gradeU">
+                                <td align="right" class="table_header" width="150px">Area</td>
+                                <td align="right" class="table_header" width="150px">Total Number of Sessions</td>
+                                <td align="right" class="table_header" width="150px">Total Number of Participants</td>
+                                <td align="right" class="table_header" width="150px">Total Hours</td>
+                                <td align="right" class="table_header" width="150px">Travel Time</td>
+                                </tr></thead>
+
+                        <tbody><tr class="oddgradeU"><td id="Region" align="right" class="oddgradeU"
+
+width="150px">Ottawa</td>
+                                <td id="Sessions" align="right" class="oddgradeU" width="150px">-1</td>
+                                <td id="Participants" align="right" class="oddgradeU" width="150px">-1</td>
+                                <td id="totalhours" align="right" class="oddgradeU" width="150px">-1</td>
+                                <td id="traveltime" align="right" class="oddgradeU" width="150px">-1</td>
+                                </tr>
+            </tbody></table>
+
+        </div>
+        <div id ="SummaryMonthlyEducation" class="content-primary" data-theme="d">
+            <table cellpadding="2" cellspacing="0" border="1" class="display" id="EducationInitiativeTotals"><tbody><tr class="oddgradeU">
+                        <td  align="right" class="oddgradeU" width="150px"></td>
+                        <td id="TotalSessions" align="right" class="oddgradeU" width="150px"></td>
+                        <td id="TotalParticipants" align="right" class="oddgradeU" width="150px"></td>
+                        <td id="TotalHours" align="right" class="oddgradeU" width="150px"></td>
+                        <td id="TotalTravelTime" align="right" class="oddgradeU" width="150px"></td>
+                    </tbody></table>
+        </div>
+		<h2>Consultation with Providers (Non Case Based)</h2>
+		<input type="button" onclick="window.clipboardData.setData('Text', $('#clipMonthlyConsultationProvidersNc').val());" value="Copy to Clipboard" align="right"/>
+
+		<div id ="MonthlyConsultationProvidersNc" class="content-primary" data-theme="d">
+			<table cellpadding="2" cellspacing="0" border="1" class="display" id="EducationInitiative">
+                        <thead><tr class="gradeU">
+                                <td align="right" class="table_header" width="250px">Consultation Type</td>
+                                <td align="right" class="table_header" width="250px">Total</td>
+                                <td align="right" class="table_header" width="250px">Hours of Care</td></tr></thead>
+                        
+                        <tbody><tr class="oddgradeU"><td id="ConsultationType" align="right" class="oddgradeU" 
+
+width="250px"></td>
+                                <td id="Total" align="right" class="oddgradeU" width="250px"></td>
+                                <td id="HoursOfCare" align="right" class="oddgradeU" width="250px"></td></tr>
+			</tbody></table>
+		</div>
+		<div id ="SummaryNonCaseBased" class="content-primary" data-theme="d">
+			<table cellpadding="2" cellspacing="0" border="1" class="display" id="EducationInitiative">
+                        <tbody><tr class="oddgradeU"><td id="ConsultationType" align="right" class="oddgradeU" width="250px"></td>
+                                <td id="Total" align="right" class="oddgradeU" width="250px"></td>
+                                <td id="HoursOfCare" align="right" class="oddgradeU" width="250px"></td></tr>
+			</tbody></table>
+		</div>
+		<h2>Consultation with Providers (Case Based)</h2>
+		<input type="button" onclick="window.clipboardData.setData('Text', $('#clipMonthlyConsultationProviders').val());" value="Copy to Clipboard" align="right"/>
+
+		<div id ="MonthlyConsultationProviders" class="content-primary" data-theme="d">
+			<table cellpadding="2" cellspacing="0" border="1" class="display" id="EducationInitiative">
+                        <thead><tr class="gradeU">
+                                <td align="right" class="table_header" width="250px">Type</td>
+                                <td align="right" class="table_header" width="250px">Total</td>
+                                <td align="right" class="table_header" width="250px">Hours of Care</td>
+								<td align="right" class="table_header" width="250px">Avg Waiting Time(days)</td></tr></thead>
+								                       
+                        <tbody><tr class="oddgradeU">
+                                <td id="Type" align="right" class="oddgradeU" width="250px"></td>
+                                <td id="Total" align="right" class="oddgradeU" width="250px"></td>
+                                <td id="HoursOfCare" align="right" class="oddgradeU" width="250px"></td>
+								<td id="AvgWaitTimeDays" align="right" class="oddgradeU" width="250px"></td></tr>
+			</tbody></table>
+		</div>
+		<div id ="SummaryCaseBased" class="content-primary" data-theme="d">
+			<table cellpadding="2" cellspacing="0" border="1" class="display" id="EducationInitiative">                        
+                        <tbody><tr class="oddgradeU"><td id="Type" align="right" class="oddgradeU" width="250px"></td>
+                                <td id="Total" align="right" class="oddgradeU" width="250px"></td>
+                                <td id="HoursOfCare" align="right" class="oddgradeU" width="250px"></td>
+								<td id="AvgWaitTimeDays" align="right" class="oddgradeU" width="250px"></td></tr>
+			</tbody></table>
+		</div>
+		<h2>Diagnosis</h2>
+		<input type="button" onclick="window.clipboardData.setData('Text', $('#clipSummaryDiagnosis').val());" value="Copy to Clipboard" align="right"/>
+
+		<div id ="SummaryDiagnosis" class="content-primary" data-theme="d">
+			<table cellpadding="2" cellspacing="0" border="1" class="display" id="EducationInitiative">
+                        <thead><tr class="gradeU">
+                                <td align="right" class="table_header" width="250px">Diagnosis</td>
+                                <td align="right" class="table_header" width="250px"></td>
+                                <td align="right" class="table_header" width="250px">Percentage %</td></tr></thead>
+                        
+                        <tbody><tr class="oddgradeU"><td id="Diagnosis" align="right" class="oddgradeU" width="250px"></td>
+                                <td id="DiagnosisCount" align="right" class="oddgradeU" width="250px"></td>
+                                <td id="Total" align="right" class="oddgradeU" width="250px"></td></tr>
+			</tbody></table>
+		</div>
+		<div id ="SummaryDiagnosisTotal" class="content-primary" data-theme="d">
+			<table cellpadding="2" cellspacing="0" border="1" class="display" id="EducationInitiative">
+                        <tbody><tr class="oddgradeU"><td id="Diagnosis" align="right" class="oddgradeU" width="250px"></td>
+                                <td id="DiagnosisCount" align="right" class="oddgradeU" width="250px"></td>
+                                <td id="Total" align="right" class="oddgradeU" width="250px"></td></tr>
+			</tbody></table>
+		</div>
+		
+                </div>
+                <div data-role="content" id="monthlyReport">
+                </div>
+                <div data-role="content" id="summaryReport">
+                </div>
+		<!-- /content -->
+		<!-- Page Footer -->
+		<div data-role="footer">
+	   		<h4></h4>
+		</div>
+		<!-- /footer -->
+  </body>
+</html>

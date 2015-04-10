@@ -1,0 +1,38 @@
+<!doctype html>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class="ui-mobile-rendering">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.3.2/jquery.mobile-1.3.2.min.css" />
+	<script src = "/quickforms/js/require.min.js" ></script>
+
+	</head>
+
+<div data-role="page" id = "mynext">
+	<script type = "text/javascript">
+		require(['/quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+				require(['dom/navControl','dom/form/select','dom/form/text','dom/tableControl'],
+					function(){
+					quickforms.loadNav('nav.html','nav');
+					quickforms.loadTable({queryName:'getNurseDischarge'});
+					});
+			});
+		});
+	</script>	
+	<div data-role="header" data-id="foo1" data-position="fixed"><h1>CARDIAC Dashboard</h2></div>
+	<div id = "nav"></div>
+	<div data-role="content">
+		<h1 align = "center">Patients Waiting to be Discharged</h1>
+		<div data-role="controlgroup" data-type="horizontal">
+		<a href="nurse.html" rel="external" data-role="button" >Order-Admit</a>
+		<a href="summaryTest.html" rel="external" data-role="button">Order-Test</a>
+		<a href="summaryDischarge.html" rel="external" data-role="button" class="ui-btn-active ui-state-persist">Order-Discharge</a>
+		<a href="" rel="external" data-role="button">History</a>
+		</div>
+		<table id ="mainData"></table>
+	</div>
+	<div data-role="footer"><h1></h1></div>
+</div>
+</html>

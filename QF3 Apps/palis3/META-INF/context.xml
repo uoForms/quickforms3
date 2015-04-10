@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- change this so it can connect to your data source -->
+<Context antiJARLocking="true" path="/palisadmin">
+  <Resource driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" maxActive="15" maxIdle="5" maxWait="5000" name="jdbc/palis" password="palisapp" type="javax.sql.DataSource" url="jdbc:sqlserver://localhost:1433;autoReconnect=true" username="palis"/>
+</Context>

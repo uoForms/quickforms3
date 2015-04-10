@@ -1,0 +1,55 @@
+<!DOCTYPE html> 
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class = "ui-mobile-rendering">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<title>Francine Application</title>	
+	<link rel="stylesheet" href="../quickforms/css/quickforms/quickforms.css" />
+	<script src = "../quickforms/js/require.min.js" ></script>
+	
+</head> 
+<body> 
+	
+<div data-role="page" id = "mynext">
+	<script type = "text/javascript">
+		require(['../quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+				require(['dom/navControl','dom/form/tabPopup','dom/form/fillDiv'],
+					function(){
+						setCookie('userRole','Administrator','1');
+						quickforms.loadNav('nav.html','nav');
+						quickforms.loadNav('sideNav.html','sideNav');
+					});
+			});
+		});
+	</script>
+	<div id="sideNav"></div>
+	<div data-role="header"><h1>Francine App-Admin</h1>
+	<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+		<a href="/francine/index.html" rel="external" data-role="button" data-rel="dialog"  data-icon="" data-theme="e" >Preview the App</a>	
+	</div>
+	</div>
+	<div data-role="content">
+		<div id = 'nav'></div>	
+	 <h4><a href = "#myPanel">Get Started</a></h4>
+		 	
+	</div>
+	<div data-role="footer" class="footer-docs" data-theme="e">
+					
+				<p>&copy; 2014 Francine app</p>
+	</div>
+</div>
+</body>
+</html>
+
+
+		
+				
+
+	
+	
+	
+	
+	

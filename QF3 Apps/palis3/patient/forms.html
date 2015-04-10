@@ -1,0 +1,107 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title id="title">Palis - </title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<link rel="stylesheet" href="../css/jquery.mobile-1.1.1.min.css" />
+	<link rel="stylesheet" href="../css/demo_table.css" />
+
+	<script src="../js/jquery-1.7.1.min.js"></script>
+	<script src="../js/quickforms.js"></script>
+        <script src="../js/jquery-ui-1.10.0.custom.min.js"></script>
+	<script src="js/patient.js"></script>
+        <script src="../js/jquery.mobile-1.1.1.min.js"></script>
+		<script src="../js/jquery.dataTables.js"></script>
+
+	<!--<script src="js/jquery.mobile-1.1.1.min.js"></script>-->
+        <script type = "text/javascript" >
+		$(function(){
+		var test=getCookie('patientId');
+		loadTabularData(app,'education','ListPatientForms','PatientKey:'+test,function(){
+        $('#mainData a').each(function(i,data){
+            var jdata= $(data);
+            var href=jdata.attr('href');
+            var link=jdata.find('#fact_name').html()+'Form';
+            jdata.attr('href',link+href);
+            $(jdata.children()[0]).attr('onclick','window.location="'+link+href+'"');
+        });
+    });
+		});
+	</script>
+
+</head> 
+<body > 
+
+<div data-role="page" data-theme="c">
+
+	<div data-role="header" data-position="inline" data-theme="d">
+            <div class="ui-btn-left" id="headerLeft"></div>
+            <h1 id="header">Palis - </h1>
+            <a onclick="goBack()" rel="external" data-role="button" data-inline="true" data-theme="b" class="ui-btn-right">Back</a>
+	</div><!-- /header -->
+
+	<div data-role="content" data-inset="true">	
+	
+        <!--<form action="" method="POST"> action will tell the form what code to run when the submit button is pressed. Now it just redirects to the portal -->
+            <div data-role="navbar" id ="navbar" data-theme="c">
+				<ul>
+					<li><a href="forms.html" rel="external" class="ui-btn-active ui-state-persist">Consults</a></li>
+                                        <li><a href="ESAS.html" rel="external" >ESAS</a></li>
+					<li><a href="patientinfo.html" rel="external">Patient Info</a></li>
+				</ul>
+			</div><!-- /navbar -->
+        <!--</form> -->
+		<br />
+                        <div data-role="collapsible" data-theme="b" data-content-theme="d">
+				<h2>New Consult</h2>
+				<ul data-role="listview">
+					<li><a href="ESASForm.html" rel="external">ESAS Form</a></li>
+					<li><a href="initialconsultationForm.html?type=initial" rel="external">Initial Phone Consult Form</a></li>
+					<li><a href="followupconsultationForm.html?type=followup" rel="external">Followup Phone Consult Form</a></li>
+					<li><a href="facetofaceconsultationForm.html?type=facetoface" rel="external">Face-To-Face Consult Form</a></li>
+                    <li><a href="notesForm.html" rel="external">Notes Form</a></li>
+				</ul>
+			</div>
+		<br />
+		<div data-role="content">
+		<div class="content-primary">
+						
+		<!-- <ul id ="mainData" data-role="listview" data-theme="d" data-divider-theme="d">
+                    <li>
+                        <a href = ".html" rel="external"><table cellpadding="5"><tr>
+                                <td id="fact_name"></td> 
+                                <td id="date"></td> 
+                                <td id="label"></td> 
+                        </tr></table></a>
+                    </li>
+		</ul> -->
+        
+        <table id = "mainData" cellpadding="10" width="100%" class="display">
+				</table>
+
+        
+                </div><!--/content-primary -->	
+		</div>
+		</div>
+		
+	<div data-role="collapsible" data-theme="b" data-content-theme="d">
+				<h2>New Consult</h2>
+				<ul data-role="listview">
+
+					<li><a href="initialconsultationForm.html?type=initial" rel="external">Initial Phone Consult Form</a></li>
+					<li><a href="followupconsultationForm.html?type=followup" rel="external">Followup Phone Consult Form</a></li>
+					<li><a href="facetofaceconsultationForm.html?type=facetoface" rel="external">Face-To-Face Consult Form</a></li>
+					<li><a href="ESASForm.html" rel="external">ESAS Form</a></li>
+                    <li><a href="notesForm.html" rel="external">Notes Form</a></li>
+				</ul>
+			</div>
+
+		
+	<div data-role="footer" data-theme="d">
+	   <h4></h4>
+	</div>
+
+</div><!-- /page -->
+
+</body>
+</html>

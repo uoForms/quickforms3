@@ -1,0 +1,103 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+    <title id="title">Palis - </title> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="css/jquery-ui.css" />
+    <link rel="stylesheet" href="css/jquery.mobile-1.1.1.min.css" />
+    <link rel="stylesheet" href="css/form.css" />
+    
+    <script src="js/jquery-1.7.1.min.js"></script>
+    <script src ="js/jquery-ui-1.10.0.custom.min.js"></script>
+    <script src ="js/designQuickForm.js"></script>
+    <script src="js/education.js"></script>
+    <script src="js/jquery.mobile-1.1.1.min.js"></script>
+	<script type="text/javascript">
+	
+	function reloadPage()
+	{
+		location.reload();
+	}
+	
+	</script>
+    
+    </head> 
+<body onload =""> 
+
+<div data-role="page">
+
+	<div data-role="header">
+		<h1 id="header">Palis - </h1>
+        <a href="logout.html" rel="external" data-role="button" data-inline="true" data-theme="c" class="ui-btn-right">Logout</a>
+	</div><!-- /header -->
+
+	<div data-role="content" data-inset="true">
+	
+	
+        <!-- FORM START -->
+        <form id ="mainForm" method="POST" action="putFact">
+            
+            
+            <a href="educationForm.html" rel="external" data-role="button" data-inline="true" data-icon="back">Back</a>
+			
+			
+           <!--  <br/><br/>
+			<label class ="ui-input-text">Fields:</label> 
+			<select id="fields" name ="options" data-native-menu="false">
+			<option id ="notSelected" value ="0">-- Not Selected --</option>
+			<option id ="initiative" value ="1">Initiative</option>
+			<option id ="course" value ="2">Course</option>
+			<option id ="area" value ="3">Area</option>
+			<option id ="eduhours" value ="4">Education Hours</option>
+			<option id ="travelTime" value ="5">Travel Time</option>
+			</select>
+			<a href="#" rel="external" onClick="editSelectedField('education')" data-role="button" data-inline="true" >Edit</a>
+			<br/><br/>
+			
+			<p></p>
+			
+			
+           <br/><br/>
+           
+
+			
+			<label for="initiative" class ="ui-input-text">Initiative:</label> 
+            <table id ="initiative"></table>
+			</br>		
+						
+			<label for="course">Course:</label>
+			<table id ="course"></table>
+			</br>
+			
+			<label for="area">Area:</label>
+			<table id ="area"></table>
+			</br>
+			
+			<label for="EduHours">Education Hours:</label>
+			</br></br>
+			<table  id ="eduhours" ></table>
+			</br>
+			
+			<label for="TravelTime">Travel Time:</label>
+			</br></br>
+			<table id ="travelTime"></table>
+			
+			</br> -->
+         
+            <a href="education.html" rel="external" data-role="button" data-inline="true" data-icon="back">Back</a>
+            
+        </form>
+        <!-- Form ENd -->
+    
+    
+	</div>	
+		
+	<div data-role="footer">
+	   <h4></h4>
+	</div>
+
+</div><!-- /page -->
+
+</body>
+</html>

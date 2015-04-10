@@ -1,0 +1,66 @@
+label
+{
+    font-size: 20px !important;
+}
+legend
+{
+    font-size: 20px;
+}
+.ui-dialog-contain {
+	max-width: 900px;
+	margin: 5% auto 15px auto;
+	position: relative;
+	left: 5px;
+	top: 0px;
+	
+}
+h2{padding:0px;margin:0px}
+.ui-dialog-background {
+	opacity: 0.2;
+	display: block !important;
+	-webkit-transition: opacity 0.3s ease-in;
+}
+ 
+.ui-dialog-background.pop.in {
+	opacity: 1;
+	-webkit-transition: opacity 0.3s ease-in;
+}
+ 
+.ui-dialog {
+	min-height: 100% !important;
+	/*background: transparent ;*/
+}
+.ui-overlay-a 
+{
+    background-image: none ;
+    /*background: rgba(1,1,1,0) ;*/
+}
+
+.transparent { background:transparent; }
+.ui-selectmenu .ui-header{margin-top:5% !important;}
+
+.ui-grid-time
+{
+	position: relative;
+}
+
+.ui-block-time-l
+{
+	float:left;
+	width: 49%;
+}
+.ui-block-time-r
+{
+	float:right;
+	width: 49%;
+}
+
+.hide 
+{
+	display:none;
+}
+
+.ui-popup-container
+{
+	width: 80% !important;
+}

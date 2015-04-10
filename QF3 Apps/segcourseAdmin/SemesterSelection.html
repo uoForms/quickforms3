@@ -1,0 +1,59 @@
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class = "ui-mobile-rendering">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<link rel="stylesheet" href="/quickforms/css/quickforms/quickforms.css" />
+	<script src = "/quickforms/js/require.min.js" ></script>
+</head>
+<body>
+<div data-role="page" id="loadQuickformsTemplate">
+	<script type="text/javascript">
+	require(['/quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+				require(['dom/form/tabPopup','dom/form/select','dom/navControl', 
+				'dom/form/fillDiv','js/semesterSelection'], // Add modules to the list. Every control in the dialog must be loaded here as well ,'segcourse/js/selectAdjustments'
+					function(){ 
+						quickforms.loadNav('nav.html','nav');
+						quickforms.parseForm( //formId, app*, fact
+							{formId:'formTemplate',
+							fact:'courseSelect'});
+					});
+			});
+		});
+	</script>
+	<div data-role= "header"><h1>SEG 3rd and 4th year Course Preferences</h1></div>
+	<div id = "nav"></div>
+	<div data-role ="content">
+	<form id="formTemplate">
+	
+		<p>1. Verify the StudentID above is correct.Otherwise, please log out and resubmit your valid student number. </p>
+		<p>2. Then please select the course code for each course you would like to take from the semester dialogs.</p>
+		<p>3. Note that as many as two CSI5xxx courses may be selected as technical electives.</p>
+		<p>4. Make sure you verify with Rabaska that you have satisfied all year two requirements.</p>
+		<p>5. Verify with Rabaska that you will have the science, engineering, computing and technical electives needed to graduate.</p>
+		
+		<p><a href="required.html" target="_blank">Required Courses</a></p>
+		<p><a href="science.html" target="_blank">Science Electives</a></p>
+		<p><a href="http://quickforms.eecs.uottawa.ca/segcourse/engineering.html" target="_blank">Engineering Electives</a><p>
+		<p><a href="electives.html" target="_blank">Computing and Technical Electives</a><p>
+		<p><a href="http://quickforms.eecs.uottawa.ca/segcourse/graduatecsi.html" target="_blank">CSI5xxx Courses (Graduate Courses)</a></p>
+		<p>References:</p>
+		<p><a href="http://www.uottawa.ca/academic/info/regist/calendars/genie/SEG.html" target="_blank">SEG Program Calendar </a> </p>
+		<p><a href="http://engineering.uottawa.ca/sites/default/files/pdf/2014/Course-sequence-SEG.pdf" target="_blank">Suggested SEG course sequence (pdf)</a><p>
+		<p><a href="http://engineering.uottawa.ca/science-electives-engineering-programs" target="_blank">Science Electives</a></p>
+		<p><span lang="FR-CA"><a href="http://www.grad.uottawa.ca/Default.aspx?tabid=1727&monControl=Programmes&ProgId=534" target="_blank"><span lang="EN-CA">CSI Graduate Calendar</span></a></span></p>
+		
+		<a id="summerCourseSelect" href="CourseSelectionSummer.html" data-rel="dialog" data-theme="c" data-icon="plus" data-role="button" class="tabPopup" > -- Summer 2015 --</a>
+		<a id="fallCourseSelect" href="CourseTypeSelectionFall.html" data-rel="dialog" data-theme="c" data-icon="plus" data-role="button" class="tabPopup" > -- Fall 2015 --</a>
+		<a id="winterCourseSelect" href="CourseTypeSelectionWinter.html" data-rel="dialog" data-theme="c" data-icon="plus" data-role="button" class="tabPopup" > -- Winter 2016 --</a>
+		<div class="buttons delete">
+			<!--<a href = "../../templates.html" rel="external" data-role="button" data-icon="delete" data-theme="c">Cancel</a>-->
+			<a href = "" onclick="courseConfirmation(this)" data-role="button" data-icon="check" data-theme="b" data-inline="true">Submit</a>
+		</div>
+	</form>
+	</div>
+	<div data-role="footer"><h1>&nbsp;</h1></div>
+</div>
+</body>
+</html>

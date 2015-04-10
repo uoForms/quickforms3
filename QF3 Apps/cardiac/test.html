@@ -1,0 +1,66 @@
+<!doctype html>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class="ui-mobile-rendering">
+<head>
+
+<!--
+			<meta name="viewport" content="width=device-width, initial-scale=1">	
+			<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
+			<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+			<script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+-->
+			
+			<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<link rel="stylesheet" href="/quickforms/css/quickforms/quickforms.css"/>
+	<script src = "/quickforms/js/require.min.js" ></script>
+	
+
+</head>
+
+<div data-role="page">
+
+	<script type = "text/javascript">
+		require(['/quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+			require(['dom/form/select','dom/form/text','dom/form/design','dom/form/tabPopup','dom/form/checkbox','dom/form/fillDiv','js/testCheck'],
+					function(){
+						quickforms.parseForm({formId:'test',fact:'patientState'});
+					});
+			});
+		});
+</script>
+<div data-role="header" data-id="foo1" data-position="fixed"><h1>Tests-Form</h1></div>
+	<div data-role="content">
+		<form id='test' action = "test.html">
+		
+		<label for="patient">Patient</label>
+		<select name ="patient" id="patient"><option value="1">Values</option></select>
+		
+		<label for="room">Room</label>
+		<select name ="room" id="room"><option value="1">Values</option></select>
+		
+		<a id="testOptionsLink" href="testOptions.html" data-rel="dialog" data-theme="c" data-icon="plus" data-role="button" class="tabPopup" remember readonly >Tests performed</a>
+		
+		<label for="testComplete">Test Completed</label>
+		<input type="checkbox" name="testCompleteFlag" id = "testComplete" value = "1"/>
+		<input type="text" id="Results" name="Results" maxlength = "200"/>
+						
+		<label for="providerClerk">Assign to</label>
+		<select name="providerClerk" id="providerClerk"><option value="1"></option></select>
+
+		<div class="buttons">
+		<a href="test.html" rel="external" data-role="button" data-inline="true" data-icon="star">Reset</a>
+		<a href="summaryTest.html"  onclick="quickforms.putFact(this,'summaryTest.html')" data-role="button" data-inline="true" data-icon="check" data-theme="b">Submit</a>
+		<a href="summaryTest.html" rel="external" data-role="button" data-inline="true" data-icon="back">Back</a>
+		</div>
+		</form>
+	</div>
+</div>
+</html>
+		
+		
+		
+		
+		
+		

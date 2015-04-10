@@ -1,0 +1,10 @@
+ == Adding SQL files ==
+ Before adding your sql changes, ensure your svn is up to date by right clicking this folder and clicking tortoiseSVN update
+ Name your sql file as follows "<username> - <changes type> - <date>.sql".
+ Ensure your sql file is in the correct release number folder
+ 
+ == Merge to build process ==
+ 
+Every release, all of the individual sql files must be merged incrementally into the build file to keep the file up to date. 
+
+Do not copy over fact data. Only schema changes and sql_queries rows. 

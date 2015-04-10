@@ -1,0 +1,14 @@
+.button-ui{
+	font-size: 16px;
+    padding: 1px;
+	min-width: .75em;
+	display: block;
+	position: relative;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+	zoom: 1;
+	border-top: 1px solid #fff;
+    border-color: rgba(255,255,255,.3);
+	width: 20px
+}

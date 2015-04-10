@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Lookup function Test</title>
+
+	<script src="jquery-1.7.1.min.js"></script>
+    <script src ="jquery-ui-1.10.0.custom.min.js"></script>
+	<!--<link rel="stylesheet" href="test/QUnit.css" />
+	<script src="test/QUnit.js"></script>-->
+	<script src ="quickforms2Test.js"></script>
+
+	<script>
+	function test(option, expected) {
+		results.total++;
+		var result = putLookup("palis3", "initiative",option,"educationFormDesign.html");
+		if (result !== expected) {
+			results.bad++;
+			console.log("Expected " + expected + ", but was " + result);
+		}
+	}
+	var results = {
+		total: 0,
+		bad: 0
+	};
+	test("New Option", "success");
+	test("", "");
+	
+	console.log("Of " + results.total + " tests, " + results.bad + " failed, "
+		+ (results.total - results.bad) + " passed.");
+	</script>
+</head>
+<body>
+	<div id="qunit"></div>
+</body>
+</html>

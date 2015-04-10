@@ -1,0 +1,191 @@
+<!DOCConsultType html> 
+<html> 
+    <head> 
+    <title>Palis - Consult Form</title> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../css/jquery-ui.css" />
+    <link rel="stylesheet" href="../css/jquery.mobile-1.1.1.min.css" />
+    <link rel="stylesheet" href="../css/form.css" />
+    
+    <script src="../js/jquery-1.7.1.min.js"></script>
+    <script src ="../js/jquery-ui-1.10.0.custom.min.js"></script>
+    <script src ="../js/quickforms.js"></script>
+    <script src="js/patient.js"></script>
+    <script src="../js/jquery.mobile-1.1.1.min.js"></script>
+	<script ConsultType="text/javascript" >
+	
+		function hideFields(ConsultType)
+		{
+			var consultLabel = "";
+			var km=getCookie('kms');
+			
+			
+				
+				
+			
+			
+			
+		}
+		
+		
+		$(function(){
+			hideFields(getParameterByName('type'));
+		});
+		// Trying to fix ' in name. Need to Discuss with Liam
+		function fixName()
+		{
+		
+		RequestPhysician.value=RequestPhysician.value.replace(/\'/g,"''");
+		
+		
+		}
+		function setConsultType()
+		{
+			if(isNull(getParameterByName('id')))
+			{
+				var ConsultType=getParameterByName('type');
+
+				
+					$('#ConsultType option:eq(1)').attr('selected', 'selected');
+					$('#ConsultType').selectmenu('refresh');
+			}
+			else
+			{
+				var ConsultType = 'initial'
+				hideFields(ConsultType);
+			}
+			
+			
+			consultLabel ="Initial Consult";
+			$('#formTitle').append("<h1>"+consultLabel+"</h1>");
+		}
+	</script>
+</head> 
+<body onload ="getFieldSelection(app,'initialconsultation',null,setConsultType)"> 
+
+<script>
+var km=getCookie('kms');
+if($('#Kilometers').val()== null)
+$('#Kilometers').val(km);
+
+</script>
+<div data-role="page" data-theme="c">
+
+	<div data-role="header" data-theme="d">
+            <div class="ui-btn-left" id="headerLeft"></div>
+		<h1 id = "header">Palis - </h1>
+        
+	</div><!-- /header -->
+
+	<div data-role="content" data-inset="true">
+	<div id="formTitle">
+	</div>
+	
+        <!-- FORM START -->
+        <form id ="mainForm" method="POST" action="putFact">
+            
+            
+            <a href="forms.html" rel="external" data-role="button" data-inline="true" data-icon="back">Cancel</a>
+            <a href="#" rel="external" onClick=" fixName(); putFact(app,'initialconsultation','forms.html');" data-role="button" data-inline="true" data-theme="b" data-icon="check">Submit</a>
+
+            <br/>
+            
+            <label for="consultant" class ="ui-input-text">Consultant</label>
+            <select id ="consultant" name ="consultant" >
+                <option value="1">Followup face to face Consult</option>
+                <option value="2">Initial face to face Consult</option>
+            </select> 
+          
+		<div id="WasScheduled">
+		<label for="Scheduled" class ="ui-input-text">Was Scheduled</label>
+            <select id ="Scheduled" name ="Scheduled" >
+                <option value="1">Scheduled</option>
+                <option value="2">Not Scheduled</option>
+            </select> 
+            </div>
+            <label for="RequestDate" class ="ui-input-text">Date</label>
+            <input name="RequestDate" id="RequestDate" ConsultType="text" class="date">
+            <div id="providerName">
+            <label for="RequestPhysician" class ="ui-input-text">Provider Name</label>
+			<input type="text" id ="RequestPhysician" name ="RequestPhysician"  
+			onkeypress="if(this.value.match(/[&=]/)) this.value=this.value.replace(/[&=]/g,''); "
+			onkeyup   ="if(this.value.match(/[&=]/)) this.value=this.value.replace(/[&=]/g,''); "/>
+            <!-- <select id ="RequestPhysician" name ="RequestPhysician" >
+                <option value="1">Request Location 1</option>
+                <option value="2">Request Location 2</option> -->
+            </select> 
+			</div>
+			<div id="ProviderType">
+            <label for="ProviderType" class ="ui-input-text">Referral Type</label>
+            <select id ="ProviderType" name ="ProviderType" >
+                <option value="1">Nurse</option>
+                <option value="2">Physician</option>
+            </select> 
+            </div>
+			<div id="referralSite">
+            <label for="RequestLocation" class ="ui-input-text">Referral Site</label>
+            <select id ="RequestLocation" name ="RequestLocation" >
+                <option value="1">Request Location 1</option>
+                <option value="2">Request Location 2</option>
+            </select> 
+			</div>
+			<div id='Region'>
+			<label for="Region" class ="ui-input-text">Referral Region</label>
+            <select id ="Region" name ="Region" >
+                <option value="1">Referral Region 1</option>
+                <option value="2">Referral Region 2</option>
+            </select> 
+			</div>
+			<div id='TopicSpecific'>
+			<label for="topicSpecific" class ="ui-input-text">Topic Specific</label>
+            <select id ="topicSpecific" name ="topicSpecific" >
+                <option value="1">Topic Specific 1</option>
+                <option value="2">Topic Specific 2</option>
+            </select> 
+			</div>
+			<div id='PhySymptom'>
+			<label for="phySymptom" class ="ui-input-text">Physical Symptoms</label>
+            <select id ="phySymptom" name ="phySymptom" >
+                <option value="1">Physical Symptom 1</option>
+                <option value="2">Physical Symptom 2</option>
+            </select> 
+			</div>
+			<div id='PsycSymptom'>
+			<label for="psycSymptom" class ="ui-input-text">Psychological Symptoms</label>
+            <select id ="psycSymptom" name ="psycSymptom" >
+                <option value="1">Psychological Symptom 1</option>
+                <option value="2">Psychological Symptom 2</option>
+            </select> 
+            </div>
+            <div id="afterMeeting">
+            <label for="PPSScore" class ="ui-input-text">PPS</label>
+            <select id ="PPSScore" name ="PPSScore" >
+                <option value="1">--Not Assessed--</option>
+                <option value="2">0</option>
+            </select> 
+            
+		
+		
+           
+            </div>
+            <label for="notes" class ="ui-input-text">Notes</label>
+            <textarea name="notes" id="notes"> </textarea>
+            <br/>
+
+            <a href="forms.html" rel="external" data-role="button" data-inline="true" data-icon="back">Cancel</a>
+            <a href="#" rel="external" onClick="fixName(); putFact(app,'initialconsultation','forms.html')" data-role="button" data-inline="true" data-theme="b" data-icon="check">Submit</a>  
+        </form>
+        <!-- Form ENd -->
+    
+    
+	</div>	
+		
+	<div data-role="footer" data-theme="d">
+	   <h4></h4>
+	</div>
+
+</div><!-- /page -->
+
+</body>
+</html>

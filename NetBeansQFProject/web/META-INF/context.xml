@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?> <!-- change this so it can connect to your data source,  -->
+<!-- Ideally, the resources go in tomcat/conf/context.xml  -->
+<Context antiJARLocking="true" path="/quickforms">
+ <!-- <Resource driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver" maxActive="15" maxIdle="5" 
+            maxWait="5000" name="jdbc/exampleConnection" password="exampleConnection" type="javax.sql.DataSource" 
+            url="jdbc:sqlserver://localhost:1433;autoReconnect=true" username="exampleConnection"/>
+-->
+
+
+	</Context>

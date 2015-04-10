@@ -1,0 +1,170 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title id="title">Palis - </title> 
+	
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.css" />
+	<link rel="stylesheet" href="http://jeromeetienne.github.com/jquery-mobile-960/css/jquery-mobile-fluid960.min.css" />
+	<script src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script src="../js/quickforms.js"></script>
+        <script src="js/patient.js"></script>
+	<script src="http://code.jquery.com/mobile/1.1.0/jquery.mobile-1.1.0.min.js"></script>
+
+	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+        <script type="text/javascript">
+          google.load('visualization', '1', {packages: ['corechart']});
+        </script>
+	
+<script type="text/javascript">
+      function drawVisualization(i,j,k,l,m,n,o,p,q) {
+      	
+      	// Define Colors
+      	
+      var backColor = '#ffffff';
+      var axisColor = '#3e3e3e';
+      var gridlinesColor = '#ffffff';
+      var axisTitleColor = '#333333';
+	  
+      var data_column = new google.visualization.arrayToDataTable([
+	  
+	  
+    ['Category','Score'],
+    ['Pain',   i],
+    ['Nausea',   j],
+    ['Tiredness',   k],
+    ['Mood',   l],
+    ['Anxiety',   m],
+    ['Appetite',   n],
+    ['Wellbeing',   o],
+	['Shortness of Breath',   p],
+	['Drowsiness',   q]
+	
+  ]);
+	
+  
+    // *********************//
+    // *** CREATE CHARTS ***//
+    // *********************//
+  	new google.visualization.ColumnChart(document.getElementById('columnChart')).
+      draw(data_column,
+           {height:450,
+           	width: '100%',
+			title: 'Most Recent ESAS result',
+			vAxis: {maxValue: 100},
+            backgroundColor: backColor,
+            chartArea:{width:"50%",height:"60%"},
+            hAxis: {title: 'Category', textStyle: {color: axisTitleColor}},
+            vAxis: {title: 'Score', gridlines: {count: 5, color: gridlinesColor}, baselineColor:axisColor, textStyle:{color: axisTitleColor}}}
+      );
+        
+      
+       }
+      google.setOnLoadCallback(drawVisualization);
+      
+	   var chartResizeTimer;
+       
+      /** window.onresize = function adjustSize() {
+              clearTimeout(chartResizeTimer);
+              chartResizeTimer = setTimeout(drawVisualization(1,2,3,4,5,6,7,8), 100);
+               };*/
+               
+ /**      $(document).on('pageshow','[data-role=page]', function(){
+  drawVisualization(1,2,3,4,5,6,7,8);
+});*/
+
+       
+    </script>
+        
+
+</head> 
+<body onload="loadEsasReport()">
+
+<div data-role="page" data-theme="c">
+
+	<div data-role="header" data-theme="d">
+            <div class="ui-btn-left" id="headerLeft"></div>
+		<h1 id="header">Palis - </h1>
+        <a onclick="goBack()" rel="external" data-role="button" data-inline="true" data-theme="c" class="ui-btn-right">Back</a>
+	</div><!-- /header -->
+
+	<div data-role="content" data-inset="true">	
+	
+        <!--<form action="" method="POST"> action will tell the form what code to run when the submit button is pressed. Now it just redirects to the portal -->
+            <div data-role="navbar" id ="navbar">
+				<ul>
+					<li><a href="forms.html" rel="external" >Forms</a></li>
+					<li><a href="ESAS.html" rel="external" class="ui-btn-active ui-state-persist">ESAS</a></li>
+                                        <li><a href="patientinfo.html" rel="external">Patient Info</a></li>
+				</ul>
+			</div><!-- /navbar -->
+        <!--</form> -->
+		<br />
+
+		<div data-role="content">
+					
+		<!-- Page Content -->
+		<div class="content-primary" data-theme="d">
+		
+			<div id="columnChart" class="action"></div>
+			
+			
+			
+										<h1>Age and Sex Statistics </h1>
+<input type="button" onclick="window.clipboardData.setData('Text', $('#clipEsasTable').val());" value="Copy to Clipboard" align="right"/>
+
+		<div id ="EsasTable" class="content-primary" data-theme="d">
+			
+			
+			<table cellpadding="2" cellspacing="0" border="1" class="display" >
+                        <thead><tr class="gradeU"><td align="right" class="table_header" width="150px"> Date </td>
+                                <td align="right" class="table_header" width="150px">Pain</td>
+                                <td align="right" class="table_header" width="150px">Tiredness</td>
+                                <td align="right" class="table_header" width="150px">Mood</td>
+								<td align="right" class="table_header" width="150px">Nausea</td>
+								<td align="right" class="table_header" width="150px">Anxiety</td>
+								<td align="right" class="table_header" width="150px">Drowsiness</td>
+								<td align="right" class="table_header" width="150px">Appetite</td>
+								<td align="right" class="table_header" width="150px">Well Being</td>
+								<td align="right" class="table_header" width="150px">Shortness of Breaths</td>
+								</tr></thead>
+                      				  
+                        <tbody><tr class="oddgradeU"><td id="Date" align="right" class="oddgradeU" width="150px">Pain</td>
+                                <td id="Pain" align="right" class="oddgradeU" width="150px">0</td>
+                                <td id="Tiredness" align="right" class="oddgradeU" width="150px">0</td>
+								<td id="Mood" align="right" class="oddgradeU" width="150px">0</td>
+								<td id="Nausea" align="right" class="oddgradeU" width="150px">0</td>
+								<td id="Anxiety" align="right" class="oddgradeU" width="150px">0</td>
+								<td id="Drowsiness" align="right" class="oddgradeU" width="150px">0</td>
+								<td id="Appetite" align="right" class="oddgradeU" width="150px">0</td>
+								<td id="WellBeing" align="right" class="oddgradeU" width="150px">0</td>
+								<td id="ShortnessOfBreath" align="right" class="oddgradeU" width="150px">0</td>
+                                </tr>
+			</tbody></table>
+			
+		
+			
+			
+		<!--	<div data-role="collapsible" data-theme="b" data-content-theme="c">
+				<h2>Choose a Report...</h2>
+				<ul data-role="listview">
+					<li><a href="Reports.html" rel="external">ESAS Report</a></li>
+					<li><a href="Reports1.html" rel="external">Scheduled Consults</a></li>
+				</ul>
+			</div>
+			<label for="time" class="select">Choose a Time Frame:</label>
+			<select name="time" id="time" data-theme="b">
+				<option value="Not"> -- Not Selected -- </option>
+			   <option value="everything" selected="selected">Everything</option>
+			   <option value="monthly">Monthly</option>
+			   <option value="weekly">Weekly</option>
+			</select>
+		</div>
+		</div> -->
+	<div data-role="footer" data-theme="d">
+	   <h4></h4>
+	</div>
+
+</div><!-- /page -->
+</div>
+</body>
+</html>

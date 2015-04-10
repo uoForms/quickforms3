@@ -1,0 +1,79 @@
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class = "ui-mobile-rendering">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<link rel="stylesheet" href="../../quickforms/css/quickforms/quickforms.css" />
+	<script src = "../../quickforms/js/require.min.js" ></script>
+</head>
+<body>
+<div data-role="page" id="loadQuickformsTemplate">
+	<script type="text/javascript">
+		require(['../../quickforms/js/quickforms.js'],function(){
+				quickforms.registerReadyFunction(function()
+				{
+					require(['dom/form/text','dom/form/select','dom/form/design', 'js/teamMember'],
+						function(){
+							quickforms.parseForm({formId:"mainForm",fact:"teamMembers"});
+						});
+				});
+			});
+	</script>
+        
+	<div data-role="header">
+		<h1 id="header">CARDIAC Team Member</h1>
+	</div><!-- /header -->
+
+	<div data-role="content" data-inset="true">
+	
+	
+        <!-- FORM START -->
+        <form id ="mainForm" >
+            
+            <div class="buttons delete design">
+				<a onclick="window.history.back()" rel="external" data-role="button" data-inline="true" data-icon="back">Back</a>
+				<a href="#" rel="external" onClick="passwordVerification(this)" data-role="button" data-inline="true" data-theme="b" data-icon="check">Submit</a>
+            </div>
+			<br/>
+            
+            <label for="firstName" class ="ui-input-text">First Name:</label>
+            <input type="text" id ="firstName" name ="firstName" />
+            
+            <label for="lastName" class ="ui-input-text">Last Name:</label>
+            <input id ="lastName" name ="lastName" type ="text"/>
+            
+            <label for="userName" class ="ui-input-text">User Name:</label>
+            <input id ="userName" name ="userName" type ="text"/>
+            
+            <label for="email" class ="ui-input-text">Email:</label>
+            <input name="email" id="email" type="text" >
+            
+            <label for="password" class ="ui-input-text">Password:</label>
+            <input id ="password" name ="password" type ="password"/>
+            
+            <label for="user_pass_confirm" class ="ui-input-text">Confirm Password:</label>
+            <input id ="user_pass_confirm" name ="password" type ="password"/>
+            
+			<label for="userRole" >Role:</label>
+            <select id ="userRole" name ="userRole" ><option></option></select>
+			
+            <br/>
+           
+		    <div class="buttons delete design">
+            <a onclick="window.history.back()" rel="external" data-role="button" data-inline="true" data-icon="back">Back</a>
+            <a href="#" rel="external" onClick="passwordVerification(this)" data-role="button" data-inline="true" data-theme="b" data-icon="check">Submit</a>
+			</div>
+        </form>
+        <!-- FORM END -->
+    
+    
+	</div>	
+		
+	<div data-role="footer">
+	   <h4></h4>
+	</div>
+
+</div><!-- /page -->
+
+</body>
+</html>

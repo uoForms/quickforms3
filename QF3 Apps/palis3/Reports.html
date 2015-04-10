@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title id="title">Palis - </title>
+		<link rel="stylesheet" href="css/jquery.mobile-1.1.1.min.css" />
+		<script src="js/jquery-1.7.1.min.js"></script>
+                <script src="js/quickforms.js"></script>
+                <script src="js/education.js"></script>
+                <script src="js/jquery.mobile-1.1.1.min.js"></script>
+                <style>
+                    tr:nth-child(odd) {background: #FFF}
+                </style>
+                <script type="text/javascript">
+                    function switchReport(report)
+                    {
+			var reports = ['educationReport','monthlyReport','summaryReport'];
+                        if(report == 'monthly')
+				window.location = 'ReportsMonthly.html';
+				else
+			if(report == 'education')
+				window.location = 'Reports.html'; 
+				else
+			if(report == 'summary')
+				window.location = 'ReportsSummary.html'; 
+				else
+				if(report == 'summary2')
+				window.location = 'ReportsSummary2.html'; 
+				
+                        
+                    }
+                </script>
+  </head>
+  <body onload="loadEducationReport()">
+    
+		<!-- Start of Page -->
+		
+		<div data-role="header">
+		<h1 id="header">Palis - </h1>
+	
+	 <div class="ui-btn-right" data-role="controlgroup" data-type="horizontal" >
+     <a href="problem.html" data-role="button" data-rel="dialog" data-theme="c" style="position:relative;top:-5px">Report a Problem</a>
+      <a href="logout.html" rel="external" data-role="button" data-theme="c" style="position:relative;top:-5px">Logout</a>
+    </div>
+	</div><!-- /header -->
+		
+
+                <div data-role="navbar">
+                        <ul>
+                                <li id="patientsTab"><a href="patients.html" rel="external">Patients</a></li>
+                                <li><a href="education.html" rel="external" >Forms</a></li>
+                                <li><a href="Reports.html" rel="external" class="ui-btn-active ui-state-persist">Reports</a></li>
+                                <li><a href="teams.html" rel="external">Team</a></li>
+                        </ul>
+                </div><!-- /navbar -->
+		<div data-role="content" id="educationReport">
+                    <!-- Page Content -->
+                    <div data-role="collapsible" data-theme="b" data-content-theme="c">
+                    <h2>Choose a Report</h2>
+                        <ul data-role="listview" id="availableReports">
+                                <li><a href="#" onclick ="switchReport('education')" rel="external">Education Report</a></li>
+                                <li><a href="#" onclick ="switchReport('monthly')" rel="external">Monthly Report</a></li>
+                                <li><a href="#" onclick ="switchReport('summary')" rel="external">Consultation Registration Statistics</a></li>
+								<li><a href="#" onclick ="switchReport('summary2')" rel="external">Consultation Appointment Statistics</a></li>
+                        </ul>
+                    </div>
+                    
+					<input type="hidden" id="yearSelectJSON" />
+                    <label for="year">Year</label>
+                    <select id="year" name ="year" onchange="changeReport()">
+                        <option id="2013">2013</option>
+                        <option id="2012">2012</option>
+                        <option id="2011">2011</option>
+                    </select>
+			<h1>Education Report </h1>
+<input type="button" onclick="window.clipboardData.setData('Text', $('#clipEducation').val());" value="Copy to Clipboard" align="right"/>
+
+		<div id ="Education" class="content-primary" data-theme="d">
+			
+			
+			<table cellpadding="2" cellspacing="0" border="1" class="display" id="EducationInitiative">
+                        <thead><tr class="gradeU"><td align="right" class="table_header" width="150px">Month</td>
+                                <td align="right" class="table_header" width="150px">Initiative</td>
+                                <td align="right" class="table_header" width="150px">Sessions</td>
+                                <td align="right" class="table_header" width="150px">Participants</td>
+                                <td align="right" class="table_header" width="150px">Hours</td>
+                                <td align="right" class="table_header" width="150px">Travel Time</td>
+                                <td align="right" class="table_header" width="150px">Total Hours(Hours + Travel Time)</td></tr></thead>
+                        
+                        <tbody><tr class="oddgradeU"><td id="Month" align="right" class="oddgradeU" width="150px">December</td>
+                                <td id="Initiative" align="right" class="oddgradeU" width="150px">Initiative 1</td>
+                                <td id="TotalInitiatives" align="right" class="oddgradeU" width="150px">2</td>
+                                <td id="TotalOfParticipants" align="right" class="oddgradeU" width="150px">18</td>
+                                <td id="TotalInitiativeHours" align="right" class="oddgradeU" width="150px">1</td>
+                                <td id="TotalTravelTime" align="right" class="oddgradeU" width="150px">0.25</td>
+                                <td id="TotalHours" align="right" class="oddgradeU" width="150px">1.25</td></tr>
+			</tbody></table>
+			
+			<!--<div data-role="collapsible" data-theme="b" data-content-theme="c">
+				<h2>Choose a Report...</h2>
+				<ul data-role="listview">
+					<li><a href="Reports.html" rel="external">Age/Gender Report</a></li>
+					<li><a href="Reports1.html" rel="external">Clinical Domain Report</a></li>
+					<li><a href="Reports2.html" rel="external">Adult Domains Report</a></li>
+					<li><a href="Reports2.html" rel="external">Children Domains Report</a></li>
+					<li><a href="Reports1.html" rel="external">Procedure Report</a></li>
+					<li><a href="table.html" rel="external">Adult Domains Table</a></li>
+				</ul>
+			</div>-->
+			
+		</div>
+                <div id ="SummaryEducation" class="content-primary" data-theme="d">
+                    <table cellpadding="2" cellspacing="0" border="1" class="display" id="EducationInitiativeTotals"><tbody><tr class="oddgradeU"><td align="right" class="oddgradeU" width="150px">Totals</td>
+                                <td  align="right" class="oddgradeU" width="150px"></td>
+                                <td id="TotalNumSessions" align="right" class="oddgradeU" width="150px">2</td>
+                                <td id="TotalNumofParticipants" align="right" class="oddgradeU" width="150px">18</td>
+                                <td id="TotalHours" align="right" class="oddgradeU" width="150px">1</td>
+                                <td id="TotalTravelTime" align="right" class="oddgradeU" width="150px">0.25</td>
+                                <td id="TotalTotalHours" align="right" class="oddgradeU" width="150px">1.25</td></tr>
+			</tbody></table>
+                </div>
+                </div>
+                <div data-role="content" id="monthlyReport">
+                </div>
+                <div data-role="content" id="summaryReport">
+                </div>
+		<!-- /content -->
+		<!-- Page Footer -->
+		<div data-role="footer">
+	   		<h4></h4>
+		</div>
+		<!-- /footer -->
+  </body>
+</html>
