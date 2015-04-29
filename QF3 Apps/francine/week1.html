@@ -32,16 +32,18 @@
 	<div data-role ="content">
 	<div id = 'nav'></div>	
 	<h4><a href = "#myPanel">Get Started</a></h4>
-	<form id="week1">
-		<h1>Hello Welcome to Week 1</h1>
-		
-		<textarea id="editor" name="content" class="dynamicText" rows="0" cols="0"></textarea>
-				
-		<div class="buttons">
-        	<a href = "index.html"  rel="external" data-role="button" data-icon="back" data-theme="c" data-inline="true">Back</a>
-			<a href = "week2.html?id=3"  rel ="external" data-role="button" data-icon="check" data-theme="b" data-inline="true">Week2</a>
-		</div>
-	</form>
+	<div style="overflow: auto;overflow-y: hidden;-ms-overflow-y: hidden;">
+		<form id="week1">
+			<h1>Hello Welcome to Week 1</h1>
+			
+			<textarea id="editor" name="content" class="dynamicText" rows="0" cols="0"></textarea>
+					
+			<div class="buttons">
+				<a href = "index.html"  rel="external" data-role="button" data-icon="back" data-theme="c" data-inline="true">Back</a>
+				<a href = "week2.html?id=3"  rel ="external" data-role="button" data-icon="check" data-theme="b" data-inline="true">Week 2</a>
+			</div>
+		</form>
+	</div>
 	</div>
 	<div data-role="footer" class="footer-docs" data-theme="e">
 					

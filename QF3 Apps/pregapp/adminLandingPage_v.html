@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+	<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+	<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+<style>
+	
+	h1 {font-family: verdana; font-size: 30px; text-align: center; color:#ff7373; }
+	#subscribe {background-color: #6c87f0; font-family:verdana; font-weight:bold; color:whitesmoke;text-shadow:1px 1px 1px grey; font-size:14px; 
+		background-repeat:no-repeat; background-position:-75% 0; border-color: #6c87f0;   border-radius: 40px;}
+    body {height:100%; margin: 0; padding: 0;}
+	#pageone { height: 100%;  margin: 0;   padding: 0; }
+	#pageone .ui-content {  padding: 0; }
+	.ui-content,.ui-content #full-height-div {  height: inherit;}
+   #startbutton {
+		  -webkit-border-radius: 28; width: 25%; margin: 50px;
+		  border-radius: 100px;text-shadow:1px 1px 1px grey
+		  font-family: verdana;
+		  color: #ffffff;
+		  font-size: 20px;
+		  background: #fa9e9e;
+		  width:120px; height:120px; line-height:120px;
+		  text-decoration: none;	text-align:center;	}
+
+	#startbutton:hover { background: #FC9E86; text-decoration: none; }
+		
+	#hm,#ov,#au {font-family: verdana; 	-webkit-border-radius: 0;  -moz-border-radius: 0;  border-radius: 0px;
+		font-family: Arial;
+		color: #6c87f0;
+		font-size: 20px;
+		background: #faa8c3;
+		padding: 10px 20px 10px 20px;
+		border: solid white 1px;
+		text-decoration: none;}
+  	#hm:hover, #ov:hover,#au:hover { background: #FC9E86;   text-decoration: none; }
+	
+	#ft, #st, #tt {background: #f58ebc;text-shadow:1px 1px 1px grey;
+	  background-image: -webkit-linear-gradient(top, #f58ebc, #6c87f0);
+	  background-image: -moz-linear-gradient(top, #f58ebc, #6c87f0);
+	  background-image: -ms-linear-gradient(top, #f58ebc, #6c87f0);
+	  background-image: -o-linear-gradient(top, #f58ebc, #6c87f0);
+	  background-image: linear-gradient(to bottom, #f58ebc, #6c87f0);
+	  -webkit-border-radius: 30;
+	  -moz-border-radius: 30;
+	  border-radius: 40px;
+	  font-family: sans-serif;
+	  color: whitesmoke;
+	  font-size: 16px;
+	  padding: 10px 20px 10px 20px;
+	  border: solid #FC9E86 7px;
+	  text-decoration: none;}
+
+	#ft:hover, #st:hover, #tt:hover {   background: #FC9E86; text-decoration: none;  position: auto; }
+ 	
+    #ws,#nb { background: #fa9e9e;
+	  background-image: -webkit-linear-gradient(top, #fa9e9e, #fa8cdd);
+	  background-image: -moz-linear-gradient(top, #fa9e9e, #fa8cdd);
+	  background-image: -ms-linear-gradient(top, #fa9e9e, #fa8cdd);
+	  background-image: -o-linear-gradient(top, #fa9e9e, #fa8cdd);
+	  background-image: linear-gradient(to bottom, #fa9e9e, #fa8cdd);
+	  -webkit-border-radius: 28;
+	  -moz-border-radius: 28;
+	  border-radius: 250px/50px;
+	  border-color: transparent;
+	  font-family: sans-serif;
+	  color: black;  font-size: 18px;  text-decoration: none; }
+
+	#ws:hover,#nb:hover { background: #d0a1fc;   text-decoration: none; }
+	#footer {background: black; color: White; width:100%; bottom:0px;position:absolute;}
+</style>	
+
+</head>
+<body>
+
+ <div data-role="page" id="pageone">
+   
+   <div data-role="header">
+      <h1>Francine APP</h1>
+      <a id="subscribe" href="#input" data-rel="popup" class="ui-btn ui-btn-inline ui-btn-right ui-icon-star ui-btn-icon-left">Subscribe</a>
+
+      <div data-role="popup" id="input">
+          <input type="text" name="email" id="email" placeholder="Email Address">
+          <input type="submit" name="submit" id="submit" data-inline="true" value="Submit">
+      </div>    
+   </div>
+
+   <div data-role="navbar" id="navbar">
+          <ul>
+		     <li><a id="hm" href="#anylink" class="ui-icon-home ui-btn-icon-left">Home</a></li>
+             <li><a id="ov" href="#anylink" class="ui-icon-grid ui-btn-icon-left">Overview</a></li>
+             <li><a id="au" href="#anylink" class="ui-icon-info ui-btn-icon-left">About Us</a></li>
+          </ul>
+   </div>
+   
+   <div data-role="main" class="ui-content" id="background" 
+	style="background: url('http://www.doulaworld.com/doula/cfml/gallery/mom-baby.jpg') no-repeat;
+  background-size : 100% 100%">
+        <div align="center">
+           <button id="startbutton" href='#'> Start </button> 
+	   </div>
+       <div class="ui-grid-b">
+         <div class="ui-block-a">
+		    <a id="ft" href="#" class="ui-btn ui-btn-all">First Trimester<br>Week 1-12</a>
+         </div>
+         <div class="ui-block-b">
+            <a id="st" href="#" class="ui-btn ui-btn-all">Second Trimester<br>Week 13-26</a>
+         </div>
+         <div class="ui-block-b" >
+            <a id="tt" href="#" class="ui-btn ui-btn-all">Third Trimester<br>Week 27-40</a>
+         </div>
+       </div>
+       <br>
+       <p> </p>
+       <div class="ui-grid-a" >
+          <div class="ui-block-a">
+             <a id="ws" href="#" class="ui-btn ui-btn-all ui-shadow">Warning Signs<br>&amp;<br>Signs of Labour</a>
+          </div>
+          <div class="ui-grid-b">
+             <a id="nb" href="#" class="ui-btn ui-btn-all ui-shadow">New Born<br>&amp;<br>Breast Feeding</a>
+          </div>
+       </div>
+   <div data-role="footer" id="footer" >
+       <h1>2015 Francine APP</h1>
+   </div>
+
+</div> 
+
+</body>
+</html>
