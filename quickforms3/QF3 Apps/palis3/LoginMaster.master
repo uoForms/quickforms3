@@ -1,0 +1,216 @@
+﻿<%@ master language="C#" autoeventwireup="true" inherits="TeamPortal.UI.LoginMaster, App_Web_loginmaster.master.cdcab7d2" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>PAL-IS</title>
+    <link rel="shortcut icon" href="Images/fav-icon.ico" type="image/x-icon" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <style>
+ul li
+{
+    list-style: none;
+}
+html, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, hr
+{
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+}
+td
+{
+    vertical-align: top;
+}
+
+/*----- Text Elements -----*/
+body, .text
+{
+    font-family: Arial, Verdana, Geneva, sans-serif;
+    font-size: 12px;
+    line-height: 1.64em;
+    color: #000000;
+}
+body, .text, th
+{
+    text-align: left;
+}
+body
+{
+    background: #FFF;
+    margin: 0px;
+    padding: 0px; /*font: normal 0.8em/1.2em verdana,aria,sans-serif;*/
+}
+
+a
+{
+    color: #003366;
+}
+a:hover, a:active
+{
+    color: #06b;
+    text-decoration: none;
+}
+a img
+{
+    border: none;
+}
+
+p, h1, h2, h3, h4, h5, h6, h7, h8, h9, ul, ul li
+{
+    margin: 0;
+    padding: 0;
+}
+
+p, h1, h2, h3, h4, hr, #content ul, blockquote, dd
+{
+    margin-bottom: 10px;
+}
+p, h1, h2, h3, h4, hr, #content ul, #contentEditor ul, blockquote, dd
+{
+    margin-bottom: 10px;
+}
+h1, h2, h3, h4, h5, h6, h7, h8, h9, th, dt
+{
+    font-weight: normal;
+    font-family: Verdana, Geneva, sans-serif;
+    line-height: 1.2em;
+}
+.textColor, h1, h2, h3, h4, h5, h6, h7, h8, h9, th, dt
+{
+    /*color: #31659b;*/
+    color: #000000;
+}
+em, i
+{
+    font-style: italic;
+}
+b, strong
+{
+    font-weight: bold;
+    color: #000;
+}
+hr, .borderTop, dt
+{
+    border-style: dashed none none none;
+    margin-top: 10px;
+    border-top-width: 1px;
+    border-top-color: #666666;
+}
+.borderTop, dt
+{
+    padding-top: 6px;
+}
+h1
+{
+    font-size: 1.3em;
+    margin-bottom: 10px;
+    line-height: 1.4em;
+}
+h2
+{
+    font-size: 1.2em;
+}
+h3
+{
+    font-size: 1.1em;
+    margin-bottom: 7px;
+}
+h4, th
+{
+    font-size: 1.04em;
+}
+h5, h6, h7, h8, h9
+{
+    font-size: 1.01em;
+    margin: 0px 0px 0px 0px;
+}
+/*----- Login Styles -----*/
+#nav-login
+{
+    background: #FFF;
+    width: 100%;
+    height: 45px;
+    clear: both;
+}
+#login-wrapper
+{
+    margin: 0px auto;
+    width: 520px;
+}
+#login-wrapper
+{
+    margin-top: 70px;
+    min-width: 520px;
+}
+
+#login-box
+{
+    width: 520px;
+    background: #FFF;
+    padding: 10px;
+    margin: 0px;
+}
+
+#inner-login-box
+{
+    width: 100%;
+    text-align: left;
+    border: 1px solid #CCCCCC;
+    background: #E3E9EF url(images/login-bkg.gif) repeat-x;
+}
+.buildVersion
+{
+    color: #666666;
+    font-family: Arial;
+    font-size: 10pt;
+}
+#inner-login-box h1, #inner-login-box h2, #inner-login-box h3
+{
+    font-weight: normal;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+#inner-login-box hr
+{
+    border-color: #CCCCCC;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <asp:ScriptManager ID="ScriptManager1" runat="server">
+    </asp:ScriptManager>
+    <div id="login-wrapper">
+        <div id="login-box">
+            <div id="inner-login-box">
+                <p>
+                </p>
+                <table cellpadding="10" cellspacing="0" border="0" width="100%">
+                    <tr>
+                        <td valign="top" style="width: 64px">
+                            <asp:ContentPlaceHolder ID="ContentLeft" runat="server">
+                                <asp:Image ID="Image4" runat="server" ImageUrl="~/Images/login-logo.png" ImageAlign="Middle"
+                                    AlternateText="" />
+                            </asp:ContentPlaceHolder>
+                        </td>
+                        <td>
+                            <asp:ContentPlaceHolder ID="ContentCenter" runat="server">
+                            </asp:ContentPlaceHolder>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center;">
+        Copyright &copy; 2013 PAL-IS Team Portal -
+    </div>
+    </form>
+</body>
+</html>

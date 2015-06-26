@@ -1,0 +1,48 @@
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class = "ui-mobile-rendering">
+
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<link rel="stylesheet" href="/quickforms/css/quickforms/quickforms.css" />
+	<script src = "/quickforms/js/require.min.js" ></script>
+</head>
+<body>
+<div data-role="page" id="formsTabs">
+<script type="text/javascript">
+	require(['/quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+				require(['dom/navControl'],
+					function(){
+						quickforms.loadNav('nav.html','nav');
+					});
+			});
+		});
+	</script>
+
+<div data-role="header"><h1>SAID APP</h1></div> <!--For Header line-->
+<div id = "nav"></div> 
+ <div data-role="content">
+           <form id ="forms">
+		    </br>
+		     <a href="referrals.html" data-theme="b" data-icon="plus" data-role="button" rel="external">Patient Referral Form</a>
+			  </br>
+			 </br>
+			 <a href="training.html" data-theme="b" data-icon="plus" data-role="button" rel ="external">Training form</a>
+		   </form>
+ </div>
+</br>
+</br>
+</br>
+ </br>
+  </br>
+</br>
+</br>
+</br>
+</br>
+</br>
+</br>
+<div data-role="footer"><h1></h1></div>
+</div> <!-- Main -->
+</body>
+</html>

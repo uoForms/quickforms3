@@ -1,0 +1,347 @@
+
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title id="title">Palis - </title>
+		<link rel="stylesheet" href="css/jquery.mobile-1.1.1.min.css" />
+		<script src="js/jquery-1.7.1.min.js"></script>
+                <script src="js/quickforms.js"></script>
+                <script src="js/education.js"></script>
+                <script src="js/jquery.mobile-1.1.1.min.js"></script>
+                <style>
+                    tr:nth-child(odd) {background: #FFF}
+                </style>
+                <script type="text/javascript">
+                    function switchReport(report)
+                    {
+			var reports = ['educationReport','monthlyReport','summaryReport'];
+                        if(report == 'monthly')
+				window.location = 'ReportsMonthly.html';
+				else
+			if(report == 'education')
+				window.location = 'Reports.html'; 
+				else
+				if(report == 'summary')
+				window.location = 'ReportsSummary.html'; 
+				
+				else
+				if(report == 'summary2')
+				window.location = 'ReportsSummary2.html'; 
+                        
+                    }
+                </script>
+  </head>
+  <body onload="loadSummaryReport()">
+    
+		<!-- Start of Page -->
+		
+		<div data-role="header">
+		<h1 id="header">Palis - </h1>
+	
+	 <div class="ui-btn-right" data-role="controlgroup" data-type="horizontal" >
+     <a href="problem.html" data-role="button" data-rel="dialog" data-theme="c" style="position:relative;top:-5px">Report a Problem</a>
+      <a href="logout.html" rel="external" data-role="button" data-theme="c" style="position:relative;top:-5px">Logout</a>
+    </div>
+	</div><!-- /header -->
+		
+
+                <div data-role="navbar">
+                        <ul>
+                                <li id="patientsTab"><a href="patients.html" rel="external">Patients</a></li>
+                                <li><a href="education.html" rel="external" >Forms</a></li>
+                                <li><a href="Reports.html" rel="external" class="ui-btn-active ui-state-persist">Reports</a></li>
+                                <li><a href="teams.html" rel="external">Team</a></li>
+                        </ul>
+                </div><!-- /navbar -->
+		<div data-role="content" id="educationReport">
+                    <!-- Page Content -->
+                    <div data-role="collapsible" data-theme="b" data-content-theme="c">
+                    <h2>Choose a Report</h2>
+                        <ul data-role="listview" id="availableReports">
+                                <li><a href="#" onclick ="switchReport('education')" rel="external">Education Report</a></li>
+                                <li><a href="#" onclick ="switchReport('monthly')" rel="external">Monthly Report</a></li>
+                                <li><a href="#" onclick ="switchReport('summary')" rel="external">Consultation Registration Statistics</a></li>
+								<li><a href="#" onclick ="switchReport('summary2')" rel="external">Consultation Appointment Statistics</a></li>
+                        </ul>
+                    </div>
+                    
+					 <input type="hidden" id="monthSelectJSON" />
+			<label for="month">Year - Month</label>
+                    <select id="month" name ="month" onchange="changeSummaryReport()">
+                        <option id="2013">2013</option>
+                        <option id="2012">2012</option>
+                        <option id="2011">2011</option>
+			</select>
+			<h1>Age and Sex Statistics </h1>
+<input type="button" onclick="window.clipboardData.setData('Text', $('#clipAgeSexStats').val());" value="Copy to Clipboard" align="right"/>
+
+		<div id ="AgeSexStats" class="content-primary" data-theme="d">
+			
+			
+			<table cellpadding="2" cellspacing="0" border="1" class="display" >
+                        <thead><tr class="gradeU"><td align="right" class="table_header" width="150px"> </td>
+                                <td align="right" class="table_header" width="150px">Male</td>
+                                <td align="right" class="table_header" width="150px">Female</td>
+                                </tr></thead>
+                        
+                        <tbody><tr class="oddgradeU"><td id="Title" align="right" class="oddgradeU" width="150px">Male</td>
+                                <td id="Mage" align="right" class="oddgradeU" width="150px">0</td>
+                                <td id="Fage" align="right" class="oddgradeU" width="150px">0</td>
+                                </tr>
+			</tbody></table>
+			
+			<!--<div data-role="collapsible" data-theme="b" data-content-theme="c">
+				<h2>Choose a Report...</h2>
+				<ul data-role="listview">
+					<li><a href="Reports.html" rel="external">Age/Gender Report</a></li>
+					<li><a href="Reports1.html" rel="external">Clinical Domain Report</a></li>
+					<li><a href="Reports2.html" rel="external">Adult Domains Report</a></li>
+					<li><a href="Reports2.html" rel="external">Children Domains Report</a></li>
+					<li><a href="Reports1.html" rel="external">Procedure Report</a></li>
+					<li><a href="table.html" rel="external">Adult Domains Table</a></li>
+				</ul>
+			</div>-->
+			
+		</div>
+                <div id ="AgeSexStatsTotal" class="content-primary" data-theme="d">
+                    <table cellpadding="2" cellspacing="0" border="1" class="display" id="Title"><tbody><tr class="oddgradeU"><td align="right" class="oddgradeU" width="150px">Totals</td>
+                              
+                                <td id="Mage" align="right" class="oddgradeU" width="150px">2</td>
+								<td id="Fage" align="right" class="oddgradeU" width="150px">3</td>
+                                
+                               </tr>
+			</tbody></table>
+			
+				<h1>Language Statistics </h1>
+<input type="button" onclick="window.clipboardData.setData('Text', $('#clipPatientLanguage').val());" value="Copy to Clipboard" align="right"/>
+
+		<div id ="PatientLanguage" class="content-primary" data-theme="d">
+			
+			
+			<table cellpadding="2" cellspacing="0" border="1" class="display" >
+                        <thead><tr class="gradeU"><td align="right" class="table_header" width="150px"> Language </td>
+                                <td align="right" class="table_header" width="150px">Count</td>
+                              
+                                </tr></thead>
+                        
+                        <tbody><tr class="oddgradeU"><td id="Lang" align="right" class="oddgradeU" width="150px">Male</td>
+                                <td id="LangCount" align="right" class="oddgradeU" width="150px">0</td>
+                                </tr>
+			</tbody></table>
+			</div>
+                <div id ="PatientLanguageTotal" class="content-primary" data-theme="d">
+                    <table cellpadding="2" cellspacing="0" border="1" class="display" id="Lang"><tbody><tr class="oddgradeU"><td align="right" class="oddgradeU" width="150px">Totals</td>
+                              
+                                <td id="LangCount" align="right" class="oddgradeU" width="150px">2</td>
+								
+                                
+                               </tr>
+			</tbody></table>
+			
+			
+				<h1>Topic Specific Statistics </h1>
+<input type="button" onclick="window.clipboardData.setData('Text', $('#clipTopicSpecificStats').val());" value="Copy to Clipboard" align="right"/>
+
+		<div id ="TopicSpecificStats" class="content-primary" data-theme="d">
+			
+			
+			<table cellpadding="2" cellspacing="0" border="1" class="display" >
+                        <thead><tr class="gradeU"><td align="right" class="table_header" width="150px"> Topic </td>
+                                <td align="right" class="table_header" width="150px">Count</td>
+                              
+                                </tr></thead>
+                        
+                        <tbody><tr class="oddgradeU"><td id="Topic" align="right" class="oddgradeU" width="150px">EOL</td>
+                                <td id="TopicCount" align="right" class="oddgradeU" width="150px">0</td>
+                                </tr>
+			</tbody></table>
+			</div>
+                <div id ="TopicSpecificStatsTotal" class="content-primary" data-theme="d">
+                    <table cellpadding="2" cellspacing="0" border="1" class="display" id="Lang"><tbody><tr class="oddgradeU"><td align="right" class="oddgradeU" width="150px">Totals</td>
+                              
+                                <td id="TopicCountTotal" align="right" class="oddgradeU" width="150px">2</td>
+								
+                                
+                               </tr>
+			</tbody></table>
+			
+			
+				<h1>Referral Source Statistics </h1>
+<input type="button" onclick="window.clipboardData.setData('Text', $('#clipRefSourceStats').val());" value="Copy to Clipboard" align="right"/>
+
+		<div id ="RefSourceStats" class="content-primary" data-theme="d">
+			
+			
+			<table cellpadding="2" cellspacing="0" border="1" class="display" >
+                        <thead><tr class="gradeU"><td align="right" class="table_header" width="150px"> Source </td>
+                                <td align="right" class="table_header" width="150px">Count</td>
+                              
+                                </tr></thead>
+                        
+                        <tbody><tr class="oddgradeU"><td id="Source" align="right" class="oddgradeU" width="150px">Specialist</td>
+                                <td id="SourceCount" align="right" class="oddgradeU" width="150px">0</td>
+                                </tr>
+			</tbody></table>
+			</div>
+                <div id ="RefSourceStatsTotal" class="content-primary" data-theme="d">
+                    <table cellpadding="2" cellspacing="0" border="1" class="display" id="Lang"><tbody><tr class="oddgradeU"><td align="right" class="oddgradeU" width="150px">Totals</td>
+                              
+                                <td id="SourceCountTotal" align="right" class="oddgradeU" width="150px">2</td>
+								
+                                
+                               </tr>
+			</tbody></table>
+			
+			
+	<h1>Referral Site Statistics </h1>
+<input type="button" onclick="window.clipboardData.setData('Text', $('#clipRefSiteStats').val());" value="Copy to Clipboard" align="right"/>
+
+		<div id ="RefSiteStats" class="content-primary" data-theme="d">
+			
+			
+			<table cellpadding="2" cellspacing="0" border="1" class="display" >
+                        <thead><tr class="gradeU"><td align="right" class="table_header" width="150px"> Site </td>
+                                <td align="right" class="table_header" width="150px">Count</td>
+                              
+                                </tr></thead>
+                        
+                        <tbody><tr class="oddgradeU"><td id="Site" align="right" class="oddgradeU" width="150px">Home</td>
+                                <td id="SiteCount" align="right" class="oddgradeU" width="150px">0</td>
+                                </tr>
+			</tbody></table>
+			</div>
+                <div id ="RefSiteStatsTotal" class="content-primary" data-theme="d">
+                    <table cellpadding="2" cellspacing="0" border="1" class="display" id="Lang"><tbody><tr class="oddgradeU"><td align="right" class="oddgradeU" width="150px">Totals</td>
+                              
+                                <td id="SiteCountTotal" align="right" class="oddgradeU" width="150px">2</td>
+								
+                                
+                               </tr>
+			</tbody></table>
+			
+			
+	<h1>Diagnosis (Cancer)  Statistics </h1>
+<input type="button" onclick="window.clipboardData.setData('Text', $('#clipCancerStats').val());" value="Copy to Clipboard" align="right"/>
+
+		<div id ="CancerStats" class="content-primary" data-theme="d">
+			
+			
+			<table cellpadding="2" cellspacing="0" border="1" class="display" >
+                        <thead><tr class="gradeU"><td align="right" class="table_header" width="150px"> Diagnosis (Cancer)</td>
+                                <td align="right" class="table_header" width="150px">Count</td>
+                              
+                                </tr></thead>
+                        
+                        <tbody><tr class="oddgradeU"><td id="Diagnosis" align="right" class="oddgradeU" width="150px">Home</td>
+                                <td id="DiagnosisTotal" align="right" class="oddgradeU" width="150px">0</td>
+                                </tr>
+			</tbody></table>
+			</div>
+                <div id ="CancerStatsTotal" class="content-primary" data-theme="d">
+                    <table cellpadding="2" cellspacing="0" border="1" class="display" id="Lang"><tbody><tr class="oddgradeU"><td align="right" class="oddgradeU" width="150px">Totals</td>
+                              
+                                <td id="DiagnosisTotal" align="right" class="oddgradeU" width="150px">2</td>
+								
+                                
+                               </tr>
+			</tbody></table>
+	
+
+<h1>Diagnosis (Non-Cancer)  Statistics </h1>
+<input type="button" onclick="window.clipboardData.setData('Text', $('#clipNonCancerStats').val());" value="Copy to Clipboard" align="right"/>
+
+		<div id ="NonCancerStats" class="content-primary" data-theme="d">
+			
+			
+			<table cellpadding="2" cellspacing="0" border="1" class="display" >
+                        <thead><tr class="gradeU"><td align="right" class="table_header" width="150px"> Diagnosis (Non-Cancer)</td>
+                                <td align="right" class="table_header" width="150px">Count</td>
+                              
+                                </tr></thead>
+                        
+                        <tbody><tr class="oddgradeU"><td id="Diagnosis" align="right" class="oddgradeU" width="150px">Home</td>
+                                <td id="DiagnosisTotal" align="right" class="oddgradeU" width="150px">0</td>
+                                </tr>
+			</tbody></table>
+			</div>
+                <div id ="NonCancerStatsTotal" class="content-primary" data-theme="d">
+                    <table cellpadding="2" cellspacing="0" border="1" class="display" id="Lang"><tbody><tr class="oddgradeU"><td align="right" class="oddgradeU" width="150px">Totals</td>
+                              
+                                <td id="DiagnosisTotal" align="right" class="oddgradeU" width="150px">2</td>
+								
+                                
+                               </tr>
+			</tbody></table>
+
+
+<h1>Physical Symptoms Referred Statistics </h1>
+<input type="button" onclick="window.clipboardData.setData('Text', $('#clipPhySymptomStats').val());" value="Copy to Clipboard" align="right"/>
+
+		<div id ="PhySymptomStats" class="content-primary" data-theme="d">
+			
+			
+			<table cellpadding="2" cellspacing="0" border="1" class="display" >
+                        <thead><tr class="gradeU"><td align="right" class="table_header" width="150px"> Physical Symptom</td>
+                                <td align="right" class="table_header" width="150px">Count</td>
+                              
+                                </tr></thead>
+                        
+                        <tbody><tr class="oddgradeU"><td id="Symptom" align="right" class="oddgradeU" width="150px">Home</td>
+                                <td id="SymptomTotal" align="right" class="oddgradeU" width="150px">0</td>
+                                </tr>
+			</tbody></table>
+			</div>
+                <div id ="PhySymptomStatsTotal" class="content-primary" data-theme="d">
+                    <table cellpadding="2" cellspacing="0" border="1" class="display" id="Lang"><tbody><tr class="oddgradeU"><td align="right" class="oddgradeU" width="150px">Totals</td>
+                              
+                                <td id="SymptomTotal" align="right" class="oddgradeU" width="150px">2</td>
+								
+                                
+                               </tr>
+			</tbody></table>
+
+			
+			<h1>Psychological Symptoms Referred Statistics </h1>
+<input type="button" onclick="window.clipboardData.setData('Text', $('#clipPsycSymptomStats').val());" value="Copy to Clipboard" align="right"/>
+
+		<div id ="PsycSymptomStats" class="content-primary" data-theme="d">
+			
+			
+			<table cellpadding="2" cellspacing="0" border="1" class="display" >
+                        <thead><tr class="gradeU"><td align="right" class="table_header" width="150px"> Psychological Symptom</td>
+                                <td align="right" class="table_header" width="150px">Count</td>
+                              
+                                </tr></thead>
+                        
+                        <tbody><tr class="oddgradeU"><td id="Symptom" align="right" class="oddgradeU" width="150px">Home</td>
+                                <td id="SymptomTotal" align="right" class="oddgradeU" width="150px">0</td>
+                                </tr>
+			</tbody></table>
+			</div>
+                <div id ="PsycSymptomStatsTotal" class="content-primary" data-theme="d">
+                    <table cellpadding="2" cellspacing="0" border="1" class="display" id="Lang"><tbody><tr class="oddgradeU"><td align="right" class="oddgradeU" width="150px">Totals</td>
+                              
+                                <td id="SymptomTotal" align="right" class="oddgradeU" width="150px">2</td>
+								
+                                
+                               </tr>
+			</tbody></table>
+
+			
+                </div>
+                </div>
+                <div data-role="content" id="monthlyReport">
+                </div>
+                <div data-role="content" id="summaryReport">
+                </div>
+		<!-- /content -->
+		<!-- Page Footer -->
+		<div data-role="footer">
+	   		<h4></h4>
+		</div>
+		<!-- /footer -->
+  </body>
+</html>

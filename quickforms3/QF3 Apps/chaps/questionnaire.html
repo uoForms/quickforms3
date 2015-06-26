@@ -1,0 +1,370 @@
+
+
+<div id="questionnaire" data-role="dialog" data-theme="c" > 
+<div data-role="content">
+
+<input type="hidden" id="BPscore" name="BPscore" value="" />
+<input type="hidden" id="HPSscore" name="HPSscore" value="" />
+<input type="hidden" id="DBscore" name="DBscore" value="" />
+<input type="hidden" id="motherDBscore" name="motherDBscore" value="" />
+<input type="hidden" id="fatherDBscore" name="fatherDBscore" value="" />
+<input type="hidden" id="childDBscore" name="childDBscore" value="" />
+<input type="hidden" id="siblingDBscore" name="siblingDBscore" value="" />
+<input type="hidden" id="otherDBscore" name="otherDBscore" value="" />
+<input type="hidden" id="babymore9poundsscore" name="babymore9poundsscore" value="" />
+<input type="hidden" id="exercisescore" name="exercisescore" value="" />
+<input type="hidden" id="fruitvegScore" name="fruitvegScore" value="" />
+<input type="hidden" id="eduScore" name="eduScore" value="" />
+<input type="hidden" id="ethenicityScore" name="ethenicityScore" value="" />
+
+    <fieldset data-role="controlgroup" data-type="horizontal">
+      <legend> 1. Have you ever had a transient ischemic attack (TIA or mini stroke)?</legend>
+      <input type="radio" name="TIA" id="yes" value="1"  />
+      <label for="yes">Yes</label>
+      
+	  <input type="radio" name="TIA" id="No" value="2"  />
+      <label for="No">No</label>
+      
+	  <input type="radio" name="TIA" id="uncertain" value="3"  />
+      <label for="uncertain">Don't Know</label>
+    </fieldset>
+	
+</br>
+	 
+  <fieldset data-role="controlgroup" data-type="horizontal">
+      <legend>2. Have you ever had a stroke?</legend>
+      <input type="radio" name="stroke" id="yes" value="1" />
+      <label for="yes">Yes</label>
+      
+	  <input type="radio" name="stroke" id="No" value="2"   />
+      <label for="No">No</label>
+      
+	  <input type="radio" name="stroke" id="uncertain" value="3"  />
+      <label for="uncertain">Don't Know</label>
+    </fieldset>
+
+</br>
+	 <fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+        3. Have you ever had a heart attack?
+      </legend>
+      <input type="radio" name="heartAttack" id="Yes" value="1"  />
+      <label for="Yes">Yes</label>
+      <input type="radio" name="heartAttack" id="No" value="2"  />
+      <label for="No">No</label>
+      <input type="radio" name="heartAttack" id="uncertain" value="3" />
+      <label for="uncertain">Don't Know</label>
+    </fieldset>
+</br>
+     <fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+        4. Has your doctor told you that your cholesterol is high?
+      </legend>
+      <input type="radio" name="cholestrol" id="Yes" value="1"  />
+      <label for="Yes">Yes</label>
+      <input type="radio" name="cholestrol" id="No" value="2"  />
+      <label for="No">No</label>
+      <input type="radio" name="cholestrol" id="uncertain" value="3" />
+      <label for="uncertain">Don't Know</label>
+    </fieldset>
+</br>	
+<fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+        5. Have you ever been told by a doctor or nurse that you have high blood pressure?
+      </legend>
+      <input type="radio" name="BP" id="YesBP" value="1"  />
+      <label for="YesBP">Yes</label>
+      <input type="radio" name="BP" id="NoBP" value="0"  checked="checked" />
+      <label for="NoBP">No</label>
+      <input type="radio" name="BP" id="uncertainBP" value="-1"  />
+      <label for="uncertainBP">Don't Know</label>
+    </fieldset>
+<div id = "bpfields">
+	<fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+        5(a). If yes, have you been prescribed medication for high blood pressure?
+      </legend>
+      <input type="radio" name="medHBP" id="medBPYes" value="1"  />
+      <label for="medBPYes">Yes</label>
+      <input type="radio" name="medHBP" id="medBPNo" value="0"  />
+      <label for="medBPNo">No</label>
+      <input type="radio" name="medHBP" id="medBPuncertain" value="-1"  />
+      <label for="medBPuncertain">Don't Know</label>
+    </fieldset>
+</div>
+	<fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+        6. Have you ever taken high blood pressure pills?
+      </legend>
+      <input type="radio" name="pillsHBP" id="YesPills" value="1" />
+      <label for="YesPills">Yes</label>
+      <input type="radio" name="pillsHBP" id="NoPills" value="0"  />
+      <label for="NoPills">No</label>
+      <input type="radio" name="pillsHBP" id="uncertainPills" value="-1"  />
+      <label for="uncertainPills">Don't Know</label>
+    </fieldset>
+	<div id="bpFields">
+	<fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+        &nbsp;&nbsp;6(a) If yes, do you take this medication each day?
+      </legend>
+      <input type="radio" name="dailyHBP" id="Yes" value="1" />
+      <label for="Yes">Yes</label>
+      <input type="radio" name="dailyHBP" id="No" value="2"  />
+     <label for="No">No</label>
+     <input type="radio" name="dailyHBP" id="uncertain" value="3"  />
+    <label for="uncertain">Don't Know</label>
+    </fieldset>
+	</div>
+	</br>
+	<fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+        7. Has your doctor told you that you have diabetes?
+      </legend>
+      <input type="radio" name="diabetes" id="diabYes" value="1" />
+      <label for="diabYes">Yes</label>
+      <input type="radio" name="diabetes" id="diabNo" value="0"  />
+      <label for="diabNo">No</label>
+      <input type="radio" name="diabetes" id="diabuncertain" value="-1"  />
+      <label for="diabuncertain">Don't Know</label>
+    </fieldset>
+	<fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+        &nbsp;&nbsp;7(a). If yes, have you been prescribed medication for diabetes?
+      </legend>
+      <input type="radio" name="meddiabetes" id="Yes" value="1" />
+      <label for="Yes">Yes</label>
+      <input type="radio" name="meddiabetes" id="No" value="2"  />
+      <label for="No">No</label>
+      <input type="radio" name="meddiabetes" id="uncertain" value="3"  />
+      <label for="uncertain">Don't Know</label>
+    </fieldset>
+	<fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+        &nbsp;&nbsp;7(b). If yes, do you take this medication each day?
+      </legend>
+      <input type="radio" name="dailydiabetes" id="Yes" value="1"  />
+      <label for="Yes">Yes</label>
+      <input type="radio" name="dailydiabetes" id="No" value="2"  />
+      <label for="No">No</label>
+      <input type="radio" name="dailydiabetes" id="uncertain" value="3"  />
+      <label for="uncertain">Don't Know</label>
+    </fieldset>
+</br>
+	<fieldset data-role="controlgroup" data-type="horizontal">
+      <legend>
+        8. Have you ever been found to have high blood sugar, either from a blood test, during an illness, or during pregnancy?
+      </legend>
+      <input type="radio" name="HPS" id="YesHPS" value="1" />
+      <label for="YesHPS">Yes</label>
+      <input type="radio" name="HPS" id="NoHPS" value="0"  />
+      <label for="NoHPS">No</label>
+      <input type="radio" name="HPS" id="uncertainHPS" value="-1" />
+      <label for="uncertainHPS">Don't Know</label>
+    </fieldset>
+</br>
+	<fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+        9. Have any of your blood relatives been diagnosed with diabetes? 
+      </legend>
+      <input type="radio" name="RelDiabetes" id="diabetesYes" value="1"   />
+      <label for="diabetesYes">Yes</label>
+      <input type="radio" name="RelDiabetes" id="diabetesNo" value="0"  />
+      <label for="diabetesNo">No</label>
+      <input type="radio" name="RelDiabetes" id="diabetesuncertain"  value="-1"  />
+      <label for="diabetesuncertain">Don't Know</label>
+	  
+	
+    </fieldset>
+	
+	<div  id="diabetesfield" class="ui-grid-b">
+	<h4>&nbsp; (If yes, please check all that apply)</h4>
+	<div class="ui-block-a"><fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+      Mother
+      </legend>
+      <input type="radio" name="motherDiabetes" id="motherdbYes" value="1" />
+      <label for="motherdbYes">Yes</label>
+      <input type="radio" name="motherDiabetes" id="motherdbNo" value="0" />
+      <label for="motherdbNo">No</label>
+      <input type="radio" name="motherDiabetes" id="motherdbuncertain" value="-1"  />
+      <label for="motherdbuncertain">Don't Know</label>
+    </fieldset></div>
+			<div class="ui-block-b"><fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+        Father
+      </legend>
+      <input type="radio" name="fatherDiabetes" id="fatherdbYes" value="1" />
+      <label for="fatherdbYes">Yes</label>
+      <input type="radio" name="fatherDiabetes" id="fatherdbNo" value="0"  />
+      <label for="fatherdbNo">No</label>
+      <input type="radio" name="fatherDiabetes" id="fatherdbuncertain" value="-1"  />
+      <label for="fatherdbuncertain">Don't Know</label>
+    </fieldset></div>
+	<div class="ui-block-c"><fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+       Brothers/sisters
+      </legend>
+      <input type="radio" name="SiblingDiabetes" id="siblingdbYes" value="1"  />
+      <label for="siblingdbYes">Yes</label>
+      <input type="radio" name="SiblingDiabetes" id="siblingdbNo" value="0"  />
+      <label for="siblingdbNo">No</label>
+      <input type="radio" name="SiblingDiabetes" id="siblingdbuncertain" value="-1"  />
+      <label for="siblingdbuncertain">Don't Know</label>
+    </fieldset></div>
+			<div class="ui-block-a"><fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+        Children
+      </legend>
+      <input type="radio" name="childDiabetes" id="childdbYes" value="1"  />
+      <label for="childdbYes">Yes</label>
+      <input type="radio" name="childDiabetes" id="childdbNo" value="0"  />
+      <label for="childdbNo">No</label>
+      <input type="radio" name="childDiabetes" id="childdbuncertain" value="-1"  />
+      <label for="childdbuncertain">Don't Know</label>
+    </fieldset></div>
+			<div class="ui-block-b"><fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+       Other
+      </legend>
+      <input type="radio" name="otherDiabetes" id="otherdbYes" value="1"   />
+      <label for="otherdbYes">Yes</label>
+      <input type="radio" name="otherDiabetes" id="otherdbNo" value="0"  />
+      <label for="otherdbNo">No</label>
+      <input type="radio" name="otherDiabetes" id="otherdbuncertain" value="-1"   />
+      <label for="otherdbuncertain">Don't Know</label>
+    </fieldset></div>
+	
+</div>
+<br>
+<fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+        10. Women: Have you ever given birth to a large baby weighing 9 pounds (4.1 kg) or more?
+      </legend>
+      <input type="radio" name="babymore9pounds" id="babymore9poundsYes" value="1" />
+      <label for="babymore9poundsYes">Yes</label>
+      <input type="radio" name="babymore9pounds" id="babymore9poundsNo" value="0"  />
+      <label for="babymore9poundsNo">No</label>
+      <input type="radio" name="babymore9pounds" id="babymore9poundsuncertain" value="-1"  />
+      <label for="babymore9poundsuncertain">Don't Know</label>
+    </fieldset>
+<br>	
+	<fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+        11. Do you currently smoke?
+      </legend>
+      <input type="radio" name="smoke" id="smokeYes" value="1" />
+      <label for="smokeYes">Yes</label>
+      <input type="radio" name="smoke" id="smokeNo" value="2"  />
+      <label for="smokeNo">No</label>
+      <input type="radio" name="smoke" id="smokeuncertain" value="3"  />
+      <label for="smokeuncertain">Don't Know</label>
+    </fieldset>
+<br>
+	<fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+        12. Do you usually do some physical activity, such as brisk walking, for at least 30 minutes each day?
+      </legend>
+      <input type="radio" name="exercise" id="exerciseYes" value="1" />
+      <label for="exerciseYes">Yes</label>
+      <input type="radio" name="exercise" id="exerciseNo" value="0"  />
+      <label for="exerciseNo">No</label>
+      <input type="radio" name="exercise" id="exerciseuncertain" value="-1"  />
+      <label for="exerciseuncertain">Don't Know</label>
+    </fieldset>
+<br>
+    <fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+        13. Do you eat vegetables or fruits every day?
+      </legend>
+      <input type="radio" name="fruitveg" id="fruitvegYes" value="1" />
+      <label for="fruitvegYes">Yes</label>
+      <input type="radio" name="fruitveg" id="fruitvegNo" value="0"  />
+      <label for="fruitvegNo">No</label>
+      <input type="radio" name="fruitveg" id="fruitveguncertain" value="-1"  />
+      <label for="fruitveguncertain">Don't Know</label>
+    </fieldset>
+<br>
+<label for ="health">14. In general, would you say your health is (select one):</label>
+<select name="health" id="health" ><option>health</option></select>
+<br>
+<label for ="stresslevel">Thinking about the stress in your life, would you say that most days are:</label>
+<select name="stresslevel" id="stresslevel"  ><option>stresslevel</option></select>
+<br>
+<fieldset data-role="controlgroup" data-type="horizontal" id="ps_test16">
+      <legend>
+        15. Do you live alone?
+      </legend>
+      <input type="radio" name="livingalone" id="Yes" value="1" />
+      <label for="Yes">Yes</label>
+      <input type="radio" name="livingalone" id="No" value="2"  />
+      <label for="No">No</label>
+      
+    </fieldset>
+<br>
+<fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+        16. Do you have trouble making ends meet at the end of the month?
+      </legend>
+      <input type="radio" name="endsmeet" id="Yes" value="1" />
+      <label for="Yes">Yes</label>
+      <input type="radio" name="endsmeet" id="No" value="2"  />
+      <label for="No">No</label>
+    </fieldset>
+	<br>
+<fieldset data-role="controlgroup" data-type="horizontal" >
+      <legend>
+        17. Were you born in Canada?
+      </legend>
+      <input type="radio" name="countryCAN" id="Yes" value="1" />
+      <label for="Yes">Yes</label>
+      <input type="radio" name="countryCAN" id="No" value="2"  />
+      <label for="No">No</label>
+    </fieldset>
+<div data-role="fieldcontain">
+<label for ="yearinCAN" class ="ui-input-text">&nbsp;&nbsp;a) If no, in what year did you come to Canada? </label>
+<input type="text" id ="yearinCAN" name ="yearinCAN" maxlength="4"/>
+</div>  
+<br>
+
+<label for ="education">18. What is the highest level of education you have completed?</label>
+<select name="education" id="education" ><option>education</option></select>
+
+
+<br>
+
+		<label for="ethenicity" >19. What ethnicity are your parents?</label>
+		
+		<select name="motherEthnicity" id="motherEthnicity"  >
+			<option>Mother</option>
+		</select>
+		<br>
+		<select name="fatherEthnicity" id="fatherEthnicity" >
+			<option>Father</option>
+		</select>
+	
+	<br>
+	<br>
+	<fieldset data-role="controlgroup" data-iconpos="right">
+	<h3>Which of the following topics would you like to receive information about? (select all that apply)</h3>
+	<br>
+	<label for="infogeneralhearthealth">General heart health (nutrition, weight management, physical activity, stress reduction)</label>
+	<input type="checkbox" name="infogeneralhearthealth" id = "infogeneralhearthealth" value = "1"/>
+	<label for="infoBP">Information about blood pressure or cholesterol control, medication(s)</label>
+	<input type="checkbox" name="infoBP" id = "infoBP" value = "1"/>
+	<label for="infoBS">Information about blood sugar control, diabetes prevention and management</label>
+	<input type="checkbox" name="infoBS" id = "infoBS" value = "1"/>
+	<label for="infoSmoking">Quitting smoking</label>
+	<input type="checkbox" name="infoSmoking" id = "infoSmoking" value = "1"/>
+	<label for="infochronichealth">Living with chronic health condition(s), pain</label>
+	<input type="checkbox" name="infochronichealth" id = "infochronichealth" value = "1"/>
+	<label for="infoPhysicalAct">Physical activity information/exercise programs</label>
+	<input type="checkbox" name="infoPhysicalAct" id = "infoPhysicalAct" value = "1"/>
+	<label for="infoOther">Other (specify): </label>
+	<input type="checkbox" name="infoOther" id = "infoOther" value = "1"/>
+	<input type="text" id ="infoOthertext" name ="infoOthertext" />
+</fieldset>
+
+</div>
+		
+</div>

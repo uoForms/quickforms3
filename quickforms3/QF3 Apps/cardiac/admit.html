@@ -1,0 +1,63 @@
+<!doctype html>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class="ui-mobile-rendering">
+<head>
+
+<!--
+			<meta name="viewport" content="width=device-width, initial-scale=1">	
+			<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.css" />
+			<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+			<script src="http://code.jquery.com/mobile/1.4.0/jquery.mobile-1.4.0.min.js"></script>
+-->
+			
+			<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<link rel="stylesheet" href="/quickforms/css/quickforms/quickforms.css"/>
+	<script src = "/quickforms/js/require.min.js" ></script>
+	
+
+</head>
+
+<div data-role="page">
+
+	<script type = "text/javascript">
+		require(['/quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+			require(['dom/form/select','dom/form/text','dom/form/design','dom/form/tabPopup','dom/form/fillDiv'],
+					function(){
+						quickforms.parseForm({formId:'admit',fact:'patientState'});
+					});
+			});
+		});
+</script>
+<div data-role="header" data-id="foo1" data-position="fixed"><h1>Admit Nurse Form</h1></div>
+	<div data-role="content">
+		<form id='admit' action = "admit.html">
+		
+		<label for="patient">Patient</label>
+		<select name ="patient" id="patient"><option value="0">Values</option></select>
+		
+		<label for="room">Room</label>
+		<select name ="room" id="room"><option value="0">Values</option></select>
+
+		<label for="ward">WARD</label>
+		<select name="ward" id="ward"><option value="0" remember>Values</option></select>
+				
+		<label for="providerNurse">Assign to</label>
+		<select name="providerNurse" id="providerNurse"><option value="1">Values</option></select>
+
+		<div class="buttons">
+		<a href="admit.html" rel="external" data-role="button" data-inline="true" data-icon="star">Reset</a>
+		<a href="nurse.html"  onclick="quickforms.putFact(this,'nurse.html')" data-role="button" data-inline="true" data-icon="check" data-theme="b">Submit</a>
+		<a href="nurse.html" rel="external" data-role="button" data-inline="true" data-icon="back">Back</a>
+		</div>
+		</form>
+	</div>
+</div>
+</html>
+		
+		
+		
+		
+		
+		

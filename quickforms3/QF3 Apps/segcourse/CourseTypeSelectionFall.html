@@ -1,0 +1,23 @@
+<div id="CourseTypeSelectionFall" data-role="dialog" data-theme="c" > 
+  <body>
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#Required" data-theme="c">Required</a></li>
+				<li><a href="#ScienceElective" data-theme="c">Science Elective</a></li>
+				<li><a href="#TechnicalElective" data-theme="c">Technical Elective</a></li>
+				<li><a href="#Graduate" data-theme="c">Graduate</a></li>
+				<li><a href="#ComputingElective" data-theme="c">Computing Elective</a></li>
+				<li><a href="#EngineeringElective" data-theme="c">Engineering Elective</a></li>
+			</ul>
+		</div>
+
+	<div id="Required" qf-lookup ="courseMulti" qf-type ="select" qf-filter="courseSemester=fall,courseType=Required,Department" qf-label-cols="courseLabel" multiple></div>
+	<div id="ScienceElective" qf-lookup ="courseMulti" qf-type ="select" qf-filter="courseSemester=fall,courseType=ScienceElective,Department" qf-label-cols="courseLabel" multiple></div>
+	<div id="TechnicalElective" qf-lookup ="courseMulti" qf-type ="select" qf-filter="courseSemester=fall,courseType=TechnicalElective,Department" qf-label-cols="courseLabel" multiple></div>
+	<div id="Graduate" qf-lookup ="courseMulti" qf-type ="select" qf-filter="courseSemester=fall,courseType=Graduate,Department" qf-label-cols="courseLabel" multiple></div>
+	<div id="ComputingElective" qf-lookup ="courseMulti" qf-type ="select" qf-filter="courseSemester=fall,courseType=ComputingElective,Department" qf-label-cols="courseLabel" multiple></div>
+	<div id="EngineeringElective" qf-lookup ="courseMulti" qf-type ="select" qf-filter="courseSemester=fall,courseType=EngineeringElective,Department" qf-label-cols="courseLabel" multiple></div>
+
+
+  </body>
+</div>

@@ -1,0 +1,65 @@
+
+
+<div id="measurements" data-role="dialog" data-theme="c" > 
+	<div data-role="content">
+	
+		<fieldset data-role="controlgroup" data-type="vertical" >
+			     	   <legend>Visit</legend>
+						<input type="radio" name="visitType" id="First" value="1" checked="checked" remember />
+						<label for="First" >First</label>
+
+						<input type="radio" name="visitType" id="Repeat" value="-1" remember />
+						<label for="Repeat" >Repeat</label>
+	        	    </fieldset>
+					
+			<label for ="cuffSize">Cuff Size</label>
+	        <select name="cuffSize" id="cuffSize" remember ><option>Cuff Size</option></select>	
+	
+	<label for="systolisBP">Systolic BP</label>
+    <input type="text" id ="systolisBP" name ="systolisBP" />
+	
+	<label for="diastolicBP">Diastolic BP</label>
+    <input type="text" id ="diastolicBP" name ="diastolicBP" />
+	
+	<label for="HDL">HDL</label>
+    <input type="text" id ="HDL" name ="HDL" value = "" />
+	
+	<label for="TotalCholestrol">Total Cholestrol</label>
+    <input type="text" id ="TotalCholestrol" name ="diastolicBP" />
+	
+	<label for="heartrate">Heart Rate (bpm)</label>
+    <input type="text" id ="heartrate" name ="heartrate" />
+	
+	<label for="waist">Waist</label>
+    <input type="text" id ="waist" name ="waist" />
+	
+		<input type="hidden" id="waistScore" name="waistScore" value="" />
+	
+	<label for="hieght">Height</label>
+    <input type="text" id ="hieght" name ="hieght" />
+	
+	<label for="weight" class ="ui-input-text">Weight</label>
+    <input type="text" id ="weight" name ="weight" />
+	
+	<label for="BMI" class ="ui-input-text">BMI</label>
+    <input type="text" id ="BMI" name ="BMI" />
+	
+	<input type="hidden" id="BMIScore" name="BMIScore" value="" />
+	
+	<h3>Recommendations:</h3>
+	<label for="reassessmentCHAP">Attend another CHAP session for reassessment</label>
+	<input type="checkbox" name="reassessmentCHAP" id = "reassessmentCHAP" value = "1"/>
+	<label for="appointment">Make appointment with primary care provider (family physician or nurse practitioner)</label>
+	<input type="checkbox" name="appointment" id = "appointment" value = "1"/>
+	<label for="norecommendation">None of the above Recommendations</label>
+	<input type="checkbox" name="norecommendation" id = "norecommendation" value = "1"/>
+
+	<label>Actions:</label>
+	<label for="alertfollowup">Coordinator alerted for assessment and follow-up</label>
+	<input type="checkbox" name="alertfollowup" id = "alertfollowup" value = "1"/>
+	<label for="alertPractice">Practice staff alerted</label>
+	<input type="checkbox" name="alertPractice" id = "alertPractice" value = "1"/>
+	<label for="noaction">None of the above Actions</label>
+	<input type="checkbox" name="noaction" id = "noaction" value = "1"/>
+	</div>
+</div>

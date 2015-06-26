@@ -1,0 +1,12 @@
+label
+{
+    font-size: 20px; width:400px;
+}
+#ui-datepicker-div { width : 50%}
+
+.container 
+ {
+ border:2px solid #ccc; width:500px; height: 400px; overflow-y: scroll; 
+ }
+
+ 

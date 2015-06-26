@@ -1,0 +1,45 @@
+<!-- Copyright (c) 2014 Austin Chamney, achamney@gmail.com.
+    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+-->
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class = "ui-mobile-rendering">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<link rel="stylesheet" href="/quickforms/css/quickforms/quickforms.css" />
+	<script src = "/quickforms/js/require.min.js" ></script>
+</head>
+<body>
+<div data-role="page" id="loadQuickformsTemplate">
+	<script type="text/javascript">
+	require(['/quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+				require(['dom/form/tabPopup','dom/form/text','dom/form/fillDiv'], // Add the tabPopup module to the list. Every control in the dialog must be loaded here as well
+					function(){
+						quickforms.parseForm( //formId*, app, fact*, callback
+							{formId:'formTemplate',
+							fact:'factTable'});
+					});
+			});
+		});
+	</script>
+	<div data-role ="content">
+	<form id="formTemplate">
+	
+		<h1>Click below to open dialog</h1>
+		<!-- IF LOADING ICON PERSISTS, CHECK DIALOG DIV ID (must be equal to html file name) -->
+		<label for="carLink">Standard Dialog Example</label>
+		<a id="carLink" href="carDialog.html" data-rel="dialog" data-theme="c" data-icon="plus" data-role="button" class="tabPopup" > -- Select a Car --</a>
+		<label for="carsLink">fillDiv Dialog Example</label>
+		<a id="coursesLink" href="carsDialog.html" data-rel="dialog" data-theme="c" data-icon="plus" data-role="button" class="tabPopup" > -- Select Courses --</a>
+		
+		
+		<div class="buttons design delete">
+			<a href = "../../templates.html" rel="external" data-role="button" data-icon="delete" data-theme="c">Cancel</a>
+			<a href = "" onclick="quickforms.putFact(this)" data-role="button" data-icon="check" data-theme="b">Submit</a>
+		</div>
+	</form>
+	</div>
+</div>
+</body>
+</html>

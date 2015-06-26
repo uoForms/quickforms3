@@ -1,0 +1,105 @@
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class = "ui-mobile-rendering">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<link rel="stylesheet" href="/quickforms/css/quickforms/quickforms.css" />
+	<script src = "/quickforms/js/require.min.js" ></script>
+</head>
+<body>
+<div data-role="page" id="loadQuickformsTemplate">
+	<script type="text/javascript">
+	require(['/quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+				require(['dom/form/text','dom/form/select', 'dom/form/date',
+						'dom/form/design','palis3/js/initEducation'],
+					function(){
+						initForm();
+						quickforms.parseForm({formId:"mainForm",fact:"education",
+						callback:function(){
+							addParticipants();
+						}});
+						
+					});
+			});
+		});
+	</script>
+
+
+	<div data-role="header">
+		<h1 id="header">Palis</h1>
+        <a href="logout.html" rel="external" data-role="button" data-inline="true" data-theme="c" class="ui-btn-right">Logout</a>
+	</div><!-- /header -->
+
+	<div data-role="content" data-inset="true">
+	
+	
+        <!-- FORM START -->
+        <form id ="mainForm" method="POST" action="putFact">
+            
+            <div class='buttons'>
+            <a href="education.html" rel="external" data-role="button" data-inline="true" data-icon="back">Cancel</a>
+            <a href="#" rel="external" onClick="quickforms.putFact(this,'education.html')" data-role="button" data-inline="true" data-theme="b" data-icon="check">Submit</a>
+			
+			<a href="#" rel="external" onClick="deleteRow(app,'education','education.html')" class="deleteButton" data-role="button" data-inline="true" data-icon="delete">Delete</a>
+			</div>
+            <br/>
+            
+            <label for="initiative" class ="ui-input-text">Initiative:</label> 
+            <select id ="initiative" name ="initiative" data-native-menu="false"></select>
+            
+            <label for="title" class ="ui-input-text">Title:</label>
+            <input id ="title" name ="title" type ="text"/>
+
+            <label for="date" class ="ui-input-text">Date:</label>
+            <input name="date" id="date" type="text" class="date">
+            
+            <label for="course">Course:</label>
+            <select id ="course" name ="course" data-native-menu="false">
+                <option value ="1">Something!</option>
+            </select>
+            
+            <label for="area">Area:</label>
+            <select id ="area" name ="area" data-native-menu="false"><option></option></select>
+            
+            <label for="eduHours">Education Hours:</label>
+            <select id ="eduHours" name ="eduHours" data-native-menu="true" measure><option></option></select>
+            
+            <label for="travelTime">Travel Time:</label>
+            <select id ="travelTime" name ="travelTime" data-native-menu="true" measure> <option></option></select>
+            
+            <h3 id ="numParticipantsTitle">Number Of Participants:</h3><!-- Total Number of participants  auto updated -->
+			<div id="participantsError"></div>
+            <label for="medPart">Medical Participants:</label>
+            <input id ="medPart" name ="medPart" type ="text" value="0" onblur="addParticipants()"/> <!-- add an onchange event-->
+            
+            <label for="nursePart">Nurse Participants:</label>
+            <input id ="nursePart" name ="nursePart" type ="text" value="0" onblur="addParticipants()"/>
+            
+            <label for="alliedPart">Allied Participants:</label>
+            <input id ="alliedPart" name ="alliedPart" type ="text" value="0" onblur="addParticipants()"/>
+            
+            <label for="mixedPart">Not Specified Participants:</label>
+            <input id ="mixedPart" name ="mixedPart" type ="text" value="0" onblur="addParticipants()"/>
+          
+           
+            <br/>
+			<div class='buttons'>
+            <a href="education.html" rel="external" data-role="button" data-inline="true" data-icon="back">Cancel</a>
+            <a href="#" rel="external" onClick="quickforms.putFact(this,'education.html')" data-role="button" data-inline="true" data-theme="b" data-icon="check">Submit</a>  
+			</div>
+        </form>
+        <!-- Form ENd -->
+    
+    
+	</div>	
+		
+	<div data-role="footer">
+	   <h4></h4>
+	</div>
+
+</div><!-- /page -->
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class = "ui-mobile-rendering">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<link rel="stylesheet" href="../quickforms/css/quickforms/quickforms.css" />
+	<script src = "../quickforms/js/require.min.js" ></script>
+</head>
+
+<body>
+
+<div data-role="page" >
+	<script type="text/javascript">
+	
+	require(['../quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+				require(['dom/form/text','dom/form/tabPopup','dom/form/dynamicText','dom/navControl'],
+					function(){
+						setCookie('userRole','Administrator','1');
+						
+						quickforms.loadNav('sideNav.html','sideNav',function(){
+								quickforms.parseForm({formId: 'week10',fact:'Weeks'});
+						});
+						quickforms.loadNav('nav.html','nav');
+					});
+			});
+		});
+	</script>
+	<div id="sideNav"></div>
+	<div data-role="header"><a href="#myPanel" data-icon="bullets" data-iconpos="notext">Menu</a><h1>Francine App</h1></div>
+	<div data-role ="content">
+	<div id = 'nav'></div>	
+	<h4><a href = "#myPanel">Get Started</a></h4>
+	<form id="week10">
+		<h1>Hello Welcome</h1>
+		
+		<textarea id="editor" name="content" class="dynamicText" rows="0" cols="0"></textarea>
+				
+		<div class="buttons">
+			<a href = "#" rel ="external" onClick="quickforms.putFact(this,'index.html')"  data-role="button" data-icon="check" data-theme="b" data-inline="true">Submit</a>
+        	<a href = "index.html"  rel="external" data-role="button" data-icon="back" data-theme="c" data-inline="true">Back</a>
+			<a href = "week11.html?id=12"  rel ="external" data-role="button" data-icon="check" data-theme="b" data-inline="true">Week11</a>
+		</div>
+	</form>
+	</div>
+	<div data-role="footer" class="footer-docs" data-theme="e">
+					
+				<p>&copy; 2014 Francine app</p>
+	</div>
+</div>
+</body>
+</html>

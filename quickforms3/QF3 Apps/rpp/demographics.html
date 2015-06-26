@@ -1,0 +1,30 @@
+
+
+<div id="demographics" data-role="dialog" data-theme="c" > 
+	<div data-role="content">
+	<label for ="age">Age</label>
+	<select name="age" id="age"  ><option>Age</option></select>
+	
+	<label for ="gender">Gender</label>
+	<select name="gender" id="gender"  ><option>Gender</option></select>
+	
+	<fieldset data-role="controlgroup" data-type="horizontal">
+			<legend>I have seen this patient before</legend>
+			<input type="radio" name="seenBeforeFlag" id="Yes" value="1"/>
+			<label for="Yes" id="yes">Yes</label>
+
+			<input type="radio" name="seenBeforeFlag" id="No" value="-1" checked="checked"  />
+			<label for="No" id="no">No</label>
+	</fieldset>
+	
+	<h2>Care of Special Populations</h2>
+	<label for="refugeeFlag">Immigrant/Refugee</label>
+	<input type="checkbox" name="refugeeFlag" id = "refugeeFlag" value = "1"/>
+	<label for="homelessFlag">Homeless/Low Income</label>
+	<input type="checkbox" name="homelessFlag" id = "homelessFlag" value = "1"/>
+	<label for="disabilityFlag">Patient with Disabilities Including Developmental Delay</label>
+	<input type="checkbox" name="disabilityFlag" id = "disabilityFlag" value = "1"/>
+	<label for="aboriginalFlag">Aboriginal Patient</label>
+	<input type="checkbox" name="aboriginalFlag" id = "aboriginalFlag" value = "1"/>
+	</div>
+</div>

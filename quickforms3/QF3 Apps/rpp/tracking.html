@@ -1,0 +1,27 @@
+
+
+<div id="tracking" data-role="dialog" data-theme="c" > 
+	<div data-role = "content">
+	<label for ="service">Service</label>
+	<select name="service" id="service" remember ><option>Service</option></select>
+	
+	<label for ="location">Location</label>
+	<select name="location" id="location" remember ><option>Location</option></select>
+	
+	<label for ="supervising">Supervising Physician</label>
+	<select name="supervising" id="supervising" remember ><option>Supervising Physician</option></select>
+	
+	<label for ="Date">Date</label>
+	<input type = "text" class="date" name ="date" id = "Date" readonly remember/>
+	
+	<fieldset data-role="controlgroup" data-type="horizontal">
+			<legend>After Hours</legend>
+			<input type="radio" name="afterHours" id="Yes" value="1" remember/>
+			<label for="Yes" id="yes">Yes</label>
+
+			<input type="radio" name="afterHours" id="No" value="-1" checked="checked" remember />
+			<label for="No" id="no">No</label>
+	</fieldset>
+	</div>
+	
+</div>

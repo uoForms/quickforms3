@@ -1,0 +1,220 @@
+<!DOCTYPE html> 
+<html> 
+	<head> 
+	<title id="title">Palis - </title> 
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <script src="../js/jquery-1.7.1.min.js"></script>
+        <script src ="../js/jquery-ui-1.10.0.custom.min.js"></script>
+        <link rel="stylesheet" href="../css/jquery-ui.css" />
+        <link rel="stylesheet" href="../css/form.css" />
+        <link rel="stylesheet" href="../css/jquery.mobile-1.1.1.min.css" />
+        <script src ="../js/quickforms.js"></script>
+        <script src ="js/patient.js"></script>
+        <script src="../js/jquery.mobile-1.1.1.min.js"></script>
+        <script type="text/javascript">
+            $('#OHIPNo').live("keyup" ,function()
+            {
+                validateOHIP($(this));
+            });
+		
+		$(function(){
+			//$('#deceasedfields').children().addClass('ui-disabled');
+			$('#deceasedfields').children().hide();
+		})
+		function submitPatientInfo()
+		{
+			if(validateOHIP($('#OHIPNo'))==true)
+			{
+				putFact(app,'patients','forms.html');
+			}
+			else
+			{
+				window.location += "#OHIPError";
+			}
+		}
+		function validateOHIP(dom)
+		{
+			
+		  var ohipNum =/(^\d{4}-\d{3}-\d{3}-[A-Z]{2}$)|(^\d{4}-\d{3}-\d{3}$)/;
+
+		  var isValid= ohipNum.test(dom.val());
+		  
+		  
+		  if(isValid)
+		  {
+			$('#OHIPError').html('');
+			
+		  }
+		  else 
+		  {
+			 $('#OHIPError').html("<p style='color: red'>Format : xxxx-xxx-xxx-AA</p>");
+		  }
+		  
+		  return isValid;
+
+		}
+		
+		
+	function validateFloat(inputtxt)
+   {
+      var decimal=  /^[-+]?[0-9]+\.[0-9]+$/; 
+      
+	  if(inputtxt.value.match(decimal)) 
+	  {   
+	alert('Correct, try another...')  
+	return true;  
+	}  
+	else  
+	{   
+	alert('Wrong...!')  
+	return false;  
+	}  
+
+   }
+  
+        </script>
+
+</head> 
+<body onload ="patientFieldSelection()"> 
+
+<div data-role="page" data-theme="c">
+
+	<div data-role="header" data-theme="d">
+            <div class="ui-btn-left" id="headerLeft"></div>
+		<h1 id="header">Palis - </h1>
+        
+	</div><!-- /header -->
+
+	<div data-role="content" data-inset="true">	
+
+		<div data-role="content">
+		<form id ="mainForm" method="POST" action="putFact">
+            
+                    <a href="#" onclick = "history.back()" rel="external" data-role="button" data-inline="true" data-icon="back">Cancel</a>
+                    <a href="#" rel="external" onClick="submitPatientInfo()" data-role="button" data-inline="true" data-theme="b" data-icon="check">Submit</a>
+
+                    <br/>
+                    <label for="RequestDate" class ="ui-input-text">Don't know which Date</label>
+                    <input name="RequestDate" id="RequestDate" type="text" class="date">
+
+                    <label for="DeliveryDate" class ="ui-input-text">Referral Date</label>
+                    <input name="DeliveryDate" id="DeliveryDate" type="text" class="date">  
+
+					<label for="PrimaryProviderName class ="ui-input-text">Primary Provider</label>
+                    <input id ="PrimaryProviderName" name ="PrimaryProviderName" type ="text"/>
+                    
+                    <label for="TypeOfProvider" class ="ui-input-text">Location of Provider</label>
+                    <select id ="TypeOfProvider" name ="TypeOfProvider" data-native-menu="false">
+                        <option value="-1">-- Not Selected--</option><option value="783">ORCC</option><option value="784">QCH</option><option value="785">TOH Civic</option><option value="786">TOH Gen</option><option value="787">TOH Rivers</option><option value="788">Monfort</option><option value="789">ROH</option><option value="790">Rehab</option><option value="791">CCC</option><option value="792">PCU</option><option value="793">Primary Care</option><option value="794">FHT</option><option value="795">LTC</option><option value="800">Resid NH</option><option value="801">Hospice</option><option value="802">Comm CCAC</option><option value="803">Other</option>
+                    </select>
+                    
+                    <label for="FirstName" class ="ui-input-text">First Name</label>
+                    <input type="text" id ="FirstName" name ="FirstName" />
+
+                    <label for="LastName" class ="ui-input-text">Last Name</label>
+                    <input id ="LastName" name ="LastName" type ="text"/>
+
+                    <label for="BirthDate" class ="ui-input-text">Date of Birth</label>
+                    <input name="BirthDate" id="BirthDate" type="text" class="birthdate">
+
+                    <label for="Gender" class ="ui-input-text">Gender</label>
+                    <select id ="Gender" name ="Gender" data-native-menu="false">
+                        <option value ="1">-- Not Selected --</option>
+                        <option value ="2">Male</option>
+                        <option value ="3">Female</option>
+                    </select>
+					
+					<label for="Kilometers" class ="ui-input-text">Kilometers</label>
+                    <input id ="Kilometers" name ="Kilometers" type ="text"
+					onkeypress="if(this.value.match(/[^.0-9]/)) this.value=this.value.replace(/[^.0-9]/g,'') "
+					onkeyup   ="if(this.value.match(/[^.0-9]/)) this.value=this.value.replace(/[^.0-9]/g,'')  " 
+					/>
+                    
+                    <div id="OHIPError"></div>
+                    <label for="OHIPNo" class ="ui-input-text">OHIP</label>
+                    <input id ="OHIPNo" name ="OHIPNo" type ="text"/>
+					
+					<label for="RefSource" class ="ui-input-text">Referral Source</label>
+                    <select id ="RefSource" name ="RefSource" data-native-menu="false">
+                        <option value ="1">-- Not Selected --</option>
+                        <option value ="2">CCAC Case Manager</option>
+                        <option value ="3">Family Physician</option>
+						<option value ="4">Other professional</option>
+                        <option value ="5">Registered Nurse</option>
+						<option value ="6">RPCU Physician</option>
+                        <option value ="7">Specialist</option>
+						
+                        
+                    </select>
+
+                    <label for="Location" class ="ui-input-text">Patient Location</label>
+                    <select id ="Location" name ="Location" data-native-menu="false">
+                        <option value ="1">-- Not Selected --</option>
+                        <option value ="2">Male</option>
+                        <option value ="3">Female</option>
+                    </select>
+					
+                    
+                    <label for="Diagnosis" class ="ui-input-text">Primary Diagnosis</label>
+                    <select id ="Diagnosis" name ="Diagnosis" data-native-menu="false">
+                        <option value ="1">-- Not Selected --</option>
+                        <option value ="2">Male</option>
+                        <option value ="3">Female</option>
+                    </select>
+                    
+                    <label for="GoalOfCareEst">Goals of Care Discussed</label>
+                    <input type="checkbox" name="GoalOfCareEst" id="GoalOfCareEst" value="1">
+					
+										
+					  <label for="Language" class ="ui-input-text">Language</label>
+                    <select id ="Language" name ="Language" data-native-menu="false">
+                        <option value ="1">English</option>
+                        <option value ="2">French</option>
+                        <option value ="3">Telugu</option>
+                    </select>
+					
+                    
+				<label for="Notes" class ="ui-input-text">Notes</label>
+                    <textarea name="Notes" id="Notes" ></textarea>
+
+				<div id="deceasedfields">
+                    <label for="DeceasedDate" class ="ui-input-text">Deceased Date:</label>
+                    <input name="DeceasedDate" id="DeceasedDate" type="text" class="birthdate">
+                    
+                    <label for="Chemo2WeeksPrior">Chemo Last Two Weeks Deceased</label>
+                    <select id ="Chemo2WeeksPrior" name ="Chemo2WeeksPrior" data-native-menu="false">
+                        <option value ="1">-- Not Selected --</option>
+                        <option value ="2">Male</option>
+                        <option value ="3">Female</option>
+                    </select>
+                    
+                    <label for="ER2WeeksPrior">ER Last Two Weeks Deceased</label>
+                    <select id ="ER2WeeksPrior" name ="ER2WeeksPrior" data-native-menu="false">
+                        <option value ="1">-- Not Selected --</option>
+                        <option value ="2">Male</option>
+                        <option value ="3">Female</option>
+                    </select>
+                    
+                    <label for="DischargeDate" class ="ui-input-text">Discharge Date</label>
+                    <input name="DischargeDate" id="DischargeDate" type="text" class="date">
+                    </div>
+                    
+                    
+			<input type="hidden" id="active" name="active" value="1" />
+                    <br/>
+
+                    <a href="#" onclick = "history.back()" rel="external" data-role="button" data-inline="true" data-icon="back">Cancel</a>
+                    <a href="#" rel="external" onClick=" submitPatientInfo()" data-role="button" data-inline="true" data-theme="b" data-icon="check">Submit</a>  
+                </form>
+		</div>
+		</div>
+		
+	<div data-role="footer" data-theme="d">
+	   <h4></h4>
+	</div>
+
+</div><!-- /page -->
+
+</body>
+</html>

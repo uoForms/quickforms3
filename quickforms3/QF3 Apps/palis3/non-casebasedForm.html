@@ -1,0 +1,65 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+    <title id="title">Palis - </title> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="css/jquery-ui.css" />
+    <link rel="stylesheet" href="css/jquery.mobile-1.1.1.min.css" />
+    <link rel="stylesheet" href="css/form.css" />
+    
+    <script src="js/jquery-1.7.1.min.js"></script>
+    <script src ="js/jquery-ui-1.10.0.custom.min.js"></script>
+    <script src ="js/quickforms.js"></script>
+    <script src="js/jquery.mobile-1.1.1.min.js"></script>
+    <script src="js/education.js"></script>
+    
+</head> 
+<body onload ="getFieldSelection(app,'noncasebased')"> 
+
+<div data-role="page">
+
+	<div data-role="header" >
+		<h1 id="header">Palis - </h1>
+        <a href="logout.html" rel="external" data-role="button" data-inline="true" data-theme="c" class="ui-btn-right">Logout</a>
+	</div><!-- /header -->
+
+	<div data-role="content" data-inset="true">
+	
+	
+        <!-- FORM START -->
+        <form id ="mainForm" method="POST" action="putFact">
+            
+            
+            <a href="education.html" rel="external" data-role="button" data-inline="true" data-icon="back">Cancel</a>
+            <a href="#" rel="external" onClick="putFact(app,'noncasebased','education.html');" data-role="button" data-inline="true" data-theme="b" data-icon="check">Submit</a>
+			<a href="#" rel="external" onClick="deleteRow(app,'noncasebased','education.html')" class="deleteButton" data-role="button" data-inline="true" data-icon="delete">Delete</a>
+			
+            <br/>
+
+            <label for="RequestDate" class ="ui-input-text">Request Date:</label>
+            <input name="RequestDate" id="RequestDate" type="text" class="date">
+            
+            <label for="typeofrequest">Type of Request:</label>
+            <select id ="typeofrequest" name ="typeofrequest" ></select> 
+            
+            <label for="hoursofcare">Hours of Care:</label>
+            <select id ="hoursofcare" name ="hoursofcare" ></select>
+            <br/>
+
+            <a href="education.html" rel="external" data-role="button" data-inline="true" data-icon="back">Cancel</a>
+            <a href="#" rel="external" onClick="putFact(app,'noncasebased','education.html');" data-role="button" data-inline="true" data-theme="b" data-icon="check">Submit</a>  
+        </form>
+        <!-- Form ENd -->
+    
+    
+	</div>	
+		
+	<div data-role="footer">
+	   <h4></h4>
+	</div>
+
+</div><!-- /page -->
+
+</body>
+</html>

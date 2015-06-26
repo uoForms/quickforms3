@@ -1,0 +1,277 @@
+<!DOCConsultType html> 
+<html> 
+    <head> 
+    <title>Palis - Consult Form</title> 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="../css/jquery-ui.css" />
+    <link rel="stylesheet" href="../css/jquery.mobile-1.1.1.min.css" />
+    <link rel="stylesheet" href="../css/form.css" />
+    
+    <script src="../js/jquery-1.7.1.min.js"></script>
+    <script src ="../js/jquery-ui-1.10.0.custom.min.js"></script>
+    <script src ="../js/quickforms.js"></script>
+    <script src="js/patient.js"></script>
+    <script src="../js/jquery.mobile-1.1.1.min.js"></script>
+	<script ConsultType="text/javascript" >
+	
+		function hideFields(ConsultType)
+		{
+			var consultLabel = "";
+			var km=getCookie('kms');
+			if(ConsultType=="initial")
+			{
+				$('#presentSection').hide();
+				$('#hoursSection').hide();
+				$('#consultLocationSection').hide();
+				$('#Kilometers').hide();
+				$('#TravelTime').hide();
+				$('#WasScheduled').hide();
+				consultLabel ="Initial Consult";
+			}
+			else if(ConsultType=="followup")
+			{
+				$('#presentSection').hide();
+				$('#hoursSection').hide();
+				$('#consultLocationSection').hide();
+				$('#Kilometers').hide();
+				$('#TravelTime').hide();
+				$('#Region').hide();
+				$('#TopicSpecific').hide();
+				$('#PhySymptom').hide();
+				$('#PsycSymptom').hide();
+				consultLabel ="Followup Consult";
+			}
+			else if(ConsultType == "facetoface")
+			{
+				$('#Region').hide();
+				$('#TopicSpecific').hide();
+				$('#PhySymptom').hide();
+				$('#PsycSymptom').hide();
+				$('#providerName').hide();
+				$('#ProviderType').hide();
+				$('#referralSite').hide();
+				consultLabel ="Face to Face Consult";
+				//$('#Kilometers').val(km);				
+								
+			}
+			
+			$('#ConsultTypeSection').hide();
+			$('#formTitle').append("<h1>"+consultLabel+"</h1>");
+		}
+		
+		function convertKilometers()
+		{
+		Kilometers.value= parseFloat(Kilometers.value);
+		}
+		$(function(){
+			hideFields(getParameterByName('type'));
+		});
+		// Trying to fix ' in name. Need to Discuss with Liam
+		function fixName()
+		{
+		
+		RequestPhysician.value=RequestPhysician.value.replace(/\'/g,"''");
+		
+		
+		}
+		function setConsultType()
+		{
+			if(isNull(getParameterByName('id')))
+			{
+				var ConsultType=getParameterByName('type');
+
+				if(ConsultType=='initial')
+					$('#ConsultType option:eq(1)').attr('selected', 'selected');
+				if(ConsultType=='followup')
+					$('#ConsultType option:eq(2)').attr('selected', 'selected');
+				if(ConsultType=='facetoface')
+					$('#ConsultType option:eq(3)').attr('selected', 'selected');
+				$('#ConsultType').selectmenu('refresh');
+			}
+			else
+			{
+				var ConsultType = 'initial'
+				if($('#ConsultType').val() == 4)
+					ConsultType = 'followup';
+				else if($('#ConsultType').val() == 1)
+					ConsultType = 'facetoface';
+				hideFields(ConsultType);
+			}
+		}
+	</script>
+</head> 
+<body onload ="getFieldSelection(app,'consultation',null,setConsultType)"> 
+
+<script>
+var km=getCookie('kms');
+if($('#Kilometers').val()== null)
+$('#Kilometers').val(km);
+
+</script>
+<div data-role="page" data-theme="c">
+
+	<div data-role="header" data-theme="d">
+            <div class="ui-btn-left" id="headerLeft"></div>
+		<h1 id = "header">Palis - </h1>
+        
+	</div><!-- /header -->
+
+	<div data-role="content" data-inset="true">
+	<div id="formTitle">
+	</div>
+	
+        <!-- FORM START -->
+        <form id ="mainForm" method="POST" action="putFact">
+            
+            
+            <a href="forms.html" rel="external" data-role="button" data-inline="true" data-icon="back">Cancel</a>
+            <a href="#" rel="external" onClick="convertKilometers(); fixName(); putFact(app,'consultation','forms.html');" data-role="button" data-inline="true" data-theme="b" data-icon="check">Submit</a>
+
+            <br/>
+            
+            <label for="consultant">Consultant:</label>
+            <select id ="consultant" name ="consultant" >
+                <option value="1">Followup face to face Consult</option>
+                <option value="2">Initial face to face Consult</option>
+            </select> 
+            <div id ="ConsultTypeSection">
+            <label for="ConsultType">Consult ConsultType:</label>
+            	<select id ="ConsultType" name ="ConsultType" >
+                	<option value="1">Followup face to face Consult</option>
+                	<option value="2">Initial face to face Consult</option>
+            	</select> 
+		</div>
+		<div id="WasScheduled">
+		<label for="Scheduled">Was Scheduled:</label>
+            <select id ="Scheduled" name ="Scheduled" >
+                <option value="1">Scheduled</option>
+                <option value="2">Not Scheduled</option>
+            </select> 
+            </div>
+            <label for="RequestDate" class ="ui-input-text">Date:</label>
+            <input name="RequestDate" id="RequestDate" ConsultType="text" class="date">
+            <div id="providerName">
+            <label for="RequestPhysician" class ="ui-input-text">Provider Name:</label>
+			<input type="text" id ="RequestPhysician" name ="RequestPhysician"  
+			onkeypress="if(this.value.match(/[&=]/)) this.value=this.value.replace(/[&=]/g,''); "
+			onkeyup   ="if(this.value.match(/[&=]/)) this.value=this.value.replace(/[&=]/g,''); "/>
+            <!-- <select id ="RequestPhysician" name ="RequestPhysician" >
+                <option value="1">Request Location 1</option>
+                <option value="2">Request Location 2</option> -->
+            </select> 
+			</div>
+			<div id="ProviderType">
+            <label for="ProviderType" class ="ui-input-text">Provider Type:</label>
+            <select id ="ProviderType" name ="ProviderType" >
+                <option value="1">Nurse</option>
+                <option value="2">Physician</option>
+            </select> 
+            </div>
+			<div id="referralSite">
+            <label for="RequestLocation" class ="ui-input-text">Referral Site</label>
+            <select id ="RequestLocation" name ="RequestLocation" >
+                <option value="1">Request Location 1</option>
+                <option value="2">Request Location 2</option>
+            </select> 
+			</div>
+			<div id='Region'>
+			<label for="Region" class ="ui-input-text">Referral Region</label>
+            <select id ="Region" name ="Region" >
+                <option value="1">Referral Region 1</option>
+                <option value="2">Referral Region 2</option>
+            </select> 
+			</div>
+			<div id='TopicSpecific'>
+			<label for="topicSpecific" class ="ui-input-text">Topic Specific</label>
+            <select id ="topicSpecific" name ="topicSpecific" >
+                <option value="1">Topic Specific 1</option>
+                <option value="2">Topic Specific 2</option>
+            </select> 
+			</div>
+			<div id='PhySymptom'>
+			<label for="phySymptom" class ="ui-input-text">Physical Symptoms</label>
+            <select id ="phySymptom" name ="phySymptom" >
+                <option value="1">Physical Symptom 1</option>
+                <option value="2">Physical Symptom 2</option>
+            </select> 
+			</div>
+			<div id='PsycSymptom'>
+			<label for="psycSymptom" class ="ui-input-text">Psychological Symptoms</label>
+            <select id ="psycSymptom" name ="psycSymptom" >
+                <option value="1">Psychological Symptom 1</option>
+                <option value="2">Psychological Symptom 2</option>
+            </select> 
+            </div>
+            <div id="afterMeeting">
+            <label for="PPSScore" class ="ui-input-text">PPS</label>
+            <select id ="PPSScore" name ="PPSScore" >
+                <option value="1">--Not Assessed--</option>
+                <option value="2">0</option>
+            </select> 
+            
+		<div id="presentSection">
+            	<label for="PhysicianPresentName" class ="ui-input-text">Physician</label>
+            	<input type="text" id ="PhysicianPresentName" name ="PhysicianPresentName" />
+            
+            	<label for="PhysicianPresent" class ="ui-input-text">Physician Present</label>
+				
+            	<input type="checkbox" id ="PhysicianPresent" name ="PhysicianPresent" value="1" />
+				
+				<label for="AlliedHealthPresent" class ="ui-input-text">Allied Health Present</label>
+				
+            	<input type="checkbox" id ="AlliedHealthPresent" name ="AlliedHealthPresent" value="1" />
+				
+				<label for="RNRPNPresent" class ="ui-input-text">RN/RPN Present</label>
+				
+            	<input type="checkbox" id ="RNRPNPresent" name ="RNRPNPresent" value="1" />
+            </div>
+		<div id="consultLocationSection">
+            	<label for="ConsultLocation" class ="ui-input-text">Consult Location</label>
+            	<select id ="ConsultLocation" name ="ConsultLocation" >
+                	<option value="1">Home</option>
+                	<option value="2">FHT</option>
+            	</select>
+		</div>
+            <div id="hoursSection">
+            	<label for="HoursOfCare" class ="ui-input-text">Hours of Care</label>
+            	<select id ="HoursOfCare" name ="HoursOfCare" >
+                	<option value="1">0.5</option>
+                	<option value="2">0.75</option>
+            	</select>
+
+			 <label for="Kilometers" class ="ui-input-text">Kilometers</label>
+			 <input type="text" id ="Kilometers" name ="Kilometers" 
+			 onkeypress="if(this.value.match(/[^.0-9]/)) this.value=this.value.replace(/[^.0-9]/g,'') "
+			 onkeyup   ="if(this.value.match(/[^.0-9]/)) this.value=this.value.replace(/[^.0-9]/g,'')  " 
+			 />
+            	
+				
+				
+				<label for="TravelTime" class ="ui-input-text">Travel Time</label>
+            	<select id ="TravelTime" name ="TravelTime" >
+                	<option value="1">0.5</option>
+                	<option value="2">0.75</option>
+            	</select> 
+		</div>
+            </div>
+            <label for="notes" class ="ui-input-text">Notes:</label>
+            <textarea name="notes" id="notes"> </textarea>
+            <br/>
+
+            <a href="forms.html" rel="external" data-role="button" data-inline="true" data-icon="back">Cancel</a>
+            <a href="#" rel="external" onClick="convertKilometers(); fixName(); putFact(app,'consultation','forms.html')" data-role="button" data-inline="true" data-theme="b" data-icon="check">Submit</a>  
+        </form>
+        <!-- Form ENd -->
+    
+    
+	</div>	
+		
+	<div data-role="footer" data-theme="d">
+	   <h4></h4>
+	</div>
+
+</div><!-- /page -->
+
+</body>
+</html>

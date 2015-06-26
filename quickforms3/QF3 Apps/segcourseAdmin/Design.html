@@ -1,0 +1,41 @@
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class = "ui-mobile-rendering">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<link rel="stylesheet" href="../quickforms/css/quickforms/quickforms.css" />
+	<script src = "../quickforms/js/require.min.js" ></script>
+</head>
+<body>
+<div data-role="page" id="loadQuickformsTemplate">
+	<script type="text/javascript">
+	require(['../quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+				require(['dom/navControl', 'dom/form/fillDiv', 'dom/form/form','server/getMultiData', 'server/getLookupCsv','server/updateLookup'], // Add modules to the list. Every control in the dialog must be loaded here as well ,'segcourse/js/selectAdjustments'
+					function(){ 
+						quickforms.loadNav('nav.html','nav');
+						quickforms.parseForm( //formId, app*, fact
+							{formId:'formTemplate',
+							fact:'courseSelect'});
+					});
+			});
+		});
+	</script>
+	<div data-role= "header"><h1>SEG 3rd and 4th year Course Preferences</h1></div>
+	<div id = "nav"></div>
+	<div data-role ="content">
+	<form id="formTemplate">
+	
+	<h2>Students</h2>
+	<a id="uploadCsv" data-role="button" href="../quickforms/templates/dom/uploadExample.html?app=segcourse" data-icon="arrow-u" data-theme="c" data-inline="true">Upload</a>
+	<a id="editGetCsv" data-role="button" onClick="quickforms.getLookupCsv('segcourse','students')" data-icon="arrow-d" data-theme="c" data-inline="true">Download</a>
+
+	<h2>Courses</h2>
+	<a id="uploadCsv" data-role="button" href="../quickforms/templates/dom/uploadExample.html?app=segcourse" data-icon="arrow-u" data-theme="c" data-inline="true">Upload</a>
+	<a id="editGetCsv" data-role="button" onClick="quickforms.getLookupCsv('segcourse','course')" data-icon="arrow-d" data-theme="c" data-inline="true">Download</a>
+	</form>
+	</div>
+	<div data-role="footer"><h1>&nbsp;</h1></div>
+</div>
+</body>
+</html>

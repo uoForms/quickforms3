@@ -1,0 +1,19 @@
+.container{
+    display: block;
+    background: #E3E9EF url(images/login-logo.png) no-repeat;
+    width:422px;
+    align: center;
+    margin:0 auto;
+    border: 1px solid #CCCCCC;
+    padding-top:25px;
+    padding-bottom:25px;
+    padding-left:100px;
+	padding-right:100px;
+	margin-top:10px;
+}
+hr{
+    border-style: dashed none none none;
+    margin-top: 10px;
+    border-top-width: 1px;
+    border-top-color: #666666;
+}

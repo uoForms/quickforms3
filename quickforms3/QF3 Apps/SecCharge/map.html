@@ -1,0 +1,297 @@
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class = "ui-mobile-rendering">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<link rel="stylesheet" href="../quickforms/css/quickforms/quickforms.css" />
+	<script src = "../quickforms/js/require.min.js" ></script>
+	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+	<style>
+ html, body,#map_canvas {
+    width: auto;
+    height: 600px;
+    background-color: #CCC;
+  }
+</style> 
+ 
+    <style>
+      #directions-panel {
+        height: 600px;
+        float: right;
+        width: 390px;
+        overflow: auto;
+      }
+
+      #map-canvas {
+        margin-right: 400px;
+      }
+	
+      #control {
+        background: transparent;
+        padding: 5px;
+        font-size: 1px;
+        font-family: Arial;
+        display: none;
+      }
+
+      @media print {
+        #map-canvas {
+          height: 600px;
+          margin: 0;
+        }
+
+        #directions-panel {
+          float: none;
+          width: auto;
+        }
+      }
+    </style>
+
+
+	<style>
+	#buttons {
+    background-color: #fff;
+    
+}
+</style>
+</head>
+<body>
+<div data-role="page" id="visitSummaryPage">
+
+	<script type="text/javascript">
+	require(['../quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+				require(['dom/navControl'],
+				function(){
+						
+						
+						quickforms.loadNav('nav.html','nav');
+						//$("#buttons").hide();
+						
+
+						});
+							
+					
+			});
+		});
+	</script>
+	
+   
+	<script>
+	   var rendererOptions = {
+  draggable: true,
+  suppressMarkers : true
+};
+var map;
+var geocoder;
+var bounds = new google.maps.LatLngBounds();
+var markersArray = [];
+var directionsDisplay= new google.maps.DirectionsRenderer(rendererOptions);
+var directionsService = new google.maps.DirectionsService();
+var cs1 = 'Hawkesbury, Ontario';
+var cs2 = 'Peterborough, Ontario';
+var start = localStorage.getItem('Start');
+  var destination = localStorage.getItem('Destination');
+ var waypts = [];
+  var checkboxArray = ["hawkesbury, ontario", "peterborough, ontario"];
+var destinationIcon = 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=CS|FF0000|000000';
+var originIcon = 'https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=A|3EB83E|000000';
+var endIcon='https://chart.googleapis.com/chart?chst=d_map_pin_letter&chld=C|EA5630|000000';
+var iconFlag=0;
+var chargingStationAdd;
+function initialize() {
+        var map_canvas = document.getElementById('map_canvas');
+        var map_options = {
+          center: new google.maps.LatLng(45.3,-75.7),
+          zoom: 10,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        map = new google.maps.Map(map_canvas, map_options)
+ 
+  directionsDisplay.setMap(map);
+  directionsDisplay.setPanel(document.getElementById('directions-panel'));
+    geocoder = new google.maps.Geocoder();
+ 
+ var trafficLayer = new google.maps.TrafficLayer();
+  trafficLayer.setMap(map);
+
+  calculateDistances();
+  
+}
+    
+  
+
+function calcRoute() {
+ 
+  var highway;
+  var toll;
+  var mRoutes;
+  
+  if(localStorage.getItem('highway')=='true'){
+  highway=true;
+  }else{
+    highway=false;
+	}
+	  if(localStorage.getItem('toll')=='true'){
+  toll=true;
+  }else{
+    toll=false;
+	}
+	  if(localStorage.getItem('mRoutes')=='true'){
+  mRoutes=true;
+  }else{
+    mRoutes=false;
+	}
+ 
+  
+  var request = {
+    origin: start,
+    destination: destination,
+	durationInTraffic: true,
+	 waypoints: waypts,
+	provideRouteAlternatives:mRoutes,
+  avoidHighways:highway,
+  avoidTolls:toll,
+    travelMode: google.maps.TravelMode.DRIVING
+  };
+  directionsService.route(request, function(response, status) {
+    if (status == google.maps.DirectionsStatus.OK) {
+      directionsDisplay.setDirections(response);
+    }
+  });
+  
+  for (var j = 0; j < chargingStationAdd.length; j++) {
+addMarker(chargingStationAdd[j], true);	
+}
+for (var i = 0; i < startEnd.length; i++) {
+addMarker(startEnd[i], false);
+}
+}
+
+ //google.maps.event.addDomListener(window, 'load', initialize);
+function addToFav(){
+	window.location="fav.html"
+}
+
+
+
+
+function calculateDistances() {
+  var service = new google.maps.DistanceMatrixService();
+  service.getDistanceMatrix(
+    {
+      origins: [start, destination],
+      destinations: [cs1, cs2],
+      travelMode: google.maps.TravelMode.DRIVING,
+      unitSystem: google.maps.UnitSystem.METRIC,
+      avoidHighways: false,
+      avoidTolls: false
+    }, callback);
+}
+
+function callback(response, status) {
+	var distanceAddition=[];
+  if (status != google.maps.DistanceMatrixStatus.OK) {
+    alert('Error was: ' + status);
+  } else {
+    var origins = response.originAddresses;
+    var cs = response.destinationAddresses;
+	chargingStationAdd=cs;
+	startEnd=origins;
+    deleteOverlays();
+	var closestCs = [];
+	
+	for (var i = 0; i < cs.length; i++) {
+	var distanceArray = [];
+	var results = response.rows[i].elements;
+        
+		for (var j = 0; j < results.length; j++) {
+       
+		var split =  results[j].distance.text.split(' ');
+		
+        distanceArray.push(Number(split[0]));
+           distanceAddition.push(distanceArray[j]);
+      }
+	  
+	  if(distanceArray[0]<distanceArray[1]){
+	  closestCs.push('0');
+	  }else{
+	  closestCs.push('1');
+	  }
+
+   
+  }
+  if(closestCs[0]==closestCs[1]){
+  if(closestCs[0]=='0'){
+  waypts.push({
+          location:checkboxArray[0],
+          stopover:true});
+  }else{
+  waypts.push({
+          location:checkboxArray[1],
+          stopover:true});
+  
+  }
+  
+}else{
+if((distanceAddition[0]+distanceAddition[2])<(distanceAddition[1]+distanceAddition[3])){
+waypts.push({
+          location:checkboxArray[0],
+          stopover:true});
+}else{
+waypts.push({
+          location:checkboxArray[1],
+          stopover:true});
+}
+}
+
+calcRoute();
+
+}
+}
+
+
+function addMarker(location, isDestination) {
+  var icon;
+  if (isDestination) {
+    icon = destinationIcon;
+  } else {
+	if(iconFlag==0){
+    icon = originIcon; iconFlag++;}else{icon = endIcon; iconFlag=0;}
+  }
+  geocoder.geocode({'address': location}, function(results, status) {
+    if (status == google.maps.GeocoderStatus.OK) {
+      bounds.extend(results[0].geometry.location);
+      map.fitBounds(bounds);
+      var marker = new google.maps.Marker({
+        map: map,
+        position: results[0].geometry.location,
+        icon: icon
+      });
+      markersArray.push(marker);
+    } else {
+      alert('Geocode was not successful for the following reason: '
+        + status);
+    }
+  });
+}
+
+function deleteOverlays() {
+  for (var i = 0; i < markersArray.length; i++) {
+    markersArray[i].setMap(null);
+  }
+  markersArray = [];
+}
+google.maps.event.addDomListener(window, 'load', initialize); 	
+    </script>
+	
+	<div data-role="header"><h1>EV User SecCharge</h1></div>
+	<div id = "nav"></div>
+	<div id="control"><a href = "#" data-role="button" data-theme="b" data-inline="true" rel="external" onclick="addToFav()">Add to Favourites</a></div>
+	 <div id="directions-panel"></div>
+	 <div id="map_canvas"></div>
+	<div data-role="footer"><h1></h1></div>
+</div>
+</body>
+</html>

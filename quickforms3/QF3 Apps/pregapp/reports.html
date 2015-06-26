@@ -1,0 +1,51 @@
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class = "ui-mobile-rendering">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<link rel="stylesheet" href="../../quickforms/css/quickforms/quickforms.css" />
+	<script src = "../../quickforms/js/require.min.js" ></script>
+</head>
+<body>
+<div data-role="page" id="loadQuickformsTemplate">
+	<script type="text/javascript">
+	require(['../quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+				require(['dom/tableControl','dom/navControl','dom/filterControl',
+						'dom/form/date','dom/form/select','dom/form/design'],
+					function(){
+						var whereclause = "";
+						if(getCookie('userRole') == 'User') whereclause = "addedBy = '"+getCookie('username')+"'";
+						quickforms.loadNav('nav.html','nav');
+						//quickforms.loadFilter('filter.html','mainData');
+						quickforms.loadTable(//appName, queryName*, parameterList,whereclause, callback, domId*,configFile 
+							{queryName:'getEmails',whereclause:whereclause});
+					});
+			});
+		});
+	</script>
+        
+	<div data-role="header">
+		<h1 id="header">Francine App</h1>
+	</div><!-- /header -->
+
+	<div data-role="content">
+	
+	<div id = 'nav'></div>
+        <!-- FORM START -->
+        <form id ="mainForm" >
+		<h3>Emails Sent</h3>           
+           <a href="emailSent.html" data-theme="b" data-icon="plus" data-role="button" rel="external">Send an Email</a>
+			<table id ="mainData"></table>			
+			<a href="emailSent.html" data-theme="b" data-icon="plus" data-role="button" rel="external">Send an Email</a>
+        </form>
+        <!-- FORM END -->   
+	</div>			
+	<div data-role="footer">
+	   <h4></h4>
+	</div>
+</div><!-- /page -->
+
+</body>
+</html>
