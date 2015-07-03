@@ -7,8 +7,12 @@ function (){
 	var loginPage = "/"+quickforms.app+"/index.html"
 	var username = getCookie('username'),
 		userId = getCookie('userid');
-	if(isNull(username) 
-		&& window.location.pathname.indexOf( loginPage) < 0
+	var appName = getCookie('appName'),
+		expired = checkCookieExp();
+	//alert(expired+"|"+(appName == quickforms.app));
+	
+	if((expired||isNull(username)) 
+		&& window.location.pathname.indexOf(loginPage) < 0
 		&& !quickforms.offline)
 	{
 		window.location = quickforms.loginLocation;

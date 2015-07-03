@@ -16,7 +16,7 @@ function (){
 		/**Versioning - Modify build number (incrementaly) for every commit to SVN. Found in app config  */
 		$('#versioning').html( 'Version ' + quickforms.version + ' (build ' + quickforms.build + ')');
 		/**End - Versioning*/
-		if(!isNull(getCookie('userpass')))
+		if(!isNull(getCookie('userpass'))&&!isNull(getCookie('appName'))&&!checkCookieExp())
 		{
 			$('#username').val(getCookie('usernameRemember'));
 			$('#password').val(getCookie('userpass'));
@@ -55,6 +55,7 @@ function (){
 				var json=JSON.parse(data);
 				setCookie("userid",json[0].teamMembersKey,1);
 				setCookie("userRole",json[0].userRoleLabel,1);
+				setCookie('appName',quickforms.app,1);
 				
 				if(rememberChecked == 'checked')
 				{

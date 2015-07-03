@@ -50,7 +50,8 @@ define(function(){
 		}
 		else
 		{*/
-			return localStorage.getItem(c_name);
+	    var app_c_name = quickforms.app+"_"+c_name;
+	    return localStorage.getItem(app_c_name);
 		//}
 		return '';
 	}
@@ -65,9 +66,30 @@ define(function(){
 		}
 		else
 		{*/
-			localStorage.setItem(c_name, value);
+	    var app_c_name = quickforms.app+"_"+c_name;
+	    localStorage.setItem(app_c_name, value);
+	    var today = new Date();
+	    today.setHours(0,0,0,0);
+	    var expDay = today.getTime() + exdays*24*3600*1000;
+	    var app_expDay = quickforms.app+"_expDay";
+	    localStorage.setItem(app_expDay,expDay);
 		//}
 	}
+	window.checkCookieExp = function()
+	{
+	    var app_expDay = quickforms.app+"_expDay";
+	    var expDay = localStorage.getItem(app_expDay);
+	    var today = new Date();
+	    today.setHours(0,0,0,0);
+	    if(!isNull(expDay)&&expDay>=today.getTime()){
+		return false;
+	    }else{
+		return true;
+	    }
+		
+	}
+	
+	
     String.prototype.endsWith = function(suffix) {
         return this.indexOf(suffix, this.length - suffix.length) !== -1;
     };
