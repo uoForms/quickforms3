@@ -44,6 +44,7 @@ function (){
 	quickforms.logout = function()
 	{
 		setCookie('username','',1);
+		setCookieExp(0);
 		window.location = quickforms.loginLocation;
 	}
 });

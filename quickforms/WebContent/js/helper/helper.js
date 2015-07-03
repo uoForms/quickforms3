@@ -69,12 +69,27 @@ define(function(){
 	    var app_c_name = quickforms.app+"_"+c_name;
 	    localStorage.setItem(app_c_name, value);
 	    var today = new Date();
-	    today.setHours(0,0,0,0);
+	    var expDay = today.getTime() + 3600*1000;
+	    var app_expDay = quickforms.app+"_expDay";
+	    var oldExpDay = localStorage.getItem(app_expDay);
+	    //If the cookie [appName]_expDay is null or will expire in one hour, extend the expiration time.
+	    if(isNull(oldExpDay)||oldExpDay<expDay){
+		localStorage.setItem(app_expDay,expDay);
+	    }
+	    
+		//}
+	}
+	
+	//Set the cookie expiration time.
+	window.setCookieExp = function(exdays)
+	{
+
+	    var today = new Date();
 	    var expDay = today.getTime() + exdays*24*3600*1000;
 	    var app_expDay = quickforms.app+"_expDay";
 	    localStorage.setItem(app_expDay,expDay);
-		//}
 	}
+	
 	window.checkCookieExp = function()
 	{
 	    var app_expDay = quickforms.app+"_expDay";

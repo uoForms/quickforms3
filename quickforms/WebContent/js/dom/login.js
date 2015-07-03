@@ -56,17 +56,20 @@ function (){
 				setCookie("userid",json[0].teamMembersKey,1);
 				setCookie("userRole",json[0].userRoleLabel,1);
 				setCookie('appName',quickforms.app,1);
+				setCookieExp(1);
 				
 				if(rememberChecked == 'checked')
 				{
 					setCookie('userpass',me.md5edPass,365);
 					setCookie('username',me.username,365);
 					setCookie('usernameRemember',me.username,365);
+					setCookieExp(365);
 				}
 				else
 				{
 					setCookie('username',me.username,1);
 					setCookie('userpass','',1);
+					
 				}
 				
 				if(isNull(getCookie('currentFormtracking_formDate'+getCookie('username'))))
