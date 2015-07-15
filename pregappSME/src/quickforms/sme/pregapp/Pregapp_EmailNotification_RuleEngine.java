@@ -6,6 +6,7 @@
 package quickforms.sme.pregapp;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -245,8 +246,16 @@ public class Pregapp_EmailNotification_RuleEngine implements RuleEngine
 	private int getNotificationCurrentWeek(String dueDateStr) throws Exception{
 		
 		Integer minimumValue = minimumWeek - 1;
-		//Fix the due date into a date
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+		
+		if(dueDateStr == null || dueDateStr.trim().isEmpty())		
+			return minimumValue;
+		
+		//Get the date format
+		DateFormat formatter = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault());
+		//String pattern = ((SimpleDateFormat)formatter).toPattern();
+		//System.out.println(pattern);
+		
+		//Fix the due date into a date		
 		Date dueDate = formatter.parse(dueDateStr);
 		
 		//Get the current date
@@ -309,7 +318,7 @@ public class Pregapp_EmailNotification_RuleEngine implements RuleEngine
 		return newContext;
 	}
     
-    /***
+    
     public static void main(String [] args)
 	{
     	System.out.println("Testing");
@@ -325,10 +334,12 @@ public class Pregapp_EmailNotification_RuleEngine implements RuleEngine
 			currentWeek = "21/06/2015";
 			System.out.println(pregappRuleEngine.getNotificationCurrentWeek(currentWeek));
 						
+			currentWeek = "11/03/2015";
+			System.out.println(pregappRuleEngine.getNotificationCurrentWeek(currentWeek));
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	} **/
+	}
 }
