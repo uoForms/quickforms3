@@ -157,10 +157,10 @@ public class Pregapp_EmailNotification_RuleEngine implements RuleEngine
 			//General congratulations message
 			message += "<h1> Dear Subscriber </h1> " +
 							 "<p>Congratulations on your " + weekTitle + "! </p>" +
-			  				 "<p> Lets continue your happy journey together!<br><br>Please click on below link for your " 
+			  				 "<p> Let us continue your happy journey together!<br><br>Please click the link below for your " 
 											+ weekTitle + " week guidelines <br><br>"+
 											"<a href=\""+link+ "\">"+link +
-											"</a><br><br><br>Note: If a link above doesn't work, please copy and paste the URL into a browser.</p>";
+											"</a><br><br><br><b>Note</b>: If the link above doesn't work, please copy and paste it on a browser to access the intructions.</p>";
 			
 			//Add the appropriate warning signs for the trimester. 
 			message += "<p>Please read through the following <a href='" + warningSignsLink +
@@ -202,10 +202,10 @@ public class Pregapp_EmailNotification_RuleEngine implements RuleEngine
 			
 			message += "<h1> Dear Subscriber </h1> " +
 							 "<p>Congratulations on your " + weekTitle + "! </p>" +
-			  				 "<p> Lets continue your happy journey together!<br><br>Please click on below link for your " 
-											+ weekTitle + " new born guidelines <br><br>"+
+			  				 "<p> Let us continue your happy journey together!<br><br>Please click on the link below for your " 
+											+ weekTitle + " newborn guidelines <br><br>"+
 											"<a href=\""+link+ "\">" + link +
-											"</a><br><br><br>Note: If a link above doesn't work, please copy and paste the URL into a browser.</p>";			
+											"</a><br><br><br><b>Note</b>: If the link above doesn't work, please copy and paste the it on a browser to access the instructions</p>";			
 		}
 		
 		UseFulMethods.sendEmail(this.senderEmail, this.senderPassword, recipientEmail, "Francine alert", message);
