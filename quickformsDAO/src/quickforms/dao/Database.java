@@ -21,6 +21,7 @@ import javax.sql.DataSource;
 import quickforms.dao.LookupPair;
 import quickforms.dao.MetaField;
 import quickforms.sme.NewThreadForDispatcher;
+import quickforms.sme.NewPregappNotificationDispatcher;
 
 public class Database implements Serializable
 {
@@ -841,6 +842,30 @@ public class Database implements Serializable
 				}
 			}
 		}
+	}
+	
+	public String sendPregAppNotifications(Map<String, String[]> params, Database db) throws Exception
+	{		
+		String rowId = null;
+		String callback = null;
+		
+		if (params.containsKey("callback"))
+			callback = params.get("callback")[0];
+		
+		
+		NewPregappNotificationDispatcher ntDispatcher = new NewPregappNotificationDispatcher(params, ds, null, null);
+		Thread t = new Thread(ntDispatcher);
+		t.start();
+		
+		String json = "[{\"id\":\"" + rowId + "\"}]";
+		if (callback != null)
+		{
+			json = json.replace("'", "\\'");
+			json = json.replace("\\\\'", "\\'");
+			json = json.replace("\\\"", "\\\\\"");
+			json = callback + "('" + json + "')";
+		}
+		return json;
 	}
 	
 	private String findMultiVal(List<LookupPair> multiKeys, String param_key)

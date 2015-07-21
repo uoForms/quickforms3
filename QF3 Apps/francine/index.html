@@ -45,10 +45,14 @@
 			});
 		});
 	</script>
-	<div data-role="header"><h1>Francine App</h1>
+	<div data-role="header"><h1></h1>
+	<h2>Francine App</h2>
 	<div data-role="controlgroup" data-type="horizontal" class="ui-btn-left">
 		<a href="subscribe.html" rel="external" data-role="button" data-rel="dialog"  data-icon="" data-theme="e" >Subscribe</a>
 		<a href="unsubscribe.html" rel="external"  data-role="button" data-rel="dialog" data-icon="" data-theme="e">Unsubscribe</a>	
+	</div>
+	<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+		<a href="aboutus.html" rel="external" data-role="button" data-rel="dialog"  data-icon="" data-theme="e" >About</a>
 	</div>
 	</div>	
     <div class="container">	
@@ -56,8 +60,6 @@
 			<h1>Francine</h1> 
 			<p>Welcome to your favorite pregnancy information system.</p> 
 		</div> -->
-		<h3 style="color:purple; font-weight:bolder;">Francine </h3>
-		<p style="color:purple; font-weight:bold; font-size:1.2em;">Welcome to your favorite pregnancy app. </p>
 		<div id="myCarousel" class="carousel slide" data-ride="carousel">
 			<!-- Indicators -->
 			<ol class="carousel-indicators">
@@ -74,8 +76,7 @@
 				<img src="images/x_first_trimester_2.png" alt="First trimester" width="350" height="550">
 				<div class="carousel-caption" >          
 				  <h3 style="color:purple;">First Trimester</h3>
-					<span style="font-size:1.4em; background-color:white; color:#fc68d4;">
-					<b >Weeks </b> <br/>					
+					<span style="font-size:1.4em; background-color:white; color:#fc68d4;">				
 					<a href="week1.html?id=2" text-decoration="none" rel="external" data-role="tabPopup" style="color:#fc68d4;">1 </a> |
 					<a href="week2.html?id=3" text-decoration="none" rel="external" data-role="tabPopup" style="color:#fc68d4;">2 </a> |
 					<a href="week3.html?id=4" text-decoration="none" rel="external" data-role="tabPopup" style="color:#fc68d4;">3 </a> |
@@ -103,7 +104,6 @@
 				<div class="carousel-caption" >          
 				  <h3 style="color:purple;">Second Trimester</h3>
 					<span style="font-size:1.4em; background-color:white; color:#fc68d4;">		
-					<b style="color:purple">Weeks </b>  <br/>
 					<a href="week13.html?id=14" text-decoration="none" rel="external" data-role="tabPopup" style="color:#fc68d4;">13 </a> |
 					<a href="week14.html?id=15" text-decoration="none" rel="external" data-role="tabPopup" style="color:#fc68d4;">14 </a> |
 					<a href="week15.html?id=16" text-decoration="none" rel="external" data-role="tabPopup" style="color:#fc68d4;">15 </a> |
@@ -132,7 +132,6 @@
 				<div class="carousel-caption" >          
 				  <h3 style="color:purple;">Third Trimester</h3>
 					<span style="font-size:1.4em; background-color:white; color:#fc68d4;">		
-					<b style="color:purple">Weeks </b> <br/> 
 					<a href="week27.html?id=28" text-decoration="none" rel="external" data-role="tabPopup" style="color:#fc68d4;">27 </a> |
 					<a href="week28.html?id=29" text-decoration="none" rel="external" data-role="tabPopup" style="color:#fc68d4;">28 </a> |
 					<a href="week29.html?id=30" text-decoration="none" rel="external" data-role="tabPopup" style="color:#fc68d4;">29 </a> |
@@ -160,7 +159,6 @@
 				<div class="carousel-caption" >          
 				  <h3 style="color:purple;">Newborn</h3>
 					<span style="font-size:1.4em; background-color:white; color:#fc68d4;">		
-					<b style="color:purple">Weeks </b> <br/>
 					<a href="new_born_wk_1.html?id=67" text-decoration="none" rel="external" data-role="tabPopup" style="color:#fc68d4;">1 </a> |
 					<a href="new_born_wk_2.html?id=68" text-decoration="none" rel="external" data-role="tabPopup" style="color:#fc68d4;">2 </a> |
 					<a href="new_born_wk_3.html?id=69" text-decoration="none" rel="external" data-role="tabPopup" style="color:#fc68d4;">3 </a> |
@@ -189,9 +187,17 @@
 		  <br/>
 	</div>
 	
-	<div data-role="footer" class="footer-docs" data-theme="e">
-					
-				<p>&copy; 2014 Francine app</p>
+	<div data-role="footer">
+		<div data-role="controlgroup" data-type="horizontal" class="ui-btn-middle" align = "middle">
+			<div style = "float: left">	
+				<div style="float: middle; font-size:12px; background-color:#E3E9EF; padding: 2px 0px">
+					<span style="color: black; font-size:90%;">Powered By</span>
+					<span style="background-color: black; padding: 3px 5px; border: 1px solid #aaa;">           <strong>uoDefacto</strong></span>
+				</div>
+			</div>
+			<div style = "float: right; font-size:16px">&copy; 2014 Francine app
+			</div>
+		</div>
 	</div>
 </div>
 </body>

@@ -1,0 +1,34 @@
+
+	<div id="filter" data-role="dialog" data-theme="c"> 
+		<div data-role="content">
+		
+			<label for = "addedBy">User</label>
+			<select id = "addedBy" name = "addedBy" remember qf-users="Administrator" ><option></option></select>
+			
+			<label for = "FilLocation">Location</label>
+			<select id = "FilLocation" name = "location" remember><option></option></select>
+			
+			<label for = "selfAssessment">Self Assessment</label>
+			
+			<label for="reading">Reading</label>
+			<input type="checkbox" name="readingFlag" id = "reading" value = "1" remember/>
+			<label for="moreCases">More Cases</label>
+			<input type="checkbox" name="moreCasesFlag" id = "moreCases" value = "1" remember/>
+			<label for="comfortable">Comfortable</label>
+			<input type="checkbox" name="comfortableFlag" id = "comfortable" value = "1" remember/>
+			
+			<label for = "dateRange">Date Range</label>
+			<div class="range" id = "dateRange">	
+				<input type="text" class="date" id = "dateSml" name = "date" readonly remember />
+				<input type="text" class="date" id = "dateBig" name = "date" readonly remember />
+			</div>
+			
+			<label for = "block">Block</label>
+			<select id = "block" name = "block" remember><option></option></select>
+			
+			<label for = "year">Year</label>
+			<select id = "year" name = "year" remember><option></option></select>
+
+		</div>
+	</div>
+	

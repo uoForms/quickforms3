@@ -1,0 +1,37 @@
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class = "ui-mobile-rendering">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<link rel="stylesheet" href="../../quickforms/css/quickforms/quickforms.css" />
+	<script src = "../../quickforms/js/require.min.js" ></script>
+</head>
+<body>
+<div data-role="page" id="loadQuickformsTemplate">
+	<script type="text/javascript">
+	require(['../../quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+			require(['dom/navControl'],
+					function(){
+						quickforms.loadNav('nav.html','nav');
+					});
+			});
+		});
+	</script>
+	<div data-role="header"><h1>RPP</h1></div>
+	<div id = "nav"></div>
+	<div data-role="content">
+		<form id="tableTemplate">
+			<h1 align = "center">RPP Excel Report Downloads</h1>
+			<div id = "reportNav"></div>
+			<a href="http://137.122.93.90:80/ibmcognos/cgi-bin/cognos.cgi?b_action=cognosViewer&ui.action=run&ui.object=%2fcontent%2fpackage%5b%40name%3d%27NataliaRPP%27%5d%2freport%5b%40name%3d%27Test%20notes%27%5d&ui.name=Test%20notes&run.outputFormat=&run.prompt=true" rel="external" data-role="button" data-theme="c">Excel Report 1</a>
+			<a href="http://137.122.93.90:80/ibmcognos/cgi-bin/cognos.cgi?b_action=cognosViewer&ui.action=run&ui.object=%2fcontent%2fpackage%5b%40name%3d%27NataliaRPP%27%5d%2freport%5b%40name%3d%27Test%20notes%27%5d&ui.name=Test%20notes&run.outputFormat=&run.prompt=true" rel="external" data-role="button" data-theme="c">Excel Report 2</a>
+			<a href="http://137.122.93.90:80/ibmcognos/cgi-bin/cognos.cgi?b_action=cognosViewer&ui.action=run&ui.object=%2fcontent%2fpackage%5b%40name%3d%27NataliaRPP%27%5d%2freport%5b%40name%3d%27Test%20notes%27%5d&ui.name=Test%20notes&run.outputFormat=&run.prompt=true" rel="external" data-role="button" data-theme="c">Excel Report 3</a>
+
+		</form>
+	</div>
+	<div data-role="footer"><h1>.</h1></div>
+</div>
+</body>
+</html>

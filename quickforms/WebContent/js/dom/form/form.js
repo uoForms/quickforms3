@@ -1,7 +1,7 @@
 /*  Copyright (c) 2014 Austin Chamney, achamney@gmail.com.
     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
-define(['server/putFact','server/getFactData','server/executeQuery'],function(){
+define(['server/putFact','server/getFactData','server/executeQuery','server/putPregappNotification'],function(){
 quickforms.form = {
 	domParsers : []
 };
@@ -158,6 +158,49 @@ quickforms.putFact = function(context, redirect)// context is JavaScript object 
 	formSerialized = formObj.scrubFormDataString(formSerialized);
 	
 	quickforms.putFactServer.call(formObj,formSerialized,quickforms.formRedirect);
+	if(quickforms.offline)
+	{
+		$.mobile.activePage.append('<div id="offlineInfo">Data sent to server : <br />'+formSerialized+'</div>');
+		window.setTimeout(function(){$('#offlineInfo').remove()},5000);
+	}
+};
+quickforms.sendPregappEmail = function(context, redirect)// context is JavaScript object of submit button, redirect is the url to navigate to on success
+{
+	try{		
+		//alert('clicked');
+		context = $(context);
+		context.attr('html','');
+		var formId = context.parents('form')[0].id;
+		
+		var formObj = context.parents('form')[0];
+		var formSerialized = "app=pregapp&";
+		quickforms.redirectUrl = redirect;
+						
+		if(formObj.elements["chkMode"].checked)
+			formSerialized += "chkMode=true";
+		else
+			formSerialized += "chkMode=false";
+	
+		quickforms.putPregappNotification.call(formObj,formSerialized,quickforms.formRedirect);
+	}catch(e){
+		alert('error activating email:' + e.message);
+	}
+	
+	if(quickforms.offline)
+	{
+		$.mobile.activePage.append('<div id="offlineInfo">Data sent to server : <br />'+formSerialized+'</div>');
+		window.setTimeout(function(){$('#offlineInfo').remove()},5000);
+	}
+};
+quickforms.autoStartEmailNotification = function(formObj, formDataSerialized, redirect){
+	try{
+		quickforms.redirectUrl = redirect;		
+		quickforms.putPregappNotification.call(formObj,formDataSerialized,quickforms.formRedirect);		
+		
+	}catch(e){
+		alert('error activating email:' + e.message);
+	}
+	
 	if(quickforms.offline)
 	{
 		$.mobile.activePage.append('<div id="offlineInfo">Data sent to server : <br />'+formSerialized+'</div>');
