@@ -35,37 +35,12 @@ define(function(){
 	};
 	window.getCookie = function(c_name)
 	{
-		/*if(document.cookie){
-			var i,x,y,ARRcookies=document.cookie.split(";");
-			for (i=0;i<ARRcookies.length;i++)
-			{
-				x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-				y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
-				x=x.replace(/^\s+|\s+$/g,"");
-				if (x==c_name)
-				{
-					return unescape(y);
-				}
-			}
-		}
-		else
-		{*/
 	    var app_c_name = quickforms.app+"_"+c_name;
 	    return localStorage.getItem(app_c_name);
-		//}
-		return '';
+	    return '';
 	}
 	window.setCookie = function(c_name,value,exdays)
 	{
-		/*if(document.cookie)
-		{
-			var exdate=new Date();
-			exdate.setDate(exdate.getDate() + exdays);
-			var c_value=escape(value) + ((exdays==null) ? "" : " ; path=/"+quickforms.app+"/ ; expires="+exdate.toUTCString());
-			document.cookie=c_name + "=" + c_value;
-		}
-		else
-		{*/
 	    var app_c_name = quickforms.app+"_"+c_name;
 	    localStorage.setItem(app_c_name, value);
 	    var today = new Date();
@@ -76,8 +51,7 @@ define(function(){
 	    if(isNull(oldExpDay)||oldExpDay<expDay){
 		localStorage.setItem(app_expDay,expDay);
 	    }
-	    
-		//}
+
 	}
 	
 	//Set the cookie expiration time.
