@@ -21,6 +21,7 @@ import javax.sql.DataSource;
 import quickforms.dao.LookupPair;
 import quickforms.dao.MetaField;
 import quickforms.sme.NewThreadForDispatcher;
+import quickforms.sme.NewPregappNotificationDispatcher;
 
 public class Database implements Serializable
 {
@@ -99,6 +100,15 @@ public class Database implements Serializable
 		disconnect();
 	}
 	
+	/**
+	 * Insert data into FACT table
+	 * @param Map<String, String[]> params
+	 * @param String app
+	 * @param String fact
+	 * @param List<LookupPair> multiKeys
+	 * @return Integer rowId
+	 * @throws Exception
+	 */
 	public int putFact(Map<String, String[]> params, String app, String fact, List<LookupPair> multiKeys) throws Exception
 	{
 		connect();
@@ -171,6 +181,14 @@ public class Database implements Serializable
 		disconnect();
 	}
 	
+	/**
+	 * Use the system view information_schema.columns to get the structure of the specified table
+	 * @param String app as quickforms app name, as well as database name
+	 * @param String fact as table name
+	 * @param Boolean includeId as ?
+	 * @return List<MetaField> mfs as structure of the table
+	 * @throws Exception
+	 */
 	public List<MetaField> getMeta(String app, String fact, boolean includeId) throws Exception // ///
 																								// MUST
 																								// BE
@@ -203,6 +221,13 @@ public class Database implements Serializable
 		return mfs;
 	}
 	
+	/**
+	 * Build the insert SQL
+	 * @param List<MetaField> metas
+	 * @param String app
+	 * @param String fact
+	 * @return String sql
+	 */
 	public String buildInsertSql(List<MetaField> metas, String app, String fact)
 	{
 		String sql = "insert into " + fact + "( ";
@@ -428,6 +453,11 @@ public class Database implements Serializable
 		return preparedQuery;
 	}
 	
+	/**
+	 * Identify the database name for the sql.
+	 * @param app as the app's name, as well as the database name.
+	 * @throws Exception
+	 */
 	public void useApp(String app) throws Exception // MUST BE CONNECTED FIRST
 	{
 		if (app.contains("-"))
@@ -812,6 +842,30 @@ public class Database implements Serializable
 				}
 			}
 		}
+	}
+	
+	public String sendPregAppNotifications(Map<String, String[]> params, Database db) throws Exception
+	{		
+		String rowId = null;
+		String callback = null;
+		
+		if (params.containsKey("callback"))
+			callback = params.get("callback")[0];
+		
+		
+		NewPregappNotificationDispatcher ntDispatcher = new NewPregappNotificationDispatcher(params, ds, null, null);
+		Thread t = new Thread(ntDispatcher);
+		t.start();
+		
+		String json = "[{\"id\":\"" + rowId + "\"}]";
+		if (callback != null)
+		{
+			json = json.replace("'", "\\'");
+			json = json.replace("\\\\'", "\\'");
+			json = json.replace("\\\"", "\\\\\"");
+			json = callback + "('" + json + "')";
+		}
+		return json;
 	}
 	
 	private String findMultiVal(List<LookupPair> multiKeys, String param_key)

@@ -35,39 +35,50 @@ define(function(){
 	};
 	window.getCookie = function(c_name)
 	{
-		/*if(document.cookie){
-			var i,x,y,ARRcookies=document.cookie.split(";");
-			for (i=0;i<ARRcookies.length;i++)
-			{
-				x=ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-				y=ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
-				x=x.replace(/^\s+|\s+$/g,"");
-				if (x==c_name)
-				{
-					return unescape(y);
-				}
-			}
-		}
-		else
-		{*/
-			return localStorage.getItem(c_name);
-		//}
-		return '';
+	    var app_c_name = quickforms.app+"_"+c_name;
+	    return localStorage.getItem(app_c_name);
+	    return '';
 	}
 	window.setCookie = function(c_name,value,exdays)
 	{
-		/*if(document.cookie)
-		{
-			var exdate=new Date();
-			exdate.setDate(exdate.getDate() + exdays);
-			var c_value=escape(value) + ((exdays==null) ? "" : " ; path=/"+quickforms.app+"/ ; expires="+exdate.toUTCString());
-			document.cookie=c_name + "=" + c_value;
-		}
-		else
-		{*/
-			localStorage.setItem(c_name, value);
-		//}
+	    var app_c_name = quickforms.app+"_"+c_name;
+	    localStorage.setItem(app_c_name, value);
+	    var today = new Date();
+	    var expDay = today.getTime() + 3600*1000;
+	    var app_expDay = quickforms.app+"_expDay";
+	    var oldExpDay = localStorage.getItem(app_expDay);
+	    //If the cookie [appName]_expDay is null or will expire in one hour, extend the expiration time.
+	    if(isNull(oldExpDay)||oldExpDay<expDay){
+		localStorage.setItem(app_expDay,expDay);
+	    }
+
 	}
+	
+	//Set the cookie expiration time.
+	window.setCookieExp = function(exdays)
+	{
+
+	    var today = new Date();
+	    var expDay = today.getTime() + exdays*24*3600*1000;
+	    var app_expDay = quickforms.app+"_expDay";
+	    localStorage.setItem(app_expDay,expDay);
+	}
+	
+	window.checkCookieExp = function()
+	{
+	    var app_expDay = quickforms.app+"_expDay";
+	    var expDay = localStorage.getItem(app_expDay);
+	    var today = new Date();
+	    today.setHours(0,0,0,0);
+	    if(!isNull(expDay)&&expDay>=today.getTime()){
+		return false;
+	    }else{
+		return true;
+	    }
+		
+	}
+	
+	
     String.prototype.endsWith = function(suffix) {
         return this.indexOf(suffix, this.length - suffix.length) !== -1;
     };
