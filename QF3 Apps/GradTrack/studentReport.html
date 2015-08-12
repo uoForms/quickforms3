@@ -23,7 +23,7 @@
 						quickforms.loadTable(//appName, queryName*, parameterList,whereclause, callback, domId*,configFile 
 							{queryName:'studentReport',configFile:'js/studentReport',whereclause:whereclause});
 					});
-					setCookie('pageType','visitSummary',365);
+					setCookie('pageType','homeSummary',365);
 			});
 		});
 	var tableToExcel = (function() {
@@ -46,7 +46,7 @@
 			<div id = "reportNav"></div>
 			
 			<table id ="mainData"></table>
-			<input type="button" onclick="tableToExcel('mainData', 'W3C Example Table')" value="Export Report to Excel">
+			<input type="button" onclick="tableToExcel('mainData', 'Student Information')" value="Export Report to Excel">
 		</form>
 	</div>
 	<div data-role="footer"><h1>.</h1></div>
