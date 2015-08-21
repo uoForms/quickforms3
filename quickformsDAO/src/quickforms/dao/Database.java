@@ -100,6 +100,15 @@ public class Database implements Serializable
 		disconnect();
 	}
 	
+	/**
+	 * Insert data into FACT table
+	 * @param Map<String, String[]> params
+	 * @param String app
+	 * @param String fact
+	 * @param List<LookupPair> multiKeys
+	 * @return Integer rowId
+	 * @throws Exception
+	 */
 	public int putFact(Map<String, String[]> params, String app, String fact, List<LookupPair> multiKeys) throws Exception
 	{
 		connect();
@@ -172,6 +181,14 @@ public class Database implements Serializable
 		disconnect();
 	}
 	
+	/**
+	 * Use the system view information_schema.columns to get the structure of the specified table
+	 * @param String app as quickforms app name, as well as database name
+	 * @param String fact as table name
+	 * @param Boolean includeId as ?
+	 * @return List<MetaField> mfs as structure of the table
+	 * @throws Exception
+	 */
 	public List<MetaField> getMeta(String app, String fact, boolean includeId) throws Exception // ///
 																								// MUST
 																								// BE
@@ -204,6 +221,13 @@ public class Database implements Serializable
 		return mfs;
 	}
 	
+	/**
+	 * Build the insert SQL
+	 * @param List<MetaField> metas
+	 * @param String app
+	 * @param String fact
+	 * @return String sql
+	 */
 	public String buildInsertSql(List<MetaField> metas, String app, String fact)
 	{
 		String sql = "insert into " + fact + "( ";
@@ -429,6 +453,11 @@ public class Database implements Serializable
 		return preparedQuery;
 	}
 	
+	/**
+	 * Identify the database name for the sql.
+	 * @param app as the app's name, as well as the database name.
+	 * @throws Exception
+	 */
 	public void useApp(String app) throws Exception // MUST BE CONNECTED FIRST
 	{
 		if (app.contains("-"))
