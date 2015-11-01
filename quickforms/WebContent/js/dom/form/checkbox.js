@@ -64,6 +64,28 @@ function (){
 		{
 			return this.name +'='+this.selectedField;
 		};
+		
+		this.getlabel = function(){
+			var controlId =  this.id;			
+		    var labels= this.parent.dom.find('label');
+		    var targetLabel="";
+			
+		    labels.each(function(i,label){
+				var originalControl = label;
+				label = $(label);				
+				if(!isNull(label.attr('for')))
+				{
+					if(label.attr('for').toString().toUpperCase().localeCompare(controlId.toString().toUpperCase()) == 0){                       				
+						targetLabel = originalControl.innerHTML;
+					}
+						
+				}
+			});
+			
+			return targetLabel;
+		};
+		
+		
 		this.summary = function(multiple)
 		{
 			if(multiple && this.checked == true)

@@ -1,0 +1,72 @@
+
+
+<div id="registration" data-role="dialog" data-theme="c" > 
+<script type="text/javascript1">
+		function showMe (it, select, box) {
+  var vis = (box.checked) ? "block" : "none";
+  document.getElementById(it).style.display = vis;
+	if(vis == "none"){
+		
+		var index = document.getElementById(select).selectedIndex;
+		var options = document.getElementById(select).options;
+		document.getElementById(select).selectedIndex = 0;
+		$("#"+select).change();
+
+	}
+
+}
+
+	</script>
+	
+	<div data-role="content">
+	
+	<label for ="Date">Workshop Complete Date</label>
+	<input type = "text" class="date" name ="date" id = "Date" readonly />
+	
+	<h2>Pre-request Courses</h2>
+			
+	<label for="MAT1371Flag">MAT1371 DESCRIPTIVE STATISTICS</label>
+	<input type="checkbox" name="MAT1371Flag" id ="MAT1371Flag" value="MAT1371" onclick="showMe('div1', 'preOneSemester', this)"/>
+	<fieldset data-role="controlgroup" data-type="horizontal" id="div1" style="display: none;">
+		    <legend>Course Complete Time</legend>
+			<label for = "preOneSemester">Complete Time</label>
+			<select id = "preOneSemester" name = "preOneSemester">
+				<option>Choose Semester When Completed</option>
+			</select>
+														
+	</fieldset>
+	
+	<label for = "CSI3140Flag">CSI3140 WWW STRUCTURES, TECHNIQUES AND STANDARDS	</label>
+	<input type="checkbox" name="CSI3140Flag" id = "CSI3140Flag" value="CSI3140" onclick="showMe('div2','preTwoSemester', this)"/>
+		
+	<fieldset data-role="controlgroup" data-type="horizontal" id="div2" style="display: none;">
+	        <legend>Course Complete Time</legend>
+			<label for = "preTwoSemester">Complete Time</label>			
+			<select name="preTwoSemester" id="preTwoSemester"  >
+				<option>Choose Semester When Completed</option>
+			</select>
+	</fieldset>	
+		
+	<label for = "ADM2372Flag">ADM2372 MANAGEMENT INFORMATION SYSTEMS 	</label>
+	<input type="checkbox" name="ADM2372Flag" id = "ADM2372Flag" value="ADM2372" onclick="showMe('div3','preThreeSemester', this)"/>
+		
+	<fieldset data-role="controlgroup" data-type="horizontal" id="div3" style="display: none;">
+			<legend>Course Complete Time</legend>
+			<label for = "preThreeSemester">Complete Time</label>	
+			<select name="preThreeSemester" id="preThreeSemester"  ><option>Choose Semester When Completed</option></select>
+	</fieldset>
+	
+	<label for = "ADM4377Flag">ADM4377 ELECTRONIC COMMERCE </label>
+	<input type="checkbox" name="ADM4377Flag" id = "ADM4377Flag" value="ADM4377" onclick="showMe('div4','preFourSemester', this)"/>
+		<fieldset data-role="controlgroup" data-type="horizontal" id="div4" style="display: none;">
+			<legend>Course Complete Time</legend>
+			<label for = "preFourSemester">Complete Time</label>				
+			<select name="preFourSemester" id="preFourSemester"  ><option>Choose Semester When Completed</option></select>
+	</fieldset>
+	
+	
+	</div>
+	
+
+	
+</div>

@@ -1,0 +1,35 @@
+<div id="project" data-role="dialog" data-theme="c" > 
+	<div data-role="content">
+	    <label for="projectTitle" class ="ui-input-text">Project Title</label>
+					<input type="text" id ="projectTitle" name ="projectTitle" />
+
+		<label for ="projectStartSemester">Project Start Semester</label>
+		<select name="projectStartSemester" id="projectStartSemester"><option>Project Start Semester</option></select>
+
+		<label for ="location">Supervisor</label>
+		<select name="location" id="location"  ><option>Supervisor</option></select>
+		
+		
+		<label for="supervisorApprovedFlag">Project Approved by Supervisor</label>
+	    <input type="checkbox" name="supervisorApprovedFlag" id="supervisorApprovedFlag" value="Approved" />
+	   
+		<label for="directorApprovedFlag">Project Approved by Director</label>
+	    <input type="checkbox" name="directorApprovedFlag" id="directorApprovedFlag" value="Approved" />
+	    		
+	           			
+		<label for="projectDoc" class ="ui-input-text">Submit Project Report</label>
+			<form method="post" enctype="multipart/form-data">
+				<input type="file" name="my_file[]" multiple>
+            </form>
+				
+		<label for = "projectGrade">Grade</label>
+			<select id = "projectGrade" name = "projectGrade"><option>Grade</option></select>
+			   
+		<label for="gradeDate" class ="ui-input-text">Supervisor Grade Submission Date</label>
+        <input name="gradeDate" id="gradeDate" type="text" class="date">
+      
+	  <label for ="projectStatus">Project Status</label>
+		<select name="projectStatus" id="projectStatus"><option>Project Status</option></select>
+		
+</div>
+</div>
