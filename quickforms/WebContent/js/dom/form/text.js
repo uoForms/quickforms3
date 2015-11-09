@@ -27,38 +27,16 @@ function (){
 				return this.name +"="+encodeURIComponent(this.currentVal);
 			}
 		};
-		this.getlabel = function(){
-			var controlId =  this.id;			
-		    var labels= this.parent.dom.find('label');
-		    var targetLabel="";
-			
-		    labels.each(function(i,label){
-				var originalControl = label;
-				label = $(label);				
-				if(!isNull(label.attr('for')))
-				{
-					if(label.attr('for').toString().toUpperCase().localeCompare(controlId.toString().toUpperCase()) == 0){                       				
-						targetLabel = originalControl.innerHTML;
-					}
-						
-				}
-			});
-			
-			return targetLabel;
-		};
-		
 		this.summary = function()
 		{
 			if(!isNull(this.currentVal))
-				return '<b>' + this.getlabel() + '</b>: ' + this.currentVal+"<br/>";
+				return this.currentVal+"<br />";
 			return '';
 		};
-        
-		this.filter = function()
+                this.filter = function()
 		{
 			return this.name+'=\''+this.currentVal+'\'';
 		};
-		
 		this.parseDom = function(formObj)
 		{
                         var remembered = getCookie(quickforms.getRememberID(this));

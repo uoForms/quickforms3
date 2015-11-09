@@ -27,23 +27,18 @@ function (){
 				me.label = [];
 			}
 			me.dom.find(":selected").each(function () {
-				
 				if(me.multiple==false)
 				{
-					
 					me.selectedField = $(this).val();
 					me.label +=$(this).text() ;
-
 				}
 				else
 				{
-					
 					me.selectedField.push($(this).val());
 					me.label.push($(this).text());
 				}
 				
 			});
-			
 		};
 		this.serialize = function()
 		{
@@ -65,25 +60,6 @@ function (){
 				retVal += this.name+'Measure='+this.label;
 			return retVal;
 		};
-		this.getlabel = function(){
-			var controlId =  this.id;			
-		    var labels= this.parent.dom.find('label');
-		    var targetLabel="";
-			
-		    labels.each(function(i,label){
-				var originalControl = label;
-				label = $(label);				
-				if(!isNull(label.attr('for')))
-				{
-					if(label.attr('for').toString().toUpperCase().localeCompare(controlId.toString().toUpperCase()) == 0){                       				
-						targetLabel = originalControl.innerHTML;
-					}
-						
-				}
-			});
-			
-			return targetLabel;
-		};
 		this.summary = function(multi)
 		{
 			if(this.label)
@@ -93,11 +69,11 @@ function (){
 					var multiLabel = "";
 					for(var i in this.label)
 					{
-						multiLabel += this.label[i]+"<br/>";
+						multiLabel += this.label[i]+"<br />";
 					}
-					return '<b>' + this.getlabel() + '</b>: <br/> ' + multiLabel;
+					return multiLabel;
 				}
-				return '<b>' + this.getlabel() + '</b>: ' + this.label + "<br/>";
+				return this.label + "<br />";
 			}
 			return '';
 		};

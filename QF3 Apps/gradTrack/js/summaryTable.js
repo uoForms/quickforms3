@@ -4,9 +4,8 @@ define([],function(){
         config.bProcessing= true;
         config.iDisplayLength= 50;
         config.sPaginationType= "full_numbers";
-        config.aaSorting= [[0,"desc"]];
+        config.aaSorting= [[2,"desc"]];
         config.sScrollX= "100%";
-		config.aLengthMenu = [[10,25,50,100,-1],[10,25,50,100,"ALL"]];
 	config.sScrollXInner= "101%";
 	config.bScrollCollapse= true;
         config.columnWidths = [];
@@ -19,6 +18,6 @@ define([],function(){
                 $('a.btmAdd').hide();
             }
         };
-        config.columnWidths = ['6%','6%','6%','8%','4%','4%','4%','8%','9%','9%'];
+		config.columnWidths = ['10%','10%','9%','23%','20%','25%'];
 	return config;
 });

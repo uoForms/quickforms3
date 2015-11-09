@@ -60,7 +60,7 @@ define(['dom/tableControl','dom/form/select'],function(){
 													if(isJSONString(data)) {
 														var json = JSON.parse(data);
 														setCookie('currentFormtracking_formDate'+getCookie('username'),json[0].date, 1);
-														window.location='student.html';
+														window.location='newVisit.html';
 													}
 												}
 						});
