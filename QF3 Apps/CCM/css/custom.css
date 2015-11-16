@@ -1,11 +1,3 @@
-.week_content{
-	overflow: auto;
-	overflow-y: hidden;
-	-ms-overflow-y: hidden;
-	background-image:url('../images/pink_background.jpg');
-	padding:10px;
-}
-
 .tabs {
 	overflow: hidden;
 	clear: both;
@@ -49,3 +41,37 @@
 	background-color: #fff;
 	display: none;
 }
+/* css for carousel Start*/
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+  weight: 100%;
+  margin: auto;
+  z-index: -1;
+}
+.carousel_slide {
+	background-repeat: 
+	no-repeat;
+	background-position:top; 
+	height: 100%; 
+	margin:0 auto; 
+	text-align: center;	
+}
+.carousel_slide_inner {
+	padding-top: 270px;
+}
+
+.carousel_slide_inner_title{
+	display: block; 
+	line-height: 1.1em; 
+	font-size: 1.5em; 
+	color: purple;
+}
+
+.carousel_slide_inner_content{
+	font-size:1.4em; 
+	color:#fc68d4;
+	width: 200px; 
+}
+
+/* css for carousel End*/	
+		

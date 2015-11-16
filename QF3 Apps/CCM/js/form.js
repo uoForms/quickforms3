@@ -1,7 +1,7 @@
 /*  Copyright (c) 2014 Austin Chamney, achamney@gmail.com.
     Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
-define(['server/putFact','server/getFactData','server/executeQuery','server/updateLookup'],function(){
+define(['server/putFact','server/getFactData','server/executeQuery'],function(){
     quickforms.form = {
 	    domParsers : []
     };
@@ -25,7 +25,7 @@ define(['server/putFact','server/getFactData','server/executeQuery','server/upda
     quickforms.FormElement = function(dom,app,fact,ccm) 
     {
 	quickforms.DomElement.call(this,dom); // super call to get parent attributes
-	this.ccm = ((""+ccm).trim().length > 0 && ccm != false && ccm != "false") ? ccm : false;
+	this.ccm = (ccm=='true'||ccm==true)?true:false;
 	this.children = [];
 	this.childMap = {};
 	this.app = app || quickforms.app;
@@ -106,13 +106,11 @@ define(['server/putFact','server/getFactData','server/executeQuery','server/upda
 	    {
 		var queryLabel = this.fact+(this.ccm?"":"_get_row");
 		var prms = "updateId="+this.updateId;
-//		var whereclause = this.ccm?"a.level1="+this.updateId:null;
 		quickforms.getFactData({queryName:queryLabel, 
 		    params:prms,
-//		    whereclause:whereclause,
 		    callback: function(data){
 			if(me.ccm){
-			    me.updateRow = parseCcmContent(data,me.id.replace("currentForm",""),me.updateId,me.level2Key, me.ccm);
+			    me.updateRow = parseCcmContent(data,me.id.replace("currentForm",""),me.updateId);
 			}else{
 			    me.updateRow = JSON.parse(data)[0];
 			}
@@ -138,161 +136,78 @@ define(['server/putFact','server/getFactData','server/executeQuery','server/upda
 			'id='+me.updateId, function(){window.history.back();});
 	    });            
 	};
-
-	var parseCcmContent = function(jSonData, formId, level1Key, level2Key, ccm){
-	    var jsonObj = {};
-	    var tmpJsonObj = JSON.parse(jSonData);
-	    var formDom = document.getElementById(formId);
-	    var titleDom = document.createElement("h1");
-	    var editBtn = document.getElementById("editBtn");
-//	    alert(ccm);
-	    if(ccm=="display"){
-		if(editBtn){
-		    editBtn.href = editBtn.href+"?id="+level1Key;		    
-		}
-		var tabDom = document.getElementById("contentTab");
-		tabDom.className = "tabs";
-		//generate tab labels and reprocess the contentHTML
-		for(var i = 0; i < tmpJsonObj.length; i++){
-		    var contentHTML = tmpJsonObj[i].contentHTML;
-		    if(contentHTML==null||contentHTML.trim().length==0) continue;
-		    var labelDom = document.getElementById("#tab"+tmpJsonObj[i].contentId);
-		    labelDom.style.display = "block";
-		    var tabContentDom = document.getElementById("tab"+tmpJsonObj[i].contentId);
-		    tabContentDom.innerHTML = tmpJsonObj[i].contentHTML;
-		}
-	    }else if(ccm=="edit"){
+	
+	var parseCcmContent = function(jSonData, formId, level1Key){
+		var jsonObj = {};
+		var tmpJsonObj = JSON.parse(jSonData);
+		var formDom = document.getElementById(formId);
+		var titleDom = document.createElement("h1");
 		titleDom.appendChild(document.createTextNode(tmpJsonObj[0].title));
-		formDom.insertBefore(titleDom, formDom.childNodes[0]);
-//		formDom.appendChild(titleDom);
-		//get content navBar and change href pointing to this level1
-		var navBtnList = $("#navBarContent").find("a");
-		for(var i = 0; i < navBtnList.size(); i++){		    
-		    navBtnList[i].href = navBtnList[i].href+"&id="+level1Key;
-		}
+//		formDom.insertBefore(titleDom,formDom.childNodes[0]);
+		formDom.appendChild(titleDom);
 		for(var i = 0; i < tmpJsonObj.length; i++){
-		    if(level2Key != "-1" && level2Key != tmpJsonObj[i].level2Key){//if level2Key is defined but is not equal to the content's level2Key, then continue
-			continue;
-		    }
-		    jsonObj[tmpJsonObj[i].contentId] = tmpJsonObj[i].contentHTML;
-		    jsonObj["level2Key"] = tmpJsonObj[i].level2Key;
-		    jsonObj["ccmKey"] = tmpJsonObj[i].ccmKey;
-		    jsonObj["contentName"] = tmpJsonObj[i].contentId;
+		    jsonObj[tmpJsonObj[i].contentId]= tmpJsonObj[i].contentHTML;
 		    var textareaDom = document.createElement("textarea");
 		    textareaDom.className = "dynamicText";
 		    textareaDom.name = tmpJsonObj[i].contentId;
-		    textareaDom.id = "content_"+tmpJsonObj[i].contentId;
 		    textareaDom.rows = "0";
 		    textareaDom.cols = "0";
-		    formDom.insertBefore(textareaDom, formDom.childNodes[1]);
-//		    formDom.appendChild(textareaDom);
-		    if(level2Key == "-1"){//if the level2Key is not defined which will be "-1", then display the first content.
-			break;
-		    }
-		}
-	    }
-
-	    var prms = "updateId="+level1Key;
-	    quickforms.getFactData({queryName:"getLastAndNext", 
-		params:prms,
-		callback: function(data){
-		    var jsonObj = JSON.parse(data)[0];
-		    var btnsDivDom = document.createElement("div");
-		    btnsDivDom.className = "buttons";
-		    if(jsonObj.lastId&&jsonObj.lastId!=""&&jsonObj.lastId!="null"){
-			var lastBtnDom = document.createElement("a");
-			if(ccm == "display"){
-			    lastBtnDom.href = "content.html?id="+jsonObj.lastId;
-			}else if (ccm == "edit"){
-			    lastBtnDom.href = "editContent.html?id="+jsonObj.lastId;
-			}else{
-			    lastBtnDom.style.display = "none";
-			}
-			lastBtnDom.rel = "external";
-			lastBtnDom.setAttribute("data-role","button");
-			lastBtnDom.setAttribute("data-icon","check");
-			lastBtnDom.setAttribute("data-theme","b");
-			lastBtnDom.setAttribute("data-inline","true");
-			lastBtnDom.appendChild(document.createTextNode(jsonObj.lastLabel));
-			btnsDivDom.appendChild(lastBtnDom);
-		    }
-
-		    var homeBtnDom = document.createElement("a");
-		    homeBtnDom.href = "index.html";  
-		    homeBtnDom.rel = "external";
-		    homeBtnDom.setAttribute("data-role","button");
-		    homeBtnDom.setAttribute("data-icon","back");
-		    homeBtnDom.setAttribute("data-theme","c");
-		    homeBtnDom.setAttribute("data-inline","true");
-		    homeBtnDom.appendChild(document.createTextNode("Home"));
-		    btnsDivDom.appendChild(homeBtnDom);
-
-		    if(jsonObj.nextId&&jsonObj.nextId!=""&&jsonObj.nextId!="null"){
-			var nextBtnDom = document.createElement("a");
-			if(ccm == "display"){
-			    nextBtnDom.href = "content.html?id="+jsonObj.nextId;
-			}else if (ccm == "edit"){
-			    nextBtnDom.href = "editContent.html?id="+jsonObj.nextId;
-			}else{
-			    nextBtnDom.style.display = "none";
-			} 
-			nextBtnDom.rel = "external";
-			nextBtnDom.setAttribute("data-role","button");
-			nextBtnDom.setAttribute("data-icon","check");
-			nextBtnDom.setAttribute("data-theme","b");
-			nextBtnDom.setAttribute("data-inline","true");
-			nextBtnDom.appendChild(document.createTextNode(jsonObj.nextLabel));
-			btnsDivDom.appendChild(nextBtnDom);
-		    }
-
-		    formDom.appendChild(btnsDivDom);
-
+//		    formDom.insertBefore(textareaDom,formDom.childNodes[i+1]);
+		    formDom.appendChild(textareaDom);
 
 		}
-	    });
-
-	    return jsonObj;
-	};
-
-
-	var makeTabs = function (selector) {
-
-	    tab_lists_anchors = document.querySelectorAll(selector	+ " li a");
-	    divs = document.querySelector(selector).getElementsByClassName("subTab");
-	    for (var i = 0; i < tab_lists_anchors.length; i++) {
-		if (tab_lists_anchors[i].classList.contains('active')) {
-		    divs[i].style.display = "block";
-		}
-
-	    }
-
-	    for (i = 0; i < tab_lists_anchors.length; i++) {
-
-		document.querySelectorAll(".tabs li a")[i]
-		.addEventListener(
-			'click',
-			function(e) {
-
-			    for (i = 0; i < divs.length; i++) {
-				divs[i].style.display = "none";
+		var prms = "updateId="+level1Key;
+		quickforms.getFactData({queryName:"getLastAndNext", 
+		    params:prms,
+		    callback: function(data){
+			    var jsonObj = JSON.parse(data)[0];
+			    var btnsDivDom = document.createElement("div");
+			    btnsDivDom.className = "buttons";
+			    if(jsonObj.lastId&&jsonObj.lastId!=""&&jsonObj.lastId!="null"){
+				var lastBtnDom = document.createElement("a");
+				lastBtnDom.href = "content.html?id="+jsonObj.lastId;  
+				lastBtnDom.rel = "external";
+				lastBtnDom.setAttribute("data-role","button");
+				lastBtnDom.setAttribute("data-icon","check");
+				lastBtnDom.setAttribute("data-theme","b");
+				lastBtnDom.setAttribute("data-inline","true");
+				lastBtnDom.appendChild(document.createTextNode(jsonObj.lastLabel));
+				btnsDivDom.appendChild(lastBtnDom);
 			    }
-
-			    for (i = 0; i < tab_lists_anchors.length; i++) {
-				tab_lists_anchors[i].classList.remove("active");
+			    
+			    var homeBtnDom = document.createElement("a");
+			    homeBtnDom.href = "index.html";  
+			    homeBtnDom.rel = "external";
+			    homeBtnDom.setAttribute("data-role","button");
+			    homeBtnDom.setAttribute("data-icon","back");
+			    homeBtnDom.setAttribute("data-theme","c");
+			    homeBtnDom.setAttribute("data-inline","true");
+			    homeBtnDom.appendChild(document.createTextNode("Home"));
+			    btnsDivDom.appendChild(homeBtnDom);
+			    
+			    if(jsonObj.nextId&&jsonObj.nextId!=""&&jsonObj.nextId!="null"){
+				var nextBtnDom = document.createElement("a");
+				nextBtnDom.href = "content.html?id="+jsonObj.nextId;  
+				nextBtnDom.rel = "external";
+				nextBtnDom.setAttribute("data-role","button");
+				nextBtnDom.setAttribute("data-icon","check");
+				nextBtnDom.setAttribute("data-theme","b");
+				nextBtnDom.setAttribute("data-inline","true");
+				nextBtnDom.appendChild(document.createTextNode(jsonObj.nextLabel));
+				btnsDivDom.appendChild(nextBtnDom);
 			    }
+			    formDom.appendChild(btnsDivDom);
 
-			    clicked_tab = e.target || e.srcElement;
-
-			    clicked_tab.classList.add('active');
-			    div_to_show = clicked_tab
-			    .getAttribute('href');
-
-			    document.querySelector(div_to_show).style.display = "block";
-
-			});
-	    } 
-
-	};
+		    }
+		});
+		
+		return jsonObj;
+	    };
+	    
+	    var generateCcmContentControl = function(formId,updateRow){
+		
+		
+	    };
 
 
     };
@@ -302,7 +217,6 @@ define(['server/putFact','server/getFactData','server/executeQuery','server/upda
 	quickforms.app = params.app || quickforms.app;
 	var formObj = new quickforms.FormElement(formDom,quickforms.app,params.fact,params.ccm);
 	formObj.updateId = getParameterByName('id');
-	formObj.level2Key = getParameterByName('level2Key')?getParameterByName('level2Key'):"-1";//get level2Key to display specific content
 	formObj.id = 'currentForm'+params.formId;
 	quickforms.initLoadingGif();
 
@@ -339,34 +253,6 @@ define(['server/putFact','server/getFactData','server/executeQuery','server/upda
 	    window.setTimeout(function(){$('#offlineInfo').remove()},5000);
 	}
     };
-    //TODO:finish this
-    quickforms.updateCcmContent = function(context, redirect){
-	context = $(context);
-	context.attr('html','');
-	var formId = context.parents('form')[0].id;
-	var formObj = quickforms['currentForm'+formId];
-	var formSerialized = "app="+formObj.app+"&";
-	var contentDom = document.getElementById("contentName");
-	var ccmKeyDom = document.getElementById("ccmKey");
-
-	quickforms.redirectUrl = window.location.href;;
-	    if(redirect != null && redirect != '' && redirect != ""){
-		quickforms.redirectUrl = redirect;
-	    }
-
-	formSerialized += "factTable=ccm"+"&updateid="+ccmKeyDom.value+"&";
-	formSerialized += formObj.serialize();
-	formSerialized = formObj.scrubFormDataString(formSerialized);
-//	alert(formSerialized); 
-	formSerialized = formSerialized.replace("&"+contentDom.value+"=","&contentHTML=");
-
-	quickforms.putFactServer.call(formObj,formSerialized,function(){window.location = quickforms.redirectUrl;});
-	if(quickforms.offline)
-	{
-	    $.mobile.activePage.append('<div id="offlineInfo">Data sent to server : <br />'+formSerialized+'</div>');
-	    window.setTimeout(function(){$('#offlineInfo').remove()},5000);
-	}
-    };
     quickforms.sendPregappEmail = function(context, redirect)// context is JavaScript object of submit button, redirect is the url to navigate to on success
     {
 	try{		
@@ -383,7 +269,6 @@ define(['server/putFact','server/getFactData','server/executeQuery','server/upda
 		formSerialized += "chkMode=true";
 	    else
 		formSerialized += "chkMode=false";
-
 
 	    quickforms.putPregappNotification.call(formObj,formSerialized,quickforms.formRedirect);
 	}catch(e){

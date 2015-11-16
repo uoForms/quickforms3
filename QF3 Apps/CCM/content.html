@@ -1,123 +1,48 @@
 <!doctype html>
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-<html class="ui-mobile-rendering">
+<html class = "ui-mobile-rendering">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="../quickforms/css/quickforms/quickforms.css" />
-<link rel="stylesheet" href="css/custom.css" />
-<script src="../quickforms/js/require.min.js"></script>
-
-
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<link rel="stylesheet" href="../quickforms/css/quickforms/quickforms.css" />
+	<link rel="stylesheet" href="css/custom.css" />
+	<script src = "../quickforms/js/require.min.js" ></script>
 </head>
 
 <body>
 
-	<div data-role="page">
-		<script type="text/javascript">
-	    require([ '../quickforms/js/quickforms.js' ], function() {
-		quickforms.registerReadyFunction(function() {
-		    require([ 'dom/form/text', 'dom/form/tabPopup',
-			    'dom/form/dynamicText', 'dom/navControl' ],
-			    function() {
-				setCookie('userRole', '', '1');
-
-				quickforms.loadNav('nav.html', 'nav', 
-					function() {
-				    quickforms.parseForm({
-					formId : 'ccmForm',
-					fact : 'getCcmContentNew',
-					ccm : 'display'
-				    });
-					}	
-				);
-
-			    });
+<div data-role="page" >
+	<script type="text/javascript">
+	
+	require(['../quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+				require(['dom/form/text','dom/form/tabPopup','dom/form/dynamicText','dom/navControl'],
+					function(){
+						setCookie('userRole','','1');
+						
+						quickforms.loadNav('sideNav.html','sideNav',function(){
+							quickforms.parseForm({formId: 'contentHTML',fact:'getCcmContent',ccm:true});
+						});
+						quickforms.loadNav('nav.html','nav');
+					});
+			});
 		});
-	    });
-
-  	    
-	    window.addEventListener("load", function() {
-			makeTabs(".tabs")
-		});
-	    
-	    function makeTabs(selector) {
-
-		tab_lists_anchors = document.querySelectorAll(selector	+ " li a");
-		divs = document.querySelector(selector).getElementsByClassName("subTab");
-		for (var i = 0; i < tab_lists_anchors.length; i++) {
-		    if (tab_lists_anchors[i].classList.contains('active')) {
-			divs[i].style.display = "block";
-		    }
-
-		}
-
-		for (i = 0; i < tab_lists_anchors.length; i++) {
-
-		    document.querySelectorAll(".tabs li a")[i]
-			    .addEventListener(
-				    'click',
-				    function(e) {
-
-					for (i = 0; i < divs.length; i++) {
-					    divs[i].style.display = "none";
-					}
-
-					for (i = 0; i < tab_lists_anchors.length; i++) {
-					    tab_lists_anchors[i].classList
-						    .remove("active");
-					}
-
-					clicked_tab = e.target || e.srcElement;
-
-					clicked_tab.classList.add('active');
-					div_to_show = clicked_tab
-						.getAttribute('href');
-
-					document.querySelector(div_to_show).style.display = "block";
-
-				    });
-		} 
-
-	    }
 	</script>
+	<div id="sideNav"></div>
+	<div data-role="header"><a href="#myPanel" data-icon="bullets" data-iconpos="notext">Menu</a><h1>Francine App</h1></div>
+	<div data-role ="content">
+	<div id = 'nav'></div>	
+	
+	<div class="week_content">
+		<form id="contentHTML">		
 
-
-		<div data-role="header">
-			<h1>Francine App</h1>
-			<a id="editBtn" data-theme="c" rel="external" data-role="button" class="tabPopup" href="editContent.html" >Edit</a>
-		</div>
-		<div data-role="content">
-			<div id='nav'></div>
-			
-
-			<div class="week_content">
-				<form id="ccmForm">
-					<div id="contentTab" class="tabs">
-						<ul>
-							<li><a id="#tabHome" href="#tabHome" class="active tabLabel" style="display:none">Home</a></li>
-							<li><a id="#tabBody" href="#tabBody" class="tabLabel" style="display:none">Body</a></li>
-							<li><a id="#tabTips" href="#tabTips" class="tabLabel" style="display:none">Tips</a></li>
-							<li><a id="#tabBaby" href="#tabBaby" class="tabLabel" style="display:none">Baby</a></li>
-						</ul>
-						<div id="tabHome" class="subTab"></div>
-						<div id="tabBody" class="subTab"></div>
-						<div id="tabTips" class="subTab"></div>
-						<div id="tabBaby" class="subTab"></div>
-					</div>
-				</form>
-				
-
-				
-
-
-			</div>
-			
-		</div>
-		<div data-role="footer" class="footer-docs" data-theme="e">
-
-			<p>&copy; 2014 Francine app</p>
-		</div>
+		</form>
 	</div>
+	</div>
+	<div data-role="footer" class="footer-docs" data-theme="e">
+					
+				<p>&copy; 2014 Francine app</p>
+	</div>
+</div>
 </body>
 </html>

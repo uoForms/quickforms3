@@ -1,6 +1,3 @@
-/*  Copyright (c) 2014 Austin Chamney, achamney@gmail.com.
-    Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- */
 define(
 	['server/putFact','server/getFactData','server/executeQuery'],
 	function() {
@@ -92,9 +89,9 @@ define(
 //				var divider = document.createTextNode("|");
 //				var weeks = document.createElement("b");
 //				weeks.appendChild(document.createTextNode("Weeks"));
-				carousel_level1_container.appendChild(document.createElement("b").appendChild(document.createTextNode("Weeks")));
-				carousel_level1_container.appendChild(document.createElement("br"));
-				carousel_level1_container.appendChild(document.createElement("br"));
+//				carousel_level1_container.appendChild(document.createElement("b").appendChild(document.createTextNode("Weeks")));
+//				carousel_level1_container.appendChild(document.createElement("br"));
+//				carousel_level1_container.appendChild(document.createElement("br"));
 				var level1LineLength = 0;
 				var dataSize = 0;
 				for(var obj in tempData){
@@ -159,9 +156,9 @@ define(
 					    carousel_level0_container.className = "carousel_slide_inner";
 					    carousel_level1_container = document.createElement("span");
 					    carousel_level1_container.className = "carousel_slide_inner_content";
-					    carousel_level1_container.appendChild(document.createElement("b").appendChild(document.createTextNode("Weeks")));
-					    carousel_level1_container.appendChild(document.createElement("br"));
-					    carousel_level1_container.appendChild(document.createElement("br"));
+//					    carousel_level1_container.appendChild(document.createElement("b").appendChild(document.createTextNode("Weeks")));
+//					    carousel_level1_container.appendChild(document.createElement("br"));
+//					    carousel_level1_container.appendChild(document.createElement("br"));
 					    level1LineLength = 0;
 					    level0Key = 0;
 					    i--;

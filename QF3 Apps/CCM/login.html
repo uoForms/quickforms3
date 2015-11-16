@@ -19,7 +19,6 @@
 						alert(loginBtnDom.href);
 						loginBtnDom.href = getParameterByName("redirect");
 						alert(loginBtnDom.href);
-						alert(loginBtnDom.onclick);
 					});
 			});
 		});
@@ -41,7 +40,7 @@
 				<td><input id="rememberMe" type="checkbox" name="rememberMe" />
 				<label for="rememberMe">Remember me next time.</label></td></tr>
 				<tr><td></td>
-                <td><input id="loginBtn" type="button" onclick = "quickforms.currentLogin.logIn()" value="Log In" /></td>
+                <td><input id="loginBtn" type="button" onclick = "quickforms.currentLogin.logIn()" value="Log In" href="#"/></td>
 				</tr></table>
             </form>	
 			<hr />
