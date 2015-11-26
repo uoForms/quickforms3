@@ -1,0 +1,50 @@
+<!DOCTYPE html> 
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class = "ui-mobile-rendering">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1"> 
+	<title>Francine Application</title>	
+	<link rel="stylesheet" href="/quickforms/css/quickforms/quickforms.css" />
+	<script src = "/quickforms/js/require.min.js" ></script>
+	
+</head> 
+<body> 
+	
+<div data-role="page" id = "mynext">
+	<script type = "text/javascript">
+		require(['/quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+				require(['dom/navControl'],
+					function(){
+						quickforms.loadNav('nav.html','nav');
+					});
+			});
+		});
+	</script>
+	<div data-role="header" data-id="foo1" data-position="fixed"><h1>Francine App</h1>
+	<div data-role="controlgroup" data-type="horizontal" class="ui-btn-right">
+		<a href="subscribe.html" rel="external" data-role="button" data-rel="dialog"  data-icon="" data-theme="e" >Subscribe</a>
+		<a href="unsubscribe.html" rel="external"  data-role="button" data-rel="dialog" data-icon="" data-theme="e">Unsubscribe</a>
+	</div>
+	</div>
+	<div data-role="content">
+		<div id = 'nav'></div>
+	</div>
+<div data-role="content" >
+     
+<h1>This is an applications created using Quickforms API for Pregnant Women</h1>	 
+       
+</div>
+<div data-role="footer" class="footer-docs" data-theme="e">
+					
+				<p>&copy; 2014 Francine app</p>
+</div>
+</div>
+</body>
+</html>
+
+</div>
+</body>
+</html>

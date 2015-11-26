@@ -1,0 +1,53 @@
+IF OBJECT_ID('LKUP_level0', 'U') IS NOT NULL ALTER TABLE LKUP_levels DROP CONSTRAINT FK_LKUP_levels_LKUP_level0;
+IF OBJECT_ID('LKUP_level1', 'U') IS NOT NULL ALTER TABLE LKUP_levels DROP CONSTRAINT FK_LKUP_levels_LKUP_level1;
+IF OBJECT_ID('LKUP_level2', 'U') IS NOT NULL ALTER TABLE LKUP_levels DROP CONSTRAINT FK_LKUP_levels_LKUP_level2;
+IF OBJECT_ID('LKUP_level0', 'U') IS NOT NULL DROP TABLE LKUP_level0;
+CREATE TABLE LKUP_level0 (
+	level0Key INT NOT NULL IDENTITY,
+	level0Label VARCHAR(2000),
+	level0Order INT,
+	CONSTRAINT PK_LKUP_level0 PRIMARY KEY (level0Key),
+	CONSTRAINT IX_LKUP_level0 UNIQUE (level0Key));
+
+IF OBJECT_ID('LKUP_level1', 'U') IS NOT NULL DROP TABLE LKUP_level1;
+CREATE TABLE LKUP_level1 (
+	level1Key INT NOT NULL IDENTITY,
+	level1Label VARCHAR(2000),
+	level1Order INT,
+	CONSTRAINT PK_LKUP_level1 PRIMARY KEY (level1Key),
+	CONSTRAINT IX_LKUP_level1 UNIQUE (level1Key));
+
+IF OBJECT_ID('LKUP_level2', 'U') IS NOT NULL DROP TABLE LKUP_level2;
+CREATE TABLE LKUP_level2 (
+	level2Key INT NOT NULL IDENTITY,
+	level2Label VARCHAR(2000),
+	level2Order INT,
+	CONSTRAINT PK_LKUP_level2 PRIMARY KEY (level2Key),
+	CONSTRAINT IX_LKUP_level2 UNIQUE (level2Key));
+	
+IF OBJECT_ID('LKUP_levels', 'U') IS NOT NULL DROP TABLE LKUP_levels;
+CREATE TABLE LKUP_levels (
+	levelsKey INT NOT NULL IDENTITY,
+	levelsLabel VARCHAR(2000),
+	levelsOrder INT,
+	level0 int NOT NULL,
+	level1 int NOT NULL,
+	level2 int NOT NULL,
+	CONSTRAINT PK_LKUP_levels PRIMARY KEY (levelsKey),
+	CONSTRAINT IX_LKUP_levels UNIQUE (levelsKey),
+	CONSTRAINT FK_LKUP_levels_LKUP_level0 FOREIGN KEY (level0) REFERENCES LKUP_level0 (level0Key),
+	CONSTRAINT FK_LKUP_levels_LKUP_level1 FOREIGN KEY (level1) REFERENCES LKUP_level1 (level1Key),
+	CONSTRAINT FK_LKUP_levels_LKUP_level2 FOREIGN KEY (level2) REFERENCES LKUP_level2 (level2Key));
+
+IF OBJECT_ID('FACT_content', 'U') IS NOT NULL DROP TABLE FACT_content;
+CREATE TABLE FACT_content (
+	contentKey INT NOT NULL IDENTITY,
+	contentLabel VARCHAR(2000),
+	levels int NOT NULL,
+	content TEXT NOT NULL,
+	createdDate datetime NOT NULL,
+	updatedDate datetime,
+	PRIMARY KEY (contentKey),
+	CONSTRAINT IX_FACT_content UNIQUE (contentKey),
+	CONSTRAINT FK_FACT_content_LKUP_levels FOREIGN KEY (levels) REFERENCES LKUP_levels (levelsKey));
+	

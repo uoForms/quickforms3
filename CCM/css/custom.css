@@ -1,0 +1,77 @@
+.tabs {
+	overflow: hidden;
+	clear: both;
+}
+
+.tabs ul {
+	list-style-type: none;
+	bottom: -1px;
+	position: relative;
+}
+
+.tabs li {
+	float: left;
+}
+
+.tabs a.tabLabel {
+	display: block;
+	padding: 5px 10px;
+	background-color: #EEE;
+	color: #000;
+	text-decoration: none;
+	margin: 0 4px;
+	border-top: 1px solid #CCC;
+	border-left: 1px solid #DDD;
+	border-right: 1px solid #DDD;
+	font: 13px/18px verdana, arial, sans-serif;
+	border-bottom: 1px solid #CCC;
+}
+
+.tabs a.active {
+	background-color: #fff;
+	border-bottom: 1px solid #fff;
+}
+
+.tabs div.subTab {
+	clear: both;
+	border: 1px solid #CCC;
+	padding: 5px;
+	font-family: verdana;
+	font-size: 13px;
+	background-color: #fff;
+	display: none;
+}
+/* css for carousel Start*/
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+  weight: 100%;
+  margin: auto;
+  z-index: -1;
+}
+.carousel_slide {
+	background-repeat: 
+	no-repeat;
+	background-position:top; 
+	height: 100%; 
+	margin:0 auto; 
+	text-align: center;	
+}
+.carousel_slide_inner {
+	padding-top: 270px;
+}
+
+.carousel_slide_inner_title{
+	display: block; 
+	line-height: 1.1em; 
+	font-size: 1.5em; 
+	color: purple;
+}
+
+.carousel_slide_inner_content{
+	font-size:1.4em; 
+	color:#fc68d4;
+	width: 200px; 
+}
+
+/* css for carousel End*/	
+		
