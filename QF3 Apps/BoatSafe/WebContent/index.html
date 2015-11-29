@@ -1,0 +1,42 @@
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class = "ui-mobile-rendering">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">	
+	<link rel="stylesheet" href="../quickforms/css/quickforms/quickforms.css" />
+	<script src = "../quickforms/js/require.min.js" ></script>
+	</head>
+<body >
+<div data-role="page" id="visitSummaryPage">
+
+	<script type="text/javascript">
+	require(['../quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+				require(['dom/navControl'],
+				function(){
+						
+						
+						quickforms.loadNav('nav.html','nav');
+						//$("#buttons").hide();
+						
+
+						});
+							
+					setCookie('pageType','home',365);
+			});
+		});
+	</script>
+		
+	
+	
+	<div data-role="header"><h1>Boat Safe Application</h1></div>
+	<div id = "nav"></div>
+	<div style="background-image: url(images/homeImage.JPG);height: 900px; width:auto;">
+	<div align="center"><img src="logos/nwtrpa.PNG" /><img src="logos/uottawa.jpg" /><img src="logos/inuvik.PNG"/><img src="logos/firstnation.PNG" /><img src="logos/deline.png" /></div>
+	<div align="center"><img src="logos/nwt.png"/></div>
+
+	</div>
+	<div data-role="footer" ><h3>Research funded by the Office of Boating Safety, Transport Canada</h3></div>
+</div>
+</body>
+</html>
