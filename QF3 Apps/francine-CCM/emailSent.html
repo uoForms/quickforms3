@@ -1,0 +1,61 @@
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class = "ui-mobile-rendering">
+  <head>
+   <meta name="viewport" content="width=device-width, initial-scale=1">    
+   <link rel="stylesheet" href="/quickforms/css/quickforms/quickforms.css" />
+   <script src = "/quickforms/js/require.min.js" ></script>
+  </head>
+    <body> 
+<div data-role="page" id="loadQuickformsTemplate">
+   <script type="text/javascript">
+	 require(['/quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+				// Do quickforms module loading here
+				
+				require(['dom/form/select','dom/form/text'],// Add this module to the list
+		 		function(){// ADD FACT TABEL NAME!
+				quickforms.parseForm( //formId*, app, fact*, callback
+							{formId:'mainForm',
+							fact:'emailSent'});
+					});
+			});
+			
+		});
+	</script>
+  <div data-role="header">
+		    <h1> Send an Email</h1>
+  </div><!-- /header -->
+       <div data-role="content">
+	   <div id = 'nav'></div>
+           <form id ="mainForm">
+		   
+          <!--ADD FORM ELEMENTS HERE-->
+		    <!--<label for="weeksK" class ="ui-input-text">weeks Key</label>-->
+            <input type="hidden" id ="weeksK" name ="weeksK" value="0"/>
+			
+			<!--<label for="usersK" class ="ui-input-text">users Key</label>-->
+            <input type="hidden" id ="usersK" name ="usersK" value="25"/>
+			
+			<!--<label for="message" class ="ui-input-text">Message</label>-->
+            <input type="hidden" id ="message" name ="message" value="initiate"/>
+			
+		    <label for="senderEmail" class ="ui-input-text">Sender Email</label>
+            <input type="text" id ="senderEmail" name ="senderEmail" value=""/>	
+			
+			<label for="password" class ="ui-input-text">Password:</label>
+            <input id ="password" name ="password" type ="password" value=""/>
+			
+			<!--<label for="sendEmail" class ="ui-input-text">Send Email</label>-->
+            <!-- <input type="hidden" id ="sendEmail" name ="sendEmail" value="true"/> -->
+			
+			 <div class= "buttons">
+               <a href = "reports.html" onclick = "history.back()" rel="external" data-role="button" data-inline="true" data-icon="back">Cancel</a>
+               <a href = "reports.html" onclick ="quickforms.putFact(this,'reports.html')" data-role="button" data-icon="check" data-theme="b" data-inline="true">Submit</a>
+             </div>
+			
+           </form><!--/form-->
+      </div><!--/content-->
+</div><!--/page-->
+</body>
+</html>

@@ -1,0 +1,65 @@
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class = "ui-mobile-rendering">
+  <head>
+   <meta name="viewport" content="width=device-width, initial-scale=1">    
+   <link rel="stylesheet" href="/quickforms/css/quickforms/quickforms.css" />
+   <script src = "/quickforms/js/require.min.js" ></script>
+  </head>
+    <body> 
+   <script type="text/javascript">
+         require(['/quickforms/js/quickforms.js'],function(){
+                        quickforms.registerReadyFunction(function()
+                        {
+                                // Do quickforms module loading here
+                                
+                                require(['dom/form/checkbox','dom/form/select','dom/form/date','dom/form/text'],// Add this module to the list
+                                function(){// ADD FACT TABEL NAME!
+                                quickforms.parseForm( //formId*, app, fact*, callback
+                                                        {formId:'mainForm',fact:'ccm'	});
+                                        });
+                        });
+                        
+                });
+        </script>	
+       <div data-role="page" id="form">
+          <div data-role="header">
+       <h1>Carousel Content</h1>
+          </div><!-- /header -->
+       <div data-role="content">
+           <form id ="mainForm" method="POST" action="putFact">
+                                     
+          <!--ADD FORM ELEMENTS HERE-->
+            <label for="level0" class ="ui-input-text">Level 0</label>
+            <select id ="level0" name ="level0" data-native-menu="false" >
+            <option value ="0">-- Not Selected --</option> 
+            </select>
+            
+            <label for="level1" class ="ui-input-text">Level 1</label>
+            <select id ="level1" name ="level1" data-native-menu="false" >
+            <option value ="0">-- Not Selected --</option> 
+            </select>
+            
+            <label for="level2" class ="ui-input-text">Level 2</label>
+            <select id ="level2" name ="level2" data-native-menu="false" >
+            <option value ="0">-- Not Selected --</option> 
+            </select>
+
+            <label for="ccmOrder" class ="ui-input-text">Order</label>
+            <input id ="ccmOrder" name ="ccmOrder" type ="text"/>
+ 
+            <div class= "buttons delete">
+               
+               <a onclick="quickforms.putFact(this,'editCarouselContent.html');" data-role="button" data-icon="check" data-theme="b" data-inline="true">Submit</a>
+			   <a href = "forms.html" onclick="history.back()" rel="external" data-role="button" data-inline="true" data-icon="back">Back</a>
+			   
+             </div>
+                        
+           </form><!--/form-->
+      </div><!--/content-->
+   
+  <div data-role="footer">
+           <h4>-</h4>
+  </div><!--/footer--> 
+</div><!--/page-->
+</body>
+</html>

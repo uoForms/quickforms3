@@ -12,16 +12,15 @@
 	require(['../quickforms/js/quickforms.js'],function(){
 			quickforms.registerReadyFunction(function()
 			{
-				require(['js/login'],// This is the only module needed
+				require(['dom/login'],// This is the only module needed
 					function(){
 						quickforms.setupLogin();
 						var loginBtnDom = document.getElementById("loginBtn");
-						alert(loginBtnDom.href);
-						loginBtnDom.href = getParameterByName("redirect");
-						alert(loginBtnDom.href);
+						loginBtnDom.setAttribute("href",getParameterByName("redirect"));
 					});
 			});
 		});
+		
 	</script>
 	
 	<div class ="container">	
