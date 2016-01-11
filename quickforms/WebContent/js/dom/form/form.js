@@ -182,8 +182,8 @@ define(['server/putFact','server/getFactData','server/executeQuery','server/upda
 		    textareaDom.className = "dynamicText";
 		    textareaDom.name = tmpJsonObj[i].contentId;
 		    textareaDom.id = "content_"+tmpJsonObj[i].contentId;
-		    textareaDom.rows = "0";
-		    textareaDom.cols = "0";
+		    textareaDom.rows = "1";
+		    textareaDom.cols = "1";
 		    formDom.insertBefore(textareaDom, formDom.childNodes[1]);
 //		    formDom.appendChild(textareaDom);
 		    if(level2Key == "-1"){//if the level2Key is not defined which will be "-1", then display the first content.
