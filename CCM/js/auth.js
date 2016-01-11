@@ -15,6 +15,7 @@ function (){
 		&& window.location.pathname.indexOf("content.html")<0
 		&& window.location.pathname.indexOf("subscribe.html")<0
 		&& window.location.pathname.indexOf("unsubscribe.html")<0
+		&& window.location.pathname!='/'+quickforms.app+'/'
 		&& !quickforms.offline)
 	{
 		window.location = loginPage+"?redirect="+window.location.href;
@@ -25,7 +26,8 @@ function (){
 	    	if(window.location.pathname.indexOf("index.html")<0 
 	    		&& window.location.pathname.indexOf("content.html")<0
 	    		&& window.location.pathname.indexOf("subscribe.html")<0
-	    		&& window.location.pathname.indexOf("unsubscribe.html")<0){
+	    		&& window.location.pathname.indexOf("unsubscribe.html")<0
+	    		&& window.location.pathname!='/'+quickforms.app+'/'){
         	    	var header = $('div[data-role="header"]'),
         		logoutDiv = $('<div class="ui-btn-right" data-role="controlgroup" data-type="horizontal" ></div>'),
         		logoutButton = $('<a href="#"  data-role="button" data-theme="c" onclick="quickforms.logout()" style="position:relative;top:-5px">Logout</a>'),
