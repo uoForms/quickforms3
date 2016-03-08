@@ -85,57 +85,6 @@ INSERT INTO LKUP_userRole (userRoleKey, userRoleLabel, userRoleOrder) VALUES (2,
 INSERT INTO FACT_teamMembers (firstName, lastName, userName, password, email, userRole, activeFlag, deleteFlag) VALUES ('John', 'Smith', 'admin', '21232f297a57a5a743894a0e4a801fc3', 'devteam@gmail.com', 1, 1, 0);
 
 --Insert francine Data--
-CREATE TABLE fact_users(
-	usersKey int IDENTITY(1,1) PRIMARY KEY,
-	createdDate datetime NOT NULL,
-	updatedDate datetime NOT NULL,
-	Email varchar(50) NOT NULL,
-	DueDate nvarchar(50) NOT NULL,
-	Subscribed bit NULL
-);
-
-CREATE TABLE lkup_users(
-	usersKey int IDENTITY(1,1) PRIMARY KEY,
-	Email varchar(50) NOT NULL,
-	DueDate datetime NULL,
-	Subscribed bit NOT NULL,
-	fName varchar(50) NULL
-);
-
-CREATE TABLE fact_unsubscribe(
-	unsubscribeKey int IDENTITY(1,1) PRIMARY KEY,
-	createdDate datetime NOT NULL,
-	updatedDate datetime NOT NULL,
-	Email varchar(50) NOT NULL,
-	DueDate nvarchar(50) NULL,
-	Unsubscribed bit NULL,
-	UserTabelRefID int NULL
-);
-
-CREATE TABLE lkup_unsubscribe(
-	unsubscribeKey int IDENTITY(1,1) PRIMARY KEY,
-	Email varchar(255) NOT NULL,
-	Unsubscribed bit NOT NULL
-);
-
-CREATE TABLE fact_emailSent(
-	emailSentKey int IDENTITY(1,1) PRIMARY KEY,
-	weeksK nvarchar(50) NULL,
-	usersK nvarchar(50) NULL,
-	message nvarchar(max) NULL,
-	senderEmail nvarchar(50) NULL,
-	createdDate datetime NULL,
-	updatedDate datetime NULL,
-	requestNumber int NULL,
-	emailType nvarchar(50) DEFAULT (0)
-);
-
-CREATE TABLE lkup_emailType(
-	emailTypeKey int IDENTITY(1,1) PRIMARY KEY,
-	emailTypeLabel varchar(50) NOT NULL
-);
-
-
 INSERT INTO FACT_queries (queryLabel, query, deleteFlag) VALUES ('lkup_Users', 'Select *  from fact_users', 0);
 INSERT INTO FACT_queries (queryLabel, query, deleteFlag) VALUES ('getUsers', 'select Email as "Email", createdDate as "Subscribed Date" from fact_users', 0);
 INSERT INTO FACT_queries (queryLabel, query, deleteFlag) VALUES ('getUserDetails', 'select * from fact_users %WHERECLAUSE%', 0);

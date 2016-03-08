@@ -1,7 +1,7 @@
    define(function(){
       var config = {};
-      config.app = 'francine_CCM'; // Your App name
-	  config.jqueryMobileTheme = "/francine_CCM/css/theme.css"; 
+      config.app = 'pregapp'; // Your App name
+	  config.jqueryMobileTheme = "/pregapp/css/theme.css";
 	  //config.jqueryMobilePath="/francine/js/jquery.mobile-1.2.0";
 	  //config.jqueryMobileCss="/francine/css/mobile.css";
 	  config.loginLocation = 'index.html';

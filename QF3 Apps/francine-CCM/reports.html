@@ -1,3 +1,4 @@
+
 <meta http-equiv="X-UA-Compatible" content="IE=Edge">
 <html class = "ui-mobile-rendering">
 <head>
@@ -16,7 +17,7 @@
 					function(){
 						var whereclause = "";
 						if(getCookie('userRole') == 'User') whereclause = "addedBy = '"+getCookie('username')+"'";
-						quickforms.loadNav('navAdmin.html','nav');
+						quickforms.loadNav('nav.html','nav');
 						//quickforms.loadFilter('filter.html','mainData');
 						quickforms.loadTable(//appName, queryName*, parameterList,whereclause, callback, domId*,configFile 
 							{queryName:'getEmails',whereclause:whereclause});
