@@ -89,7 +89,7 @@ define(
 //				var divider = document.createTextNode("|");
 //				var weeks = document.createElement("b");
 //				weeks.appendChild(document.createTextNode("Weeks"));
-				carousel_level1_container.appendChild(document.createElement("b").appendChild(document.createTextNode("Weeks")));
+				carousel_level1_container.appendChild(document.createElement("b").appendChild(document.createTextNode("A Weekly Guide to Pregnancy for Urban Aboriginal Women")));
 				carousel_level1_container.appendChild(document.createElement("br"));
 				carousel_level1_container.appendChild(document.createElement("br"));
 				var level1LineLength = 0;
@@ -156,7 +156,7 @@ define(
 					    carousel_level0_container.className = "carousel_slide_inner";
 					    carousel_level1_container = document.createElement("span");
 					    carousel_level1_container.className = "carousel_slide_inner_content";
-					    carousel_level1_container.appendChild(document.createElement("b").appendChild(document.createTextNode("Weeks")));
+					    carousel_level1_container.appendChild(document.createElement("b").appendChild(document.createTextNode("A Weekly Guide to Pregnancy for Urban Aboriginal Women")));
 					    carousel_level1_container.appendChild(document.createElement("br"));
 					    carousel_level1_container.appendChild(document.createElement("br"));
 					    level1LineLength = 0;

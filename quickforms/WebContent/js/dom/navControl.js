@@ -28,7 +28,7 @@ quickforms.loadNav = function(url,divId, callback)
 		});
 		navDiv.find('li').each(function(i,dom){
 			dom = $(dom);
-			if(dom.is('[qf-users]') && dom.attr('qf-users').indexOf(getCookie('userRole'))<0&&quickforms.app==getCookie('appName'))
+			if(dom.is('[qf-users]') && dom.attr('qf-users').indexOf(getCookie('userRole'))<0)
 				dom.remove();
 		});
 		

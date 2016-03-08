@@ -5,9 +5,7 @@ function (){
 	var loginPage = "/quickforms/users/index.html";
 	var username = getCookie('username'),
 		userId = getCookie('userid');
-	var appName = getCookie('appName'),
-		expired = checkCookieExp();
-	if((expired||isNull(username)) 
+	if(isNull(username) 
 		&& window.location.pathname != loginPage
 		&& !quickforms.offline)
 	{
@@ -29,7 +27,6 @@ function (){
 	quickforms.logout = function()
 	{
 		setCookie('username','',1);
-		setCookieExp(0);
 		window.location = loginPage;
 	}
 });
