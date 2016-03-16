@@ -137,8 +137,89 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                 if (editBtn) {
                     editBtn.href = editBtn.href + "?id=" + level1Key;
                 }
+								
+					
                 titleDom.appendChild(document.createTextNode(tmpJsonObj[0].title));
                 formDom.insertBefore(titleDom, formDom.childNodes[0]);
+
+				var prms = "updateId=" + level1Key;
+                quickforms.getFactData({
+                queryName: "getLastAndNext",
+                params: prms,
+	                callback: function (data) {
+                    var jsonObj = JSON.parse(data)[0];
+                    var btnsDivDom = document.createElement("div");
+                    btnsDivDom.className = "buttons";
+
+					
+				titleDom.appendChild(document.createElement(tmpJsonObj[0].btnsDivDom));
+                formDom.insertBefore(btnsDivDom, formDom.childNodes[0]);
+				
+                    if (jsonObj.lastId && jsonObj.lastId != "" && jsonObj.lastId != "null") {
+                        var lastBtnDom = document.createElement("a");
+                        if (ccm == "display") {
+                            lastBtnDom.href = "content.html?id=" + jsonObj.lastId;
+                        } else if (ccm == "edit") {
+                            lastBtnDom.href = "editContent.html?id=" + jsonObj.lastId;
+                        } else {
+                            lastBtnDom.style.display = "none";
+                        }
+                        lastBtnDom.rel = "external";
+                        lastBtnDom.setAttribute("data-role", "button");
+                        lastBtnDom.setAttribute("data-icon", "check");
+                        lastBtnDom.setAttribute("data-theme", "c");
+                        lastBtnDom.setAttribute("data-inline", "true");
+                        lastBtnDom.setAttribute("class","tabPopup ui-btn-left ui-btn ui-shadow ui-btn-corner-all ui-btn-up-c");
+                        lastBtnDom.setAttribute("style","padding: 10px 20px; margin: 5px;");
+                        //lastBtnDom.appendChild(document.createTextNode(jsonObj.lastLabel));
+                        lastBtnDom.appendChild(document.createTextNode("<<"));
+                        btnsDivDom.appendChild(lastBtnDom);
+                    }
+					
+					var homeBtnDom = document.createElement("a");
+                    homeBtnDom.href = "index.html";
+                    homeBtnDom.rel = "external";
+                    homeBtnDom.setAttribute("data-role", "button");
+                    homeBtnDom.setAttribute("data-icon", "back");
+                    homeBtnDom.setAttribute("data-theme", "c");
+                    homeBtnDom.setAttribute("data-inline", "true");
+                    homeBtnDom.setAttribute("class","tabPopup ui-btn-left ui-btn ui-shadow ui-btn-corner-all ui-btn-up-c");
+                    homeBtnDom.setAttribute("style","padding: 10px 20px; margin: 5px;");
+                    homeBtnDom.appendChild(document.createTextNode("Up"));
+                    btnsDivDom.appendChild(homeBtnDom);
+					
+					
+					
+					
+					
+
+                    if (jsonObj.nextId && jsonObj.nextId != "" && jsonObj.nextId != "null") {
+                        var nextBtnDom = document.createElement("a");
+                        if (ccm == "display") {
+                            nextBtnDom.href = "content.html?id=" + jsonObj.nextId;
+                        } else if (ccm == "edit") {
+                            nextBtnDom.href = "editContent.html?id=" + jsonObj.nextId;
+                        } else {
+                            nextBtnDom.style.display = "none";
+                        }
+                        nextBtnDom.rel = "external";
+                        nextBtnDom.setAttribute("data-role", "button");
+                        nextBtnDom.setAttribute("data-icon", "check");
+                        nextBtnDom.setAttribute("data-theme", "c");
+                        nextBtnDom.setAttribute("data-inline", "true");
+                        nextBtnDom.setAttribute("class","tabPopup ui-btn-left ui-btn ui-shadow ui-btn-corner-all ui-btn-up-c");
+                        nextBtnDom.setAttribute("style","padding: 10px 20px; margin: 5px;");
+                        //nextBtnDom.appendChild(document.createTextNode(jsonObj.nextLabel));
+                        nextBtnDom.appendChild(document.createTextNode(">>"));
+                        btnsDivDom.appendChild(nextBtnDom);
+                    }
+					
+					
+					}
+					
+				})
+					
+				
                 var tabDom = document.getElementById("contentTab");
                 tabDom.className = "tabs";
                 //generate tab labels and reprocess the contentHTML
@@ -150,6 +231,9 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                     var tabContentDom = document.getElementById("tab" + tmpJsonObj[i].contentId);
                     tabContentDom.innerHTML = tmpJsonObj[i].contentHTML;
                 }
+				
+				
+					
             } else if (ccm == "edit") {
                 titleDom.appendChild(document.createTextNode(tmpJsonObj[0].title));
                 formDom.insertBefore(titleDom, formDom.childNodes[0]);
@@ -185,7 +269,7 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
             quickforms.getFactData({
                 queryName: "getLastAndNext",
                 params: prms,
-                callback: function (data) {
+	                callback: function (data) {
                     var jsonObj = JSON.parse(data)[0];
                     var btnsDivDom = document.createElement("div");
                     btnsDivDom.className = "buttons";
@@ -209,7 +293,10 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                         lastBtnDom.appendChild(document.createTextNode("<<"));
                         btnsDivDom.appendChild(lastBtnDom);
                     }
-
+					
+					
+					
+					
                     var homeBtnDom = document.createElement("a");
                     homeBtnDom.href = "index.html";
                     homeBtnDom.rel = "external";
@@ -221,6 +308,11 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                     homeBtnDom.setAttribute("style","padding: 10px 20px; margin: 5px;");
                     homeBtnDom.appendChild(document.createTextNode("Up"));
                     btnsDivDom.appendChild(homeBtnDom);
+					
+					
+					
+					
+					
 
                     if (jsonObj.nextId && jsonObj.nextId != "" && jsonObj.nextId != "null") {
                         var nextBtnDom = document.createElement("a");
@@ -242,11 +334,16 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                         nextBtnDom.appendChild(document.createTextNode(">>"));
                         btnsDivDom.appendChild(nextBtnDom);
                     }
+					
+										
+					
+                    
 
                     formDom.appendChild(btnsDivDom);
+				}
 
-
-                }
+			              
+			
             });
 
             return jsonObj;
