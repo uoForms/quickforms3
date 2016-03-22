@@ -170,7 +170,7 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                         lastBtnDom.setAttribute("data-theme", "c");
                         lastBtnDom.setAttribute("data-inline", "true");
                         lastBtnDom.setAttribute("class","tabPopup ui-btn-left ui-btn ui-shadow ui-btn-corner-all ui-btn-up-c");
-                        lastBtnDom.setAttribute("style","padding: 10px 20px; margin: 5px;");
+                        lastBtnDom.setAttribute("style","padding: 7px 15px; margin: 5px;");
                         //lastBtnDom.appendChild(document.createTextNode(jsonObj.lastLabel));
                         lastBtnDom.appendChild(document.createTextNode("<<"));
                         btnsDivDom.appendChild(lastBtnDom);
@@ -184,7 +184,7 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                     homeBtnDom.setAttribute("data-theme", "c");
                     homeBtnDom.setAttribute("data-inline", "true");
                     homeBtnDom.setAttribute("class","tabPopup ui-btn-left ui-btn ui-shadow ui-btn-corner-all ui-btn-up-c");
-                    homeBtnDom.setAttribute("style","padding: 10px 20px; margin: 5px;");
+                    homeBtnDom.setAttribute("style","padding: 7px 15px; margin: 5px;");
                     homeBtnDom.appendChild(document.createTextNode("Up"));
                     btnsDivDom.appendChild(homeBtnDom);
 					
@@ -208,7 +208,7 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                         nextBtnDom.setAttribute("data-theme", "c");
                         nextBtnDom.setAttribute("data-inline", "true");
                         nextBtnDom.setAttribute("class","tabPopup ui-btn-left ui-btn ui-shadow ui-btn-corner-all ui-btn-up-c");
-                        nextBtnDom.setAttribute("style","padding: 10px 20px; margin: 5px;");
+                        nextBtnDom.setAttribute("style","padding: 7px 15px; margin: 5px;");
                         //nextBtnDom.appendChild(document.createTextNode(jsonObj.nextLabel));
                         nextBtnDom.appendChild(document.createTextNode(">>"));
                         btnsDivDom.appendChild(nextBtnDom);
@@ -288,7 +288,7 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                         lastBtnDom.setAttribute("data-theme", "c");
                         lastBtnDom.setAttribute("data-inline", "true");
                         lastBtnDom.setAttribute("class","tabPopup ui-btn-left ui-btn ui-shadow ui-btn-corner-all ui-btn-up-c");
-                        lastBtnDom.setAttribute("style","padding: 10px 20px; margin: 5px;");
+                        lastBtnDom.setAttribute("style","padding: 7px 15px; margin: 5px;");
                         //lastBtnDom.appendChild(document.createTextNode(jsonObj.lastLabel));
                         lastBtnDom.appendChild(document.createTextNode("<<"));
                         btnsDivDom.appendChild(lastBtnDom);
@@ -305,7 +305,7 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                     homeBtnDom.setAttribute("data-theme", "c");
                     homeBtnDom.setAttribute("data-inline", "true");
                     homeBtnDom.setAttribute("class","tabPopup ui-btn-left ui-btn ui-shadow ui-btn-corner-all ui-btn-up-c");
-                    homeBtnDom.setAttribute("style","padding: 10px 20px; margin: 5px;");
+                    homeBtnDom.setAttribute("style","padding: 7px 15px; margin: 5px;");
                     homeBtnDom.appendChild(document.createTextNode("Up"));
                     btnsDivDom.appendChild(homeBtnDom);
 					
@@ -329,7 +329,7 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                         nextBtnDom.setAttribute("data-theme", "c");
                         nextBtnDom.setAttribute("data-inline", "true");
                         nextBtnDom.setAttribute("class","tabPopup ui-btn-left ui-btn ui-shadow ui-btn-corner-all ui-btn-up-c");
-                        nextBtnDom.setAttribute("style","padding: 10px 20px; margin: 5px;");
+                        nextBtnDom.setAttribute("style","padding: 7px 15px; margin: 5px;");
                         //nextBtnDom.appendChild(document.createTextNode(jsonObj.nextLabel));
                         nextBtnDom.appendChild(document.createTextNode(">>"));
                         btnsDivDom.appendChild(nextBtnDom);
