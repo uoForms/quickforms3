@@ -16,7 +16,7 @@
 					function(){
 						var whereclause = "";
 						if(getCookie('userRole') == 'User') whereclause = "addedBy = '"+getCookie('username')+"'";
-						quickforms.loadNav('nav.html','nav');
+						quickforms.loadNav('navAdmin.html','nav');
 						quickforms.loadTable(//appName, queryName*, parameterList,whereclause, callback, domId*,configFile 
 							{queryName:'getUsers',whereclause:whereclause});
 					});

@@ -19,6 +19,6 @@ define([],function(){
                 $('a.btmAdd').hide();
             }
         };
-		config.columnWidths = ['10%','10%','9%','23%','20%','25%'];
+		config.columnWidths = ['25%','25%','25%','25%'];
 	return config;
 });
