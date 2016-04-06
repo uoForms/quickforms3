@@ -49,7 +49,7 @@ public class Pregapp_Unsubscribe_RuleEngine implements RuleEngine
 				
 			    
 				subject="Email Removed";
-				msg="You have Unscubribed from Francine Application";
+				msg="You have Unscubribed from CelebrateCreation Application";
 				//send an email with this msg
 				//get senderEmail and Password from propertyfile
 				String senderEmail=sendEmailProcess(context, subject, msg);

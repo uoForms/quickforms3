@@ -60,7 +60,7 @@ public class Pregapp_Users_RuleEngine implements RuleEngine
 			else
 			{
 				subject="WELCOME MESSAGE";
-				msg="You have successfully subscribe to Francine App and your due date is "+context.get("DueDate")[0];
+				msg="You have successfully subscribe to CelebrateCreation App and your due date is "+context.get("DueDate")[0];
 				emailType="2";
 				UsersKeyFact=factID;
 			}
