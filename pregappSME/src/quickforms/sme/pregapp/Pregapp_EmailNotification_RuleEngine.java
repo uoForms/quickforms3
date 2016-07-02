@@ -31,7 +31,7 @@ public class Pregapp_EmailNotification_RuleEngine implements RuleEngine {
     private String senderEmail = "";
     private String senderPassword = "";
     private Boolean testMode = false;
-    private final String adminUserEmails = "eze.ben@gmail.com,veena.chhattani@gmail.com";
+    private final String adminUserEmails = "eze.ben@gmail.com";
 
     /***
      * Processes and sends notifications for all those that match the pregnancy anniversary
@@ -334,7 +334,16 @@ public class Pregapp_EmailNotification_RuleEngine implements RuleEngine {
 
 
     public static void main(String[] args) {
-        System.out.println("Testing");
+    	
+    	try{
+    		UseFulMethods.sendEmail("autoReplyPregApp@gmail.com<Test Alias>", "autoReplyPregApp1", "eze.ben@gmail.com", "Daily notification summary", "Test message");
+    		UseFulMethods.sendEmail("autoReplyPregApp@gmail.com", "autoReplyPregApp1", "eze.ben@gmail.com", "Daily notification summary", "Test message");
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	
+    	
+    	System.out.println("Testing");
         Pregapp_EmailNotification_RuleEngine pregappRuleEngine = new Pregapp_EmailNotification_RuleEngine();
 
         try {
