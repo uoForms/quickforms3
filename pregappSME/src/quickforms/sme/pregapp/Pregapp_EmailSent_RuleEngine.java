@@ -72,7 +72,7 @@ public class Pregapp_EmailSent_RuleEngine implements RuleEngine {
                 + currWeek + " week guidelines <br><br>" +
                 "<a href=\"" + link + "\">" + link +
                 "</a><br><br><br>Note: If a link above doesn't work, please copy and paste the URL into a browser.</p>";
-        UseFulMethods.sendEmail(senderEmail, password, row.get("Email")[0], String.valueOf(currWeek), message);
+        UseFulMethods.sendEmail(senderEmail, "", password, row.get("Email")[0], String.valueOf(currWeek), message);
         String[] params = new String[2];
         params[0] = senderEmail;
         params[1] = message;

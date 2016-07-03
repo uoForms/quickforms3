@@ -129,24 +129,11 @@ public abstract class UseFulMethods
 		return dateTimeStamp;
 	}
 	
-	static public void sendEmail(String d_email, String pwd, String toAddress, String m_subject, String message) throws Exception
+	static public void sendEmail(String d_email, String alias, String pwd, String toAddress, String m_subject, String message) throws Exception
 	{
-		String fromEmail = "";
-		String fromAlias = "";
-		
-		
-		//Fix the "from" email
-		String[] emailItems = d_email.split("<");
-		
-		if(emailItems.length == 1)
-			fromEmail = emailItems[0].trim();
-		else{
-			fromEmail = emailItems[0].trim();
-			fromAlias = emailItems[1].trim().replace(">", "");
-		}
-		
+				
 		final String password = pwd;
-		final String from = fromEmail;
+		final String from = d_email;
 		
 		class SMTPAuthenticator extends Authenticator
 		{
@@ -185,10 +172,10 @@ public abstract class UseFulMethods
 		msg.setContent(message, "text/html");
 		msg.setSubject(m_subject);
 		
-		if(fromAlias.equalsIgnoreCase(""))
+		if(alias.equalsIgnoreCase(""))
 			msg.setFrom(new InternetAddress(from));
 		else
-			msg.setFrom(new InternetAddress(from, fromAlias));
+			msg.setFrom(new InternetAddress(from, alias));
 		
 		
 		String [] toAddresses = toAddress.split(",");

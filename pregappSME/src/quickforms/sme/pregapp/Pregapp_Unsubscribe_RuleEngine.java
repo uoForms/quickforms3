@@ -65,11 +65,6 @@ public class Pregapp_Unsubscribe_RuleEngine implements RuleEngine
 	}
 	
 	
-	
-	
-	
-	
-	
 	public String  sendEmailProcess(Map<String, String[]> context,String subject,String msg)
 			throws IOException, Exception
 	{
@@ -79,7 +74,7 @@ public class Pregapp_Unsubscribe_RuleEngine implements RuleEngine
 		String senderEmail = map.get("senderEmail");
 		String password = map.get("password");
 		String message = "<h1> Dear User</h1><br><p>"+msg+ "</p>";
-		UseFulMethods.sendEmail(senderEmail, password, context.get("Email")[0], subject, message);
+		UseFulMethods.sendEmail(senderEmail, "", password, context.get("Email")[0], subject, message);
 		return senderEmail;
 	}
 	//update UnSubscribe Table Fact 
