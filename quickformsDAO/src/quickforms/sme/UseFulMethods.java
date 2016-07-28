@@ -9,6 +9,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.Date;
 import java.util.HashMap;
@@ -112,6 +113,39 @@ public abstract class UseFulMethods
 		// formatter.applyPattern(NEW_FORMAT);
 		dateTimeStamp = getStringDateObj(date, NEW_FORMAT);
 		return dateTimeStamp;
+		
+	}
+	
+	static public Date getDateFromString(String dateStamp) throws Exception
+	{		
+		final String DB_FORMAT = "yyyy-MM-dd"; // database format
+		final String US_FORMAT = "MM/dd/yyyy"; // frontend format and
+		final String CAD_Format = "dd/MM/yyyy";
+		Date date = null;
+		dateStamp = dateStamp.substring(0, 10);
+		
+		try{
+			date = getDateObj(dateStamp, DB_FORMAT);
+		}catch(Exception e){}
+		
+		if(date != null)
+			return date;
+		
+		try{
+			date = getDateObj(dateStamp, CAD_Format);
+		}catch(Exception e){}
+		
+		if(date != null)
+			return date;
+		
+		try{
+			date = getDateObj(dateStamp, US_FORMAT);
+		}catch(Exception e){}
+		
+		if(date != null)
+			return date;		
+		else
+			return null;
 		
 	}
 	
@@ -225,4 +259,52 @@ public abstract class UseFulMethods
 		
 	}
 	
+	/***
+     * Gets the pregapp email settings for pregapp notification
+     */
+    static public Pregapp_EmailNotification_Settings getPregappEmailSettings(){    	
+    	Pregapp_EmailNotification_Settings settings = new Pregapp_EmailNotification_Settings();        
+        try{			
+        	if(!settings.loadFromFile()){
+        		settings.setDefaultSenderEmail("autoreplypregapp@gmail.com");
+        		settings.setDefaultSenderAlias("Celebrate Creation Weekly Pregnancy");
+        		settings.setDefaultSenderPassword("autoReplyPregApp1");
+        		settings.setAdminEmails("eze.ben@gmail.com");
+        		settings.setSubjectTemplate("Celebrate Creation - Week @@WeekNumber");
+        		
+        		settings.setBodyTemplate(
+        				new StringBuilder()
+        		           .append("<h2>Dear xxxx</h2>\n")
+        		           .append("<p>Please click the link below to see your Week 31 update!</p>\n")
+        		           .append("<p><a href=\"http://quickforms3.eecs.uottawa.ca/pregapp/content.html?id=@@WeekNumber\">http://quickforms3.eecs.uottawa.ca/pregapp/content.html?id=32</a></p>\n")
+        		           .append("<p><b>Note<b>:If the link above doesn't work, please copy and paste it on a browser to access the instructions.</p>\n")
+        		           .append("<p>Regards,\n")
+        		           .append("<br/>Celebrate Creation</p>\n")
+        		           .append("<p>This is an automatically generated email. Please do not reply to this message.</p>\n")
+        		           .append("<p>If you wish to unsubscribe, click on this link:\n")
+        		           .append("<br/><a href=\"http://quickforms3.eecs.uottawa.ca/pregapp/unsubscribe.html\">http://quickforms3.eecs.uottawa.ca/pregapp/unsubscribe.html</a></p>\n")
+        		           .toString());
+        		
+        		settings.setSubscriberNotification(
+        				new StringBuilder()
+        		           .append("<h1>Dear Subscriber</h1>\n")
+        		           .append("<br/>\n")
+        		           .append("<p>\n")
+        		           .append("	Welcome to the Pregnancy Guide Application! <br>Lets start your happy journey together!<br><br>Please click on below link for your @WeekNumber week guidelines. 	\n")
+        		           .append("	<br/> <br/>\n")
+        		           .append("	<a href=\"@Link\"> Link </a>\n")
+        		           .append("	<br/><br/>\n")
+        		           .append("	<b>Note</b>: If a link above doesn't work, please copy and paste the URL into a browser.\n")
+        		           .append("</p>\n")
+        		           .toString());
+        	}        	
+        	
+        }catch (Exception e){
+        	System.out.println(String.format("Exception reading settings file: %s", e.getMessage()));
+        }
+        
+        return settings;
+    }
+    
+    
 }

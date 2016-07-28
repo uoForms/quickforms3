@@ -19,7 +19,6 @@ import javax.sql.DataSource;
 import quickforms.sme.*;
 import quickforms.dao.Database;
 import quickforms.dao.LookupPair;
-import quickforms.sme.RuleEngine;
 
 /**
  * @author Priyanka Jain
@@ -55,24 +54,23 @@ public class Pregapp_EmailSent_RuleEngine implements RuleEngine {
 
 
     public String[] sendEmailProcess(Map<String, String[]> row, String app, String currWeek) throws IOException, Exception {
-        //get senderEmail and Password from propertyfile
-        String canonicalFilePath = new Pregapp_EmailSent_RuleEngine().getClass().getCanonicalName();
-        String filePath = UseFulMethods.getApp_PropertyFile_Path(app, canonicalFilePath);
-        Map<String, String> map = UseFulMethods.getProperties(filePath);
-        String senderEmail = map.get("senderEmail");
-        String password = map.get("password");
+           
+        Pregapp_EmailNotification_Settings settings = UseFulMethods.getPregappEmailSettings();
+        String senderEmail = settings.getDefaultSenderEmail();
+        String sendersAlias = settings.getDefaultSenderAlias();
+        String password = settings.getDefaultSenderPassword();
+        String subscriptionNotification = settings.getSubscriberNotification();
+        
         String link;
         if (Integer.parseInt(currWeek) < 3) {
             link = "http://quickforms3.eecs.uottawa.ca/pregapp/content.html?id=" + "1";
         } else {
             link = "http://quickforms3.eecs.uottawa.ca/pregapp/content.html?id=" + String.valueOf(Integer.parseInt(currWeek) + 1);
         }
-        String message = "<h1> Dear Subscriber " +
-                "</h1><br><p> Welcome to the Pregnancy Guide Application! <br>Lets start your happy journey together!<br><br>Please click on below link for your "
-                + currWeek + " week guidelines <br><br>" +
-                "<a href=\"" + link + "\">" + link +
-                "</a><br><br><br>Note: If a link above doesn't work, please copy and paste the URL into a browser.</p>";
-        UseFulMethods.sendEmail(senderEmail, "", password, row.get("Email")[0], String.valueOf(currWeek), message);
+        
+        String message = subscriptionNotification.replace("@WeekNumber", String.valueOf(currWeek)).replace("@Link", link);
+        UseFulMethods.sendEmail(senderEmail, sendersAlias, password, row.get("Email")[0], String.valueOf(currWeek), message);
+        
         String[] params = new String[2];
         params[0] = senderEmail;
         params[1] = message;
