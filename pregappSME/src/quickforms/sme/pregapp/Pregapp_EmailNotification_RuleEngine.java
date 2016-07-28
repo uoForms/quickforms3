@@ -259,6 +259,7 @@ public class Pregapp_EmailNotification_RuleEngine implements RuleEngine {
             currentWeek = "11/03/2016";
             System.out.println(pregappRuleEngine.getNotificationCurrentWeek(UseFulMethods.getDateFromString(currentWeek)));
             
+            currentWeek = "20/10/2016";
             System.out.println(pregappRuleEngine.getNotificationCurrentWeek(UseFulMethods.getDateFromString(currentWeek)));
 
         } catch (Exception e) {
