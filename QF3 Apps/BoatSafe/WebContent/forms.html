@@ -172,6 +172,10 @@
 				
 			<label for ="departureLocationDate">Departure Date</label>
 			<input type = "text" class="date" name ="departureLocationDate" id = "departureLocationDate" readonly />
+			<label for="departureLocationTime">Departure Time</label>
+			<input type ="text" class="time" name="departureLocationTime" id="departureLocationTime"/>
+			
+             
 			
 			<label for="arrivalLocation">Arrival Location</label>
             <input type="text" name="arrivalLocation" id = "arrivalLocation" />
@@ -180,10 +184,58 @@
 			
 			<label for ="arrivalDate">Arrival Date</label>
 			<input type = "text" class="date" name ="arrivalDate" id = "arrivalDate" readonly />
+			<label for="arrivalTime">Arrival Time</label>
+			
+			<input type="text" class="time" name="arrivalTime" id="arrivalTime" />
 			<label for="routePlan">Route Plan </label>
             <textarea class="dynamicText" name="routePlan" id="routePlan" ></textarea>
-		<label for ="checklistLink">Checklist</label>		
-		<a id="checklistLink" href="checklist.html" data-rel="dialog" data-theme="c" data-icon="plus" data-role="button" class="tabPopup" > -- Checklist: Check items you will bring with you. --</a>
+		
+		<h2> Checklists</h2>	
+             <label for="PaddleboatsWatercyclesSealed-Hull&Sit-on-Top Kayaks">Paddleboats|Watercycles|Sealed-Hull&Sit-on-Top Kayaks</label>	   
+			<select id="checklist1" multiple name="checklist1" >
+                  </select>
+				  
+			<label for="CanoesKayaksRowboatsRowingShellsOther Human-Powered Boats">Canoes|Kayaks|Rowboats|Rowing Shells|Other Human-Powered Boats</label>
+		    <select id="checklist2"multiple name="checklist2">
+				 </select>
+				 
+			<label for="Sailboards|Kiteboards"> Sailboards|Kiteboards</label>		 
+			<select id="checklist3"multiple name="checklist3">
+				 </select>
+				 
+			<label for="Personal Watercraft(PWC) ">Personal Watercraft(PWC) </label>
+			<select id="checklist4"multiple name="checklist4">
+			     </select>
+			<label for="Sail and Power Boats up to 6m (19'8'') ">Sail and Power Boats up to 6m (19'8'')</label>
+            <select id="checklist5" multiple name="checklist5">
+		     </select>
+			 
+			 <label for="Sail and Power Boats over 6m up to 9m (19'8''- 29'6'')">Sail and Power Boats over 6m up to 9m (19'8''- 29'6'')</label>
+		    <select id="checklist6" multiple name="checklist6">
+            </select>
+			
+			<label for="Sail and Power Boats over 9m up to 12m (29'6''- 39'4'')">Sail and Power Boats over 9m up to 12m (29'6''- 39'4'')</label>
+           <select id="checklist7" multiple name="checklist7"> 			
+		   </select>
+		   
+		   <label for="Sail and Power Boats over 12m up to 24m (39'4''- 78'9'')">Sail and Power Boats over 12m up to 24m (39'4''- 78'9'')</label>
+		 <select id="checklist8" multiple name="checklist8">
+		 </select>
+		 
+		 <label for="Sail and Power Boats over 24m ( 78'9'')">Sail and Power Boats over  24m (78'9'')</label>
+		 <select id="checklist9" multiple name="checklist9">
+		 </select>
+		
+	 <!--INFORMATION NOT POPULATING
+		 <label for="Sail and Power Boats over 24m ( 78'9'')">Sail and Power Boats over 24m ( 78'9'')</label>
+		<select id="checklist9" multiple name="checklist9">
+		</select>
+	 -->
+		
+		       
+            <!--<a id="checklistLink" href="checklist.html" data-rel="dialog" data-theme="c" data-icon="plus" data-role="button" class="tabPopup" > &#45;&#45; Checklist: Check items you will bring with you. &#45;&#45;</a>-->
+           
+				 
 			
 		<!--hidden inputs for email notifications -->
 			<div id="notification">			
@@ -208,7 +260,9 @@
 </form>
 
 </div>
-	<div data-role="footer"><h3>Research funded by the Office of Boating Safety, Transport Canada</h3></div>
+	<div data-role="footer"><h3>Research funded by the Office of Boating Safety, Transport Canada</h3>
+	<div align ="right" style="margin: 20px"><img src="logos/Transportlogo.png"/></div>
+	</div>
 </div>
 	</div>
 </body>
