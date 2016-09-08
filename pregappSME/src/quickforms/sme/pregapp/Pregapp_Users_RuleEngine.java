@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 
 import quickforms.dao.Database;
 import quickforms.dao.LookupPair;
+import quickforms.sme.Pregapp_EmailNotification_Settings;
 import quickforms.sme.RuleEngine;
 import quickforms.sme.UseFulMethods;
 
@@ -23,7 +24,41 @@ import quickforms.sme.UseFulMethods;
  * @author Priyanka Jain
  */
 public class Pregapp_Users_RuleEngine implements RuleEngine
-{
+{	
+	public String sendEmailProcess(Map<String, String[]> context,String subject,String msg)
+			throws IOException, Exception
+	{
+		Pregapp_EmailNotification_Settings settings = UseFulMethods.getPregappEmailSettings();
+        String senderEmail = settings.getDefaultSenderEmail();
+        String sendersAlias = settings.getDefaultSenderAlias();
+        String password = settings.getDefaultSenderPassword();
+        		
+		String message = "<h1> Dear Subscriber</h1><br><p>"+msg+ "</p>";
+		UseFulMethods.sendEmail(senderEmail, sendersAlias, password, context.get("Email")[0], subject, message);
+		return senderEmail;
+	}
+	public Map<String, String[]> setOldContext(Map<String, String[]> context, String factID ) throws Exception
+	{
+		Map<String, String[]> newContext = new HashMap<String, String[]>(context);
+		newContext.put("updateid", new String[]{factID});
+		newContext.put("sendEmail", new String[]{"false"});
+		newContext.remove("createdDate");
+		return newContext;
+	}
+	public Map<String, String[]> setNewContext(String app,String factTable,String factID, String msg,String emailType,String message ,String senderEmail ) throws Exception
+	{ 
+		Map<String, String[]> newContext = new HashMap<String, String[]>();
+		newContext.put("app", new String[]{app});
+		newContext.put("factTable", new String[]{factTable});		
+		newContext.put("usersK", new String[]{factID});
+		newContext.put("message", new String[]{message});
+		newContext.put("senderEmail", new String[]{senderEmail});
+		newContext.put("emailType", new String[]{emailType});
+		newContext.put("sendEmail", new String[]{"false"});
+		return newContext;
+	}
+
+
 	public void process(Map<String, String[]> context, DataSource ds,String factID, List<List<LookupPair>> oldContextStr) throws Exception
 	{
 		if (!(context.containsKey("sendEmail")))
@@ -67,45 +102,11 @@ public class Pregapp_Users_RuleEngine implements RuleEngine
 			//send an email with this msg
 			//get senderEmail and Password from propertyfile
 			String senderEmail=sendEmailProcess(context, subject, msg);
-
+	
 			//update in tempMSg table
 			Map<String, String[]> newContext = setNewContext(context.get("app")[0],"emailSent",UsersKeyFact, msg,emailType, msg ,senderEmail);
 			db.putFactProcess(newContext, db);
 		}	
-	}
-	
-	
-	public String sendEmailProcess(Map<String, String[]> context,String subject,String msg)
-			throws IOException, Exception
-	{
-		String canonicalFilePath=new Pregapp_Users_RuleEngine().getClass().getCanonicalName();
-		String filePath=UseFulMethods.getApp_PropertyFile_Path(context.get("app")[0],canonicalFilePath);
-		Map<String, String> map=UseFulMethods.getProperties(filePath);
-		String senderEmail = map.get("senderEmail");
-		String password = map.get("password");
-		String message = "<h1> Dear Subscriber</h1><br><p>"+msg+ "</p>";
-		UseFulMethods.sendEmail(senderEmail, password, context.get("Email")[0], subject, message);
-		return senderEmail;
-	}
-	public Map<String, String[]> setOldContext(Map<String, String[]> context, String factID ) throws Exception
-	{
-		Map<String, String[]> newContext = new HashMap<String, String[]>(context);
-		newContext.put("updateid", new String[]{factID});
-		newContext.put("sendEmail", new String[]{"false"});
-		newContext.remove("createdDate");
-		return newContext;
-	}
-	public Map<String, String[]> setNewContext(String app,String factTable,String factID, String msg,String emailType,String message ,String senderEmail ) throws Exception
-	{ 
-		Map<String, String[]> newContext = new HashMap<String, String[]>();
-		newContext.put("app", new String[]{app});
-		newContext.put("factTable", new String[]{factTable});		
-		newContext.put("usersK", new String[]{factID});
-		newContext.put("message", new String[]{message});
-		newContext.put("senderEmail", new String[]{senderEmail});
-		newContext.put("emailType", new String[]{emailType});
-		newContext.put("sendEmail", new String[]{"false"});
-		return newContext;
 	}
 
 	

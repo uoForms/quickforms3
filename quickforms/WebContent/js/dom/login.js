@@ -83,6 +83,7 @@ function (){
                             {
 								me.success = false;
 								window.location = 'index.html?invalidLogin=true';
+								alert("Username and password does not match!");
                             }
                             else
                             {

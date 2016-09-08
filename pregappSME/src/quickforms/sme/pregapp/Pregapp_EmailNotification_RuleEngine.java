@@ -7,7 +7,6 @@ package quickforms.sme.pregapp;
 
 import java.io.IOException;
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -21,18 +20,20 @@ import javax.sql.DataSource;
 import quickforms.sme.*;
 import quickforms.dao.Database;
 import quickforms.dao.LookupPair;
-import quickforms.sme.RuleEngine;
 
 /**
  * @author Ben Eze
  */
 public class Pregapp_EmailNotification_RuleEngine implements RuleEngine {
-    private final int minimumWeek = -4;
+    private final int minimumWeek = 0;
+    private final int maximumWeek = 40;
+    private String senderAlias="";
     private String senderEmail = "";
     private String senderPassword = "";
     private Boolean testMode = false;
-    private final String adminUserEmails = "eze.ben@gmail.com,veena.chhattani@gmail.com";
-
+    private final String adminUserEmails = "eze.ben@gmail.com";
+    
+        
     /***
      * Processes and sends notifications for all those that match the pregnancy anniversary
      *
@@ -56,7 +57,10 @@ public class Pregapp_EmailNotification_RuleEngine implements RuleEngine {
             System.out.println(String.format("Exception reading form parameters: %s", e.getMessage()));
         }
 
-        //get all User
+        //Pull the pregapp email settings. If this fails, go ahead and use the default
+        Pregapp_EmailNotification_Settings settings = UseFulMethods.getPregappEmailSettings();
+        
+        //get all Users
         Database db = new Database(ds);
         String app = context.get("app")[0];
         String lkup_UsersJSon = db.getResultSet(app, "lkup_Users", null, null, null, null);
@@ -67,30 +71,35 @@ public class Pregapp_EmailNotification_RuleEngine implements RuleEngine {
 
         for (Map<String, String[]> row : allUsersLkUp) //for each user
         {
-            //sent email and add to db
-            String userKey = row.get("usersKey")[0];
-            String userEmail = row.get("Email")[0];
+        	try{
+        		//sent email and add to db
+                String userKey = row.get("usersKey")[0];
+                String userEmail = row.get("Email")[0];
 
-            int currWeek = getNotificationCurrentWeek(row.get("DueDate")[0]);    //calculate user week
+                int currWeek = getNotificationCurrentWeek(UseFulMethods.getDateFromString(row.get("DueDate")[0]));    //calculate user week
 
-            //System.out.println(String.format("Details for user:%s, key:%s, current week:%d Due Date:%s ", userEmail, userKey, currWeek, row.get("DueDate")[0]));
+                System.out.println(String.format("Details for user:%s, key:%s, current week:%d Due Date:%s ", userEmail, userKey, currWeek, row.get("DueDate")[0]));
 
-            if (currWeek >= minimumWeek) {
-                String messageLog = String.format("Email sent for user:%s, key:%s, current week:%d ", userEmail, userKey, currWeek);
+                if (currWeek >= minimumWeek && currWeek <= maximumWeek) {
+                    String messageLog = String.format("Email sent for user:%s, key:%s, current week:%d ", userEmail, userKey, currWeek);
 
-                sendNotificationEmail(row, app, currWeek);
-                System.out.println(messageLog);
+                    sendNotificationEmail(settings, row, app, currWeek);
+                    System.out.println(messageLog);
 
-                emailsSent += 1;
-                if (subscriberEmailConfirmation == "")
-                    subscriberEmailConfirmation = messageLog;
-                else
-                    subscriberEmailConfirmation += "<br/>" + messageLog;
-            }
+                    emailsSent += 1;
+                    if (subscriberEmailConfirmation == "")
+                        subscriberEmailConfirmation = messageLog;
+                    else
+                        subscriberEmailConfirmation += "<br/>" + messageLog;
+                }
+        		
+        	}catch(Exception e){
+        		System.out.println(String.format("Exception sending email for %s: %s", row.get("Email")[0], e.getMessage()));
+        	}            
         }
 
         //Send confirmation daily to show that the messages were actually sent
-        this.sendAdminConfirmationEmail(app, emailsSent, subscriberEmailConfirmation);
+        this.sendAdminConfirmationEmail(settings, emailsSent, subscriberEmailConfirmation);
     }
 
     /**
@@ -103,125 +112,23 @@ public class Pregapp_EmailNotification_RuleEngine implements RuleEngine {
      * @throws IOException
      * @throws Exception
      */
-    private String[] sendNotificationEmail(Map<String, String[]> row, String app, int currWeek) throws IOException, Exception {
-        String canonicalFilePath = new Pregapp_EmailNotification_RuleEngine().getClass().getCanonicalName();
-        String filePath = UseFulMethods.getApp_PropertyFile_Path(app, canonicalFilePath);
-        Map<String, String> map = UseFulMethods.getProperties(filePath);
-
-        String weekTitle = "";
-        String message = "";
+    public String[] sendNotificationEmail(Pregapp_EmailNotification_Settings settings, Map<String, String[]> row, String app, int currWeek) throws IOException, Exception {
+        
+    	this.senderEmail = settings.getDefaultSenderEmail();
+    	this.senderAlias = settings.getDefaultSenderAlias();
+    	this.senderPassword = settings.getDefaultSenderPassword();
+    	
+        String subject = settings.getSubjectTemplate().replace("@@Subscriber", "Subscriber").replace("@@WeekNumber", Integer.toString(currWeek));        
+        String message = settings.getBodyTemplate().replace("@@WeekNumber", Integer.toString(currWeek)).replace("@@Subscriber", "Subscriber");
         String recipientEmail = row.get("Email")[0];
-
-        this.senderEmail = map.get("senderEmail");
-        this.senderPassword = map.get("password");
 
         //If we are testing, send the email to ourselves
         if (this.testMode) {
-            recipientEmail = adminUserEmails;
-            message = "";
+            recipientEmail = settings.getAdminEmails();
             message = "This is a test notification.....";
         }
 
-        String link;
-        if (currWeek < 3) {
-            link = "http://quickforms3.eecs.uottawa.ca/pregapp/content.html?id=" + "1";
-        } else {
-            link = "http://quickforms3.eecs.uottawa.ca/pregapp/content.html?id=" + String.valueOf(currWeek + 1);
-        }
-
-/*        String warningSignsLink = "http://quickforms3.eecs.uottawa.ca/francine/warning_signs_trimester_1.html?id=61";
-        String signsOfLabour = "http://quickforms3.eecs.uottawa.ca/francine/signs_of_labor.html?id=65";*/
-
-        if (currWeek >= 0) {
-
-            switch (currWeek) {
-                case 0:
-                    weekTitle = "your new pregnancy";
-                    break;
-                case 1:
-                    weekTitle = "<b>first week</b> of your pregnancy";
-                    break;
-                case 2:
-                    weekTitle = "<b>second week</b> of your pregnancy";
-                    break;
-                case 3:
-                    weekTitle = "<b>third week</b> of your pregnancy";
-                    break;
-                default:
-                    weekTitle = "<b>" + currWeek + "th </b>" + "week of your pregnancy";
-                    break;
-            }
-/*
-            if (currWeek > 12)
-                warningSignsLink = "http://quickforms3.eecs.uottawa.ca/francine/warning_signs_trimester_1.html?id=61";
-            else if (currWeek > 26)
-                warningSignsLink = "http://quickforms3.eecs.uottawa.ca/francine/warning_signs_trimester_3.html?id=63";*/
-
-            //General congratulations message
-            message += "<h1> Dear Subscriber </h1> " +
-                    "<p>Congratulations on " + weekTitle + "! </p>" +
-                    "<p> Let us continue your happy journey together!<br><br>Please click the link below for your "
-                    + weekTitle + " week guidelines <br><br>" +
-                    "<a href=\"" + link + "\">" + link +
-                    "</a><br><br><br><b>Note</b>: If the link above doesn't work, please copy and paste it on a browser to access the instructions.</p>" +
-                    "<p>Celebrate Creation</p>";
-
-/*            //Add the appropriate warning signs for the trimester.
-            message += "<p>Please read through the following <a href='" + warningSignsLink +
-                    "'>warning signs</a> and contact your physician immediately if you notice any of those signs</p>";*/
-
-
-/*            //Add the signs of labour for those up to 38 weeks pregnant
-            if (currWeek >= 38) {
-                message += "<p>As you getting closer to your due date, please read through these <a href='" + signsOfLabour +
-                        "'>signs of labour</a> as well.</p>";
-            }*/
-        }
-/*        else {
-
-            link = "http://quickforms3.eecs.uottawa.ca/francine/new_born_wk_" + Math.abs(currWeek) + ".html";
-
-
-            String advantageOfPregnancyLink = "http://quickforms3.eecs.uottawa.ca/francine/adv_of_breast_feeding.html?id=66";
-
-
-
-
-			//Section for new born
-			switch(currWeek){
-				case -1:
-					weekTitle = "new born";
-					link +="?id=67";
-					break;
-				case -2:
-					weekTitle = "<b>two weeks old baby</b>";
-					link +="?id=68";
-					break;
-				case -3:
-					weekTitle = "<b>three weeks old baby</b>";
-					link +="?id=69";
-					break;
-				case -4:
-					weekTitle = "<b>4 weeks old baby</b>";
-					link +="?id=70";
-					break;
-				default:
-					weekTitle = "<b>" + Math.abs(currWeek) + "th </b>" + "old baby";
-					link = advantageOfPregnancyLink;
-					break;
-			}
-
-
-            message += "<h1> Dear Subscriber </h1> " +
-                    "<p>Congratulations on your " + weekTitle + "! </p>" +
-                    "<p> Let us continue your happy journey together!<br><br>Please click on the link below for your "
-                    + weekTitle + " newborn guidelines <br><br>" +
-                    "<a href=\"" + link + "\">" + link +
-                    "</a><br><br><br><b>Note</b>: If the link above doesn't work, please copy and paste the it on a browser to access the instructions</p>";
-        }*/
-
-
-        UseFulMethods.sendEmail(this.senderEmail, this.senderPassword, recipientEmail, "CelebrateCreation Alert", message);
+        UseFulMethods.sendEmail(this.senderEmail, this.senderAlias, this.senderPassword, recipientEmail, subject, message);
         String[] params = new String[2];
         params[0] = senderEmail;
         params[1] = message;
@@ -230,26 +137,47 @@ public class Pregapp_EmailNotification_RuleEngine implements RuleEngine {
     }
 
     /**
-     * sends confirmation email to adminitrators
+     * sends confirmation email to administrators
      *
      * @param app
      * @param numberOfEmails
      */
-    private void sendAdminConfirmationEmail(String app, int numberOfEmails, String messageLog) {
+    private void sendAdminConfirmationEmail(Pregapp_EmailNotification_Settings settings, int numberOfEmails, String messageLog) {
 
         try {
-            String canonicalFilePath = new Pregapp_EmailNotification_RuleEngine().getClass().getCanonicalName();
-            String filePath = UseFulMethods.getApp_PropertyFile_Path(app, canonicalFilePath);
-            Map<String, String> map = UseFulMethods.getProperties(filePath);
-
-            String message = String.format("%d subscriber emails have been sent! <br/><br/> %s", numberOfEmails, messageLog);
-
-            this.senderEmail = map.get("senderEmail");
-            this.senderPassword = map.get("password");
-            UseFulMethods.sendEmail(this.senderEmail, this.senderPassword, this.adminUserEmails, "Daily notification summary", message);
+            
+        	this.senderEmail = settings.getDefaultSenderEmail();
+        	this.senderAlias = settings.getDefaultSenderAlias();
+        	this.senderPassword = settings.getDefaultSenderPassword();        	
+            
+            String message = String.format("%d subscriber emails have been sent! <br/><br/> %s", numberOfEmails, messageLog);            
+            UseFulMethods.sendEmail(this.senderEmail, this.senderAlias, this.senderPassword, this.adminUserEmails, "Daily notification summary", message);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public Map<String, String[]> setNewContext(Map<String, String[]> context, String UsersKey, String message, Integer currWeek, String factID, String senderEmail) throws Exception {
+        Map<String, String[]> newContext = new HashMap<String, String[]>(context);
+        newContext.put("senderEmail", new String[]{senderEmail});
+        newContext.put("weeksK", new String[]{String.valueOf(currWeek)});
+        newContext.put("usersK", new String[]{UsersKey});
+        newContext.put("message", new String[]{message});
+        newContext.put("emailType", new String[]{"1"});
+        newContext.put("requestNumber", new String[]{factID});
+        newContext.put("sendEmail", new String[]{"false"});
+        return newContext;
+    }
+
+    public Map<String, String[]> setOldContext(Map<String, String[]> context, String factID, String senderEmail) throws Exception {
+        Map<String, String[]> newContext = new HashMap<String, String[]>(context);
+        newContext.put("senderEmail", new String[]{senderEmail});
+        newContext.put("updateid", new String[]{factID});
+        newContext.put("message", new String[]{"Initiation for Weekly Email Request"});
+        newContext.remove("createdDate");
+        newContext.put("sendEmail", new String[]{"false"});
+
+        return newContext;
     }
 
     /**
@@ -259,21 +187,16 @@ public class Pregapp_EmailNotification_RuleEngine implements RuleEngine {
      * @return number between minimumWeek - 40
      * @throws Exception
      */
-    private int getNotificationCurrentWeek(String dueDateStr) throws Exception {
+    private int getNotificationCurrentWeek(Date dueDate) throws Exception {
 
         Integer minimumValue = minimumWeek - 1;
 
-        if (dueDateStr == null || dueDateStr.trim().isEmpty())
+        if (dueDate == null)
             return minimumValue;
 
         //Get the date format
         DateFormat formatter = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault());
-        //String pattern = ((SimpleDateFormat)formatter).toPattern();
-        //System.out.println(pattern);
-
-        //Fix the due date into a date
-        Date dueDate = formatter.parse(dueDateStr);
-
+    
         //Get the current date
         String curDateStr = formatter.format(System.currentTimeMillis());
         Date curDate = formatter.parse(curDateStr);
@@ -309,50 +232,56 @@ public class Pregapp_EmailNotification_RuleEngine implements RuleEngine {
             return (int) weeks; //After delivery up to the minimum allowed
     }
 
-    public Map<String, String[]> setNewContext(Map<String, String[]> context, String UsersKey, String message, Integer currWeek, String factID, String senderEmail) throws Exception {
-        Map<String, String[]> newContext = new HashMap<String, String[]>(context);
-        newContext.put("senderEmail", new String[]{senderEmail});
-        newContext.put("weeksK", new String[]{String.valueOf(currWeek)});
-        newContext.put("usersK", new String[]{UsersKey});
-        newContext.put("message", new String[]{message});
-        newContext.put("emailType", new String[]{"1"});
-        newContext.put("requestNumber", new String[]{factID});
-        newContext.put("sendEmail", new String[]{"false"});
-        return newContext;
-    }
-
-    public Map<String, String[]> setOldContext(Map<String, String[]> context, String factID, String senderEmail) throws Exception {
-        Map<String, String[]> newContext = new HashMap<String, String[]>(context);
-        newContext.put("senderEmail", new String[]{senderEmail});
-        newContext.put("updateid", new String[]{factID});
-        newContext.put("message", new String[]{"Initiation for Weekly Email Request"});
-        newContext.remove("createdDate");
-        newContext.put("sendEmail", new String[]{"false"});
-
-        return newContext;
-    }
-
-
+    
     public static void main(String[] args) {
-        System.out.println("Testing");
+    	
+    	try{
+    		UseFulMethods.sendEmail("autoReplyPregApp@gmail.com", "Test Alias", "autoReplyPregApp1", "eze.ben@gmail.com", "Daily notification summary", "Test message");
+    		UseFulMethods.sendEmail("autoReplyPregApp@gmail.com", "Test Alias", "autoReplyPregApp1", "eze.ben@gmail.com", "Daily notification summary", "Test message");
+    	}catch(Exception e){
+    		e.printStackTrace();
+    	}
+    	
+    	
+    	System.out.println("Testing");
         Pregapp_EmailNotification_RuleEngine pregappRuleEngine = new Pregapp_EmailNotification_RuleEngine();
-
+                
         try {
-            String currentWeek = "10/08/2014";
-            System.out.println(pregappRuleEngine.getNotificationCurrentWeek(currentWeek));
+            String currentWeek = "08/10/2015";
+            System.out.println(pregappRuleEngine.getNotificationCurrentWeek(UseFulMethods.getDateFromString(currentWeek)));
 
-            currentWeek = "31/05/2015";
-            System.out.println(pregappRuleEngine.getNotificationCurrentWeek(currentWeek));
+            currentWeek = "31/05/2016";
+            System.out.println(pregappRuleEngine.getNotificationCurrentWeek(UseFulMethods.getDateFromString(currentWeek)));
 
-            currentWeek = "21/06/2015";
-            System.out.println(pregappRuleEngine.getNotificationCurrentWeek(currentWeek));
+            currentWeek = "21/06/2016";
+            System.out.println(pregappRuleEngine.getNotificationCurrentWeek(UseFulMethods.getDateFromString(currentWeek)));
 
-            currentWeek = "11/03/2015";
-            System.out.println(pregappRuleEngine.getNotificationCurrentWeek(currentWeek));
+            currentWeek = "11/03/2016";
+            System.out.println(pregappRuleEngine.getNotificationCurrentWeek(UseFulMethods.getDateFromString(currentWeek)));
+            
+            currentWeek = "20/10/2016";
+            System.out.println(pregappRuleEngine.getNotificationCurrentWeek(UseFulMethods.getDateFromString(currentWeek)));
 
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+        
+        System.out.println("Testing - sending emails");
+        Pregapp_EmailNotification_Settings settings = UseFulMethods.getPregappEmailSettings();
+        
+        Map<String, String[]> row = new HashMap<String, String[]>();
+        String[] email = new String[] {"eze.ben@gmail.com"};
+        row.put("Email", email);
+        
+        try {
+			pregappRuleEngine.sendNotificationEmail(settings, row, "", 31);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     }
 }

@@ -15,6 +15,7 @@ import javax.sql.DataSource;
 
 import quickforms.dao.Database;
 import quickforms.dao.LookupPair;
+import quickforms.sme.Pregapp_EmailNotification_Settings;
 import quickforms.sme.RuleEngine;
 import quickforms.sme.UseFulMethods;
 
@@ -65,21 +66,16 @@ public class Pregapp_Unsubscribe_RuleEngine implements RuleEngine
 	}
 	
 	
-	
-	
-	
-	
-	
 	public String  sendEmailProcess(Map<String, String[]> context,String subject,String msg)
 			throws IOException, Exception
 	{
-		String canonicalFilePath=new Pregapp_Unsubscribe_RuleEngine().getClass().getCanonicalName();
-		String filePath=UseFulMethods.getApp_PropertyFile_Path(context.get("app")[0],canonicalFilePath);
-		Map<String, String> map=UseFulMethods.getProperties(filePath);
-		String senderEmail = map.get("senderEmail");
-		String password = map.get("password");
+		Pregapp_EmailNotification_Settings settings = UseFulMethods.getPregappEmailSettings();
+        String senderEmail = settings.getDefaultSenderEmail();
+        String sendersAlias = settings.getDefaultSenderAlias();
+        String password = settings.getDefaultSenderPassword();       
+		
 		String message = "<h1> Dear User</h1><br><p>"+msg+ "</p>";
-		UseFulMethods.sendEmail(senderEmail, password, context.get("Email")[0], subject, message);
+		UseFulMethods.sendEmail(senderEmail, sendersAlias, password, context.get("Email")[0], subject, message);
 		return senderEmail;
 	}
 	//update UnSubscribe Table Fact 
