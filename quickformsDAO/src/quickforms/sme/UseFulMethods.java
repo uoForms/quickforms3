@@ -166,8 +166,7 @@ public abstract class UseFulMethods
 	}
 	
 	static public void sendEmail(String d_email, String alias, String pwd, String toAddress, String m_subject, String message) throws Exception
-	{
-		Logger.log("boatsafe", "testsetestseses");		
+	{	
 		final String password = pwd;
 		final String from = d_email;
 		

@@ -33,7 +33,6 @@ public class ReportProblem extends HttpServlet
 		 */
 		
 		Map<String, String[]> inParams = request.getParameterMap();
-		PrintWriter out = response.getWriter();
 		final String app = request.getParameter("app");
 		System.out.println("app"+ app);
 		final String userName = request.getParameter("addedBy");
@@ -73,7 +72,6 @@ public class ReportProblem extends HttpServlet
 					String fromAddress = (String) environmentContext.lookup(app + ".reportProblem.fromAddress");
 					String emailPassword = (String) environmentContext.lookup(app + ".reportProblem.emailPassword");
 					String toAddresses = (String) environmentContext.lookup(app + ".reportProblem.toAddresses") + "," + userEmail;
-					System.out.println(fromAddress+emailPassword+toAddresses);
 					UseFulMethods.sendEmail(fromAddress, "",emailPassword, toAddresses, emailSubject, emailBody);
 					Logger.log(app, "Sending email for problem report in " + app);
 				}
