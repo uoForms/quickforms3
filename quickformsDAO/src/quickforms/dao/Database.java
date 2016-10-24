@@ -125,6 +125,9 @@ public class Database implements Serializable
 				String enteredData = params.get(metas.get(i).getColumnName())[0];
 				pst.setString(i + 1, enteredData);
 			}
+			else if(metas.get(i).getColumnName().equals("userRole")){
+				pst.setString(i + 1, "2");
+			}
 			else
 			{
 				pst.setString(i + 1, "0");

@@ -33,11 +33,15 @@ public class ReportProblem extends HttpServlet
 		 */
 		
 		Map<String, String[]> inParams = request.getParameterMap();
-		
+		PrintWriter out = response.getWriter();
 		final String app = request.getParameter("app");
+		System.out.println("app"+ app);
 		final String userName = request.getParameter("addedBy");
+		System.out.println("username"+ userName);
 		final String userEmail = request.getParameter("email");
+		System.out.println("userEmail"+ userEmail);
 		final String userPhone = request.getParameter("phoneNumber");
+		System.out.println("phonenumber"+ userPhone);
 		
 		final String problem = request.getParameter("problem");
 		
@@ -69,8 +73,8 @@ public class ReportProblem extends HttpServlet
 					String fromAddress = (String) environmentContext.lookup(app + ".reportProblem.fromAddress");
 					String emailPassword = (String) environmentContext.lookup(app + ".reportProblem.emailPassword");
 					String toAddresses = (String) environmentContext.lookup(app + ".reportProblem.toAddresses") + "," + userEmail;
-					
-					UseFulMethods.sendEmail(fromAddress, emailPassword, toAddresses, emailSubject, emailBody);
+					System.out.println(fromAddress+emailPassword+toAddresses);
+					UseFulMethods.sendEmail(fromAddress, "",emailPassword, toAddresses, emailSubject, emailBody);
 					Logger.log(app, "Sending email for problem report in " + app);
 				}
 				catch (Exception e)
@@ -81,5 +85,15 @@ public class ReportProblem extends HttpServlet
 			}
 		};
 		sendEmailThread.start();
+	}
+	
+	@Override
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
+	{
+		String debug = request.getParameter("debug");
+		if (debug != null)
+		{
+			doPost(request, response);
+		}
 	}
 }

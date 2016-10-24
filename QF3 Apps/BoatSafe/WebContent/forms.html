@@ -133,7 +133,7 @@
 				<a href = "" onclick="redirectStartButton(this)" id="start" data-role="button" data-icon="check" data-theme="b" data-inline="true">Email Start Trip</a>
 				<a href = "" onclick="redirectEndButton(this)" id="end" data-role="button" data-icon="check" data-theme="b" data-inline="true">Email End Trip</a>
 			</div>
-			 <h2>Names of travellers & emergency contacts</h2> 
+			 <h2>Names of travellers & emergency contacts</h2>
 			
 			<label for="traveller" class ="ui-input-text">Traveller</label>
             <input type="text" id ="traveller" name ="traveller" />
@@ -170,18 +170,19 @@
 			<a href = "" onclick="checkWeather();" class="weatherButton" rel="external" data-role="button" data-icon=""  data-inline="true">Weather</a>
 			<a href = "" onclick="loadMap();" class="mapButton" rel="external" data-role="button" data-icon=""  data-inline="true">Map</a>	
 				
-			<label for ="departureLocationDate">Departure Date & Time</label>
-			<input type = "text" class="dateTime" name ="departureLocationDate" id = "departureLocationDate" readonly />
-			      
+			<label for ="departureLocationDate">Departure Date and Time</label>
+			<input type = "text" class="datetime" name ="departureLocationDate" id = "departureLocationDate" readonly />
+			
+             
 			
 			<label for="arrivalLocation">Arrival Location</label>
             <input type="text" name="arrivalLocation" id = "arrivalLocation" />
 			<a href = "" onclick="checkWeatherArrival();" class="weatherButton" rel="external" data-role="button" data-icon=""  data-inline="true">Weather</a>
 			<a href = "" onclick="loadMapArrival();" class="mapButton" rel="external" data-role="button" data-icon=""  data-inline="true">Map</a>	
 			
-			<label for ="arrivalDate">Arrival Date & Time</label>
-			<input type = "text" class="dateTime" name ="arrivalDate" id = "arrivalDate" readonly />
-
+			<label for ="arrivalDate">Arrival Date and Times</label>
+			<input type = "text" class="datetime" name ="arrivalDate" id = "arrivalDate" readonly />
+			
 			<label for="routePlan">Route Plan </label>
             <textarea class="dynamicText" name="routePlan" id="routePlan" ></textarea>
 		

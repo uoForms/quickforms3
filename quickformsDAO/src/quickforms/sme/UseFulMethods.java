@@ -20,6 +20,8 @@ import javax.mail.internet.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+
+import quickforms.dao.Logger;
 import quickforms.dao.LookupPair;
 
 /**
@@ -165,7 +167,7 @@ public abstract class UseFulMethods
 	
 	static public void sendEmail(String d_email, String alias, String pwd, String toAddress, String m_subject, String message) throws Exception
 	{
-				
+		Logger.log("boatsafe", "testsetestseses");		
 		final String password = pwd;
 		final String from = d_email;
 		
@@ -193,7 +195,7 @@ public abstract class UseFulMethods
 		props.put("mail.smtp.socketFactory.port", d_port);
 		props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		props.put("mail.smtp.socketFactory.fallback", "false");
-		
+
 		SMTPAuthenticator auth = new SMTPAuthenticator();
 		Session session = Session.getInstance(props, auth);
 		session.setDebug(true);

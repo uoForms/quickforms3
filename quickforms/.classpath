@@ -2,11 +2,6 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/quickformsDAO"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre7">
-		<attributes>
-			<attribute name="owner.project.facets" value="java"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v7.0">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.web"/>
@@ -20,5 +15,8 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/mysql-connector-java-5.1.25-bin.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/opencsv-2.3.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/sqljdbc4.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="lib" path="F:/Program Files/apache-tomcat-8.0.36/lib/servlet-api.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Ryan/Desktop/qf-dao.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
