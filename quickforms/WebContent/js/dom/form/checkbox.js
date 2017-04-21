@@ -3,7 +3,7 @@
  */
 define(['dom/form/form'],
     function () {
-        quickforms.CheckboxElement = function (dom, formObj, label) // Monitors checkbox activity
+        quickforms.CheckboxElement = function (dom, formObj, label, lookup) // Monitors checkbox activity
         {
             quickforms.DomElement.call(this, dom); // super call to get parent attributes
             var me = this;
@@ -11,6 +11,7 @@ define(['dom/form/form'],
             this.label = label;
             this.hasBeenClicked = false;
             this.selectedField = 0;
+            this.lookup = lookup;
             this.domType = dom.attr('type'); // radio or checkbox
             this.rememeber = dom.is("[remember]");
             this.multiple = dom.is("[multiple]");  // No need to insert into database if unchecked
@@ -47,7 +48,8 @@ define(['dom/form/form'],
             this.serialize = function (multi) {
                 if (this.domType == "radio") {
                     if (this.checked)
-                        return this.name + '=' + this.selectedField;
+                        return this.lookup + '=' + this.selectedField;
+                    return '';
                 }
                 else {
                     if (!multi || this.checked)// filldiv checkboxes should only save when checked
@@ -59,6 +61,13 @@ define(['dom/form/form'],
                 return this.name + '=' + this.selectedField;
             };
             this.summary = function (multiple) {
+                if (this.domType == 'radio' && this.checked == true){
+                   var commentID = this.name + '_text';
+                   if($('#'+commentID).val()!='' && $('#'+commentID).val()!=undefined && $('#'+commentID).val()!='null'){
+                     return this.name.replace(/_/g, ' ').replace(' s ', '\'s ')  + this.label + ' &nbsp&nbsp&nbsp<em>Comment:' + $('#'+commentID).val() +'</em>';
+                   }else
+                     return this.name.replace(/_/g, ' ').replace(' s ', '\'s ' )  + this.label;
+                }
                 if (multiple && this.checked == true) {
                     return this.label;
                 }

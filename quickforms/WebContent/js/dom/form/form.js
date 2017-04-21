@@ -137,8 +137,8 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                 if (editBtn) {
                     editBtn.href = editBtn.href + "?id=" + level1Key;
                 }
-								
-					
+
+
                 titleDom.appendChild(document.createTextNode(tmpJsonObj[0].title));
                 formDom.insertBefore(titleDom, formDom.childNodes[0]);
 
@@ -151,10 +151,10 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                     var btnsDivDom = document.createElement("div");
                     btnsDivDom.className = "buttons";
 
-					
+
 				titleDom.appendChild(document.createElement(tmpJsonObj[0].btnsDivDom));
                 formDom.insertBefore(btnsDivDom, formDom.childNodes[0]);
-				
+
                     if (jsonObj.lastId && jsonObj.lastId != "" && jsonObj.lastId != "null") {
                         var lastBtnDom = document.createElement("a");
                         if (ccm == "display") {
@@ -175,7 +175,7 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                         lastBtnDom.appendChild(document.createTextNode("<<"));
                         btnsDivDom.appendChild(lastBtnDom);
                     }
-					
+
 					var homeBtnDom = document.createElement("a");
                     homeBtnDom.href = "index.html";
                     homeBtnDom.rel = "external";
@@ -187,11 +187,11 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                     homeBtnDom.setAttribute("style","padding: 7px 15px; margin: 5px;");
                     homeBtnDom.appendChild(document.createTextNode("Up"));
                     btnsDivDom.appendChild(homeBtnDom);
-					
-					
-					
-					
-					
+
+
+
+
+
 
                     if (jsonObj.nextId && jsonObj.nextId != "" && jsonObj.nextId != "null") {
                         var nextBtnDom = document.createElement("a");
@@ -213,13 +213,13 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                         nextBtnDom.appendChild(document.createTextNode(">>"));
                         btnsDivDom.appendChild(nextBtnDom);
                     }
-					
-					
+
+
 					}
-					
+
 				})
-					
-				
+
+
                 var tabDom = document.getElementById("contentTab");
                 tabDom.className = "tabs";
                 //generate tab labels and reprocess the contentHTML
@@ -231,9 +231,9 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                     var tabContentDom = document.getElementById("tab" + tmpJsonObj[i].contentId);
                     tabContentDom.innerHTML = tmpJsonObj[i].contentHTML;
                 }
-				
-				
-					
+
+
+
             } else if (ccm == "edit") {
                 titleDom.appendChild(document.createTextNode(tmpJsonObj[0].title));
                 formDom.insertBefore(titleDom, formDom.childNodes[0]);
@@ -293,10 +293,10 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                         lastBtnDom.appendChild(document.createTextNode("<<"));
                         btnsDivDom.appendChild(lastBtnDom);
                     }
-					
-					
-					
-					
+
+
+
+
                     var homeBtnDom = document.createElement("a");
                     homeBtnDom.href = "index.html";
                     homeBtnDom.rel = "external";
@@ -308,11 +308,11 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                     homeBtnDom.setAttribute("style","padding: 7px 15px; margin: 5px;");
                     homeBtnDom.appendChild(document.createTextNode("Up"));
                     btnsDivDom.appendChild(homeBtnDom);
-					
-					
-					
-					
-					
+
+
+
+
+
 
                     if (jsonObj.nextId && jsonObj.nextId != "" && jsonObj.nextId != "null") {
                         var nextBtnDom = document.createElement("a");
@@ -334,16 +334,16 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                         nextBtnDom.appendChild(document.createTextNode(">>"));
                         btnsDivDom.appendChild(nextBtnDom);
                     }
-					
-										
-					
-                    
+
+
+
+
 
                     formDom.appendChild(btnsDivDom);
 				}
 
-			              
-			
+
+
             });
 
             return jsonObj;
@@ -400,7 +400,6 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
         formObj.level2Key = getParameterByName('level2Key') ? getParameterByName('level2Key') : "-1";//get level2Key to display specific content
         formObj.id = 'currentForm' + params.formId;
         quickforms.initLoadingGif();
-
         formObj.getUpdateRow(function () {
             for (var i = 0; i < this.form.domParsers.length; i++) {
                 this.form.domParsers[i](formObj);
@@ -413,7 +412,7 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
         quickforms.loadCss(quickforms.cssUrl + "quickforms/form.css");
         quickforms.loadCss("css/custom.css");
     };
-    quickforms.putFact = function (context, redirect)// context is JavaScript object of submit button, redirect is the url to navigate to on success
+    quickforms.putFact = function (context, redirect, append)// context is JavaScript object of submit button, redirect is the url to navigate to on success
     {
         context = $(context);
         context.attr('html', '');
@@ -421,6 +420,8 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
         var formObj = quickforms['currentForm' + formId];
         var formSerialized = "app=" + formObj.app + "&";
         quickforms.redirectUrl = redirect;
+        if(append)
+          quickforms.append = append;
 
         formSerialized += "factTable=" + formObj.fact + "&updateid=" + formObj.updateId + "&";
         formSerialized += formObj.serialize();
@@ -433,6 +434,40 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
                 $('#offlineInfo').remove()
             }, 5000);
         }
+    };
+    quickforms.putFactComments = function (context, redirect)// context is JavaScript object of submit button, redirect is the url to navigate to on success
+    {
+        context = $(context);
+        context.attr('html', '');
+        var formId = context.parents('form')[0].id;
+        var formObj = quickforms['currentForm' + formId];
+        var formSerialized = "app=" + formObj.app + "&";
+        quickforms.redirectUrl = redirect;
+
+        var providerId = getCookie('userid');
+        formSerialized += "providerID=" + providerId + "&assessmentID=" + formObj.updateId + "&";
+        formSerialized += "factTable=comments"  + "&updateid=null"  + "&";
+        var formObjSerialized = formObj.serialize();
+        var paramsList = formObjSerialized.split('&');
+        for(var i=0; i<paramsList.length; i++ ){
+          var param = paramsList[i];
+          if (param.includes('comment_')){
+            var pos_equals = param.indexOf("=");
+            var domainId = param.substring(8,pos_equals);
+            var comment = param.substr(param.indexOf("=")+1);
+            var queryParams = formSerialized + 'domainID=' + domainId +"&comment="+comment;
+            quickforms.putFactServer.call(formObj, queryParams, quickforms.formRedirect);
+          }
+        }
+        // formSerialized = formObj.scrubFormDataString(formSerialized);
+        //
+        // quickforms.putFactServer.call(formObj, formSerialized, quickforms.formRedirect);
+        // if (quickforms.offline) {
+        //     $.mobile.activePage.append('<div id="offlineInfo">Data sent to server : <br />' + formSerialized + '</div>');
+        //     window.setTimeout(function () {
+        //         $('#offlineInfo').remove()
+        //     }, 5000);
+        // }
     };
     //TODO:finish this
     quickforms.updateCcmContent = function (context, redirect) {
@@ -453,7 +488,7 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
         formSerialized += "factTable=ccm" + "&updateid=" + ccmKeyDom.value + "&";
         formSerialized += formObj.serialize();
         formSerialized = formObj.scrubFormDataString(formSerialized);
-//	alert(formSerialized); 
+//	alert(formSerialized);
         formSerialized = formSerialized.replace("&" + contentDom.value + "=", "&contentHTML=");
 
         quickforms.putFactServer.call(formObj, formSerialized, function () {
@@ -515,7 +550,11 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
     quickforms.formRedirect = function (data) {
         if (quickforms.redirectUrl != null) {
             var json = JSON.parse(data);
-            window.location = quickforms.redirectUrl + "?rowId=" + json[0].id;
+            if(quickforms.append)
+              window.location = quickforms.redirectUrl + "?rowId=" + json[0].id;
+            else {
+              window.location = quickforms.redirectUrl;
+            }
 
             //$.mobile.changePage(quickforms.redirectUrl+"?id="+json[0].id);
         }

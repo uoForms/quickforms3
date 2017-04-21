@@ -1,0 +1,73 @@
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class = "ui-mobile-rendering">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../quickforms/css/quickforms/quickforms.css" />
+	<script src = "../quickforms/js/require.min.js" ></script>
+</head>
+<body>
+<div data-role="page" id="newVisitPage">
+	<script type="text/javascript">
+	require(['../quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+				require(['dom/form/text','dom/form/date','dom/form/tabPopup',
+						'dom/form/fillDiv', 'js/newPatient'], 
+					function(){
+						quickforms.parseForm( //formId, app*, fact
+							{formId:'patientsForm',
+							fact:'patients',
+							});
+							
+					    $('#teamMembersLink').click(function(){
+							quickforms.getFactData({
+						                    app:quickforms.app,
+			                                 queryName:'getTeamMembers',
+											 params: null,
+											 whereclause:'userRole = 1',
+											 callback: function(data){console.log(data);
+											    var jsonData = JSON.parse(data);
+												$('#tm').find('.ui-btn-text').each(function(i){
+													var me = null;
+												    for(var j in jsonData){
+														if(jsonData[j]['User Name'] == $(this).text()){
+															me = jsonData[j];					
+														}
+													} 
+													$(this).text(me['User Name'] + ' (' +  me['Position'] + ')');
+												
+												})
+											 }
+											 });
+							});
+
+		});
+			});
+		});
+
+	</script>
+	<div data-role="header"><h1>CWS</h1></div>
+	<div data-role = "content">
+		<form id="patientsForm">
+
+
+      <label for="label">Label:</label>
+      <input type="text" id="label" name="label" maxlength = "200"/>
+
+			<label for="description">Description:</label>
+			<input type="text" id="description" name="description" maxlength = "200"/>
+
+			<a id="teamMembersLink" href="teamMembers.html" data-rel="dialog" data-theme="c" data-icon="plus" data-role="button" class="tabPopup" > -- Select Care Providers --</a>
+
+      <br><br>
+			<a href = "" onclick="redirectCancelButton()" id="cancel" rel="external" data-role="button" data-icon="delete" data-theme="c" data-inline="true">Cancel</a>
+			<a href = "" onclick="redirectSubmitButton(this)" id="submit" data-role="button" data-icon="check" data-theme="b" data-inline="true">Submit</a>
+
+		</form>
+
+	</div>
+	<div data-role="footer"><h1>.</h1></div>
+</div>
+</body>
+</html>

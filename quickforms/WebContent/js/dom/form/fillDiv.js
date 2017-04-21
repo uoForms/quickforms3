@@ -2,6 +2,7 @@
  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 define(['dom/form/form',
+        'dom/form/text',
         'server/getMultiData',
         'dom/form/checkbox',
         'dom/form/select'],
@@ -13,7 +14,11 @@ define(['dom/form/form',
             this.parent = formObj;
             this.id = this.dom.attr('id');
             this.tab = $('a[href="#' + this.id + '"]');
+            if(this.tab.length == 0){
+              this.tab = $('h3[id='+this.id+'_label]');
+            }
             this.label = this.tab.text();
+            this.label = this.label.replace('click to expand contents','');
             this.serialize = function () {
                 var curSerialize = '';
                 for (var i in this.addedData) {
@@ -64,24 +69,34 @@ define(['dom/form/form',
                 return filterReturn;
             };
         }
+
         quickforms.form.domParsers.push(function (formObj) {
+			var templateId;
+			var url = formObj.dom.context.URL;
+			var urlVariables = url.split('&');
+			var templateId;
+			for (i = 0; i < urlVariables.length; i++) {
+				var sParameterName = urlVariables[i].split('=');
 
+				 if (sParameterName[0] === 'template') {
+					 templateId = sParameterName[1] === undefined ? true : sParameterName[1];
+				 }
+			 }
             var fills = formObj.dom.find('div[qf-type]');
-
             fills.each(function (i, fill) {
                 fill = $(fill);
-
                 var fillObj = new quickforms.FillDiv(fill, formObj);
                 var filter = fillObj.parseFilter(fill.attr('qf-filter'));
 
-                formObj.addChild(fillObj);
+                formObj.addChild(fillObj); 
                 fillObj.parentForm = formObj;
                 fillObj.query = quickforms.getMultiData.call(fillObj, formObj.app,
                     formObj.fact,
                     fill.attr('qf-lookup'),
                     filter,
                     formObj.updateId,
-                    quickforms.addAttributes);
+                    quickforms.addAttributes,
+					templateId);
 
             });
         });
@@ -104,8 +119,217 @@ define(['dom/form/form',
                 fillObj.dom.checkboxradio();
                 fillObj.dom.trigger("create");
             }
+            else if (qfType == 'radio') {
+                quickforms.convertJSONtoRadioButton(fillObj, data);
+                fillObj.dom.checkboxradio();
+               // fillObj.dom.trigger("create");
+            }
             fillObj.parentForm.finishedParsing();
             //var selectField = new quickforms.DomElement($('#'+fieldId));
+        }
+        quickforms.convertJSONtoRadioButton = function (fillObj, data) {
+            if (isJSONString(data)) {
+                fillObj.dom.children().remove();
+                fillObj.addedData = [];
+                var json = JSON.parse(data),
+                    currentKey = '',
+                    currentCategory = '';
+
+                var fieldSet;
+                var table, tHead, tBody, tRow, tData, tHeader;
+                table = $('<table id="' + json[0]['evaluationCategory'] + '_'+ json[0]['evaluationDomain']+'" >');
+                tHead = $("<thead>");
+                tRow = $("<tr>");
+                tRow.append($("<th>"));
+                var firstRowsecondHeader = $("<th>");
+                var markPopupWindow = $('<div style="width:400px;position:relative;left:200px" data-position-to="origin" data-role="popup" id= "mark_description">');
+                var markInfoPopupBtn = $('<a style="position:relative;left:40%" href="#mark_description" data-role="button" data-rel="popup" data-icon="info" data-iconpos="notext" data-inline="true"></a>');
+                var markInfoBox = $('<ul><li>No Impairment:</li><li>Mild Impairment</li><li>Moderate Impairment</li><li>Complete Impairment</li></ul>');
+                markPopupWindow.append(markInfoBox);
+                firstRowsecondHeader.append(markInfoPopupBtn);
+                firstRowsecondHeader.append(markPopupWindow);
+                tRow.append(firstRowsecondHeader);
+				if(json[0]['evaluationCategory'] == 'CAPACITY AND PERFORMANCE'){
+				     tRow.append('<th></th>');
+				}	 
+                if (json[0]['evaluationCategory'] == 'ENVIRONMENT'){
+                  tRow.append('<th class="rotate"><div><span>Complete barrier</span></div></th>'+
+                              '<th class="rotate"><div><span>Severe barrier</span></div></th>'+
+                              '<th class="rotate"><div><span>Moderate barrier</span></div></th>'+
+                              '<th class="rotate"><div><span>Mild barrier</span></div></th>'+
+                              '<th class="rotate"><div><span>No barrier facilitartor</span></div></th>'+
+                              '<th class="rotate"><div><span>Mild facilitartor</span></div></th>' +
+                              '<th class="rotate"><div><span>Moderate facilitartor</span></div></th>'+
+                              '<th class="rotate"><div><span>Substantial facilitator</span></div></th>'+
+                              '<th class="rotate"><div><span>Complete facilitator</span></div></th>'+
+                              '<th class="rotate"><div><span>Not applicable</span></div></th>'+
+                              '<th class="rotate"><div><span>Comment</span></div></th>');
+                              ;
+                }else{
+                tRow.append('<th class="rotate"><div><span>No Impairment</span></div></th>'+
+                            '<th class="rotate"><div><span>Mild Impairment</span></div></th>'+
+                            '<th class="rotate"><div><span>Moderate Impairment</span></div></th>'+
+                            '<th class="rotate"><div><span>Severe Impairment</span></div></th>'+
+                            '<th class="rotate"><div><span>Complete Impairment</span></div></th>'+
+                            '<th class="rotate"><div><span>Not Applicable</span></div></th>'+
+                          '<th class="rotate"><div><span>Comment</span></div></th>');
+                }
+                tHead.append(tRow);
+                table.append(tHead);
+                tBody = $("<tbody>");
+                var commentText = "";
+				var isCapacity = true;
+                for (var i = 0; i < json.length; i++) {
+
+                    var keyColumnName = "",
+                        jsoni = json[i];
+                    for (var col in jsoni) {
+                        if (col.indexOf('Key') >= 0) {
+                            keyColumnName = col;
+                            fillObj.keyColumnName = col;
+                        }
+                    }
+
+                    if (fillObj.category != null && jsoni[fillObj.category] != currentCategory) {
+                      if(currentCategory != ''){
+					    // add the comment pop up botton at the end of the last row
+                        var qualifiedCat =  currentCategory .replace('\'',' ').replace(/\W+/g,'_');
+                        var closeButton = $('<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>')
+                        var popupButton = $('<a id="'+ qualifiedCat+'_popupButton" href="#' + qualifiedCat+'_popup" data-rel="popup" data-role="button" data-transition="pop">Add</a>');
+                        var popupWindow = $('<div style="width:500px;left:400px" data-position-to="origin" data-role="popup" id= "'+qualifiedCat+'_popup">');
+                        var comment= $('<textarea type="comment" id="'+ qualifiedCat +'_text" name="comment">');
+
+                        comment.change(function(evt){
+                          var popupId = $(this).attr('id').replace('text','popupButton');
+                          if($(this).val() != ''){
+                            $('#'+popupId+' .ui-btn-text').text('..');
+                          }else{
+                            $('#'+popupId+' .ui-btn-text').text('Add');
+                          }
+                        })
+                        
+						if(commentText != '' && commentText != 'null'){
+					      
+                          popupButton = $('<a id="'+ qualifiedCat+'_popupButton" href="#' + qualifiedCat+'_popup" data-rel="popup" data-role="button" data-transition="pop">..</a>');
+                       
+                         comment.val(commentText);
+						 commentText = '';
+						}
+                        popupButton.blur(function(e) {
+                          $('textarea').focus();
+                        });
+                        popupWindow.append(closeButton).append(comment);
+                        var commentDom = new quickforms.TextElement(comment, fillObj.parentForm);
+
+                        td = $('<td align="center">');
+                        td.append(popupButton);
+                        td.append(popupWindow);
+                        fillObj.addedData.push(commentDom);
+                        tRow.append(td);
+                      }           
+
+                      tRow = $('<tr>');
+					  
+                     
+                      currentCategory = jsoni[fillObj.category];
+                      currentKey = jsoni[fillObj.keyColumnName];
+					  qualifiedCat = currentCategory.replace(/\W+/g,'_');
+                      //tHeader.append('<a href="" data-role="button" data-rel="popup" data-icon="info" data-iconpos="notext" data-inline="true"></a><h3>'+currentCategory+'</h3>');
+                      var infoPopupWindow = $('<div style="width:800px" data-position-to="origin" data-role="popup" id= "'+qualifiedCat+'_description">');
+                      var infoCloseBtn = $('<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>')
+                      var infoPopupBtn = $('<a href="#'+qualifiedCat+'_description" data-role="button" data-rel="popup" data-icon="info" data-iconpos="notext" data-inline="true"></a>');
+                      var infoBox = $('<div><p><b>'+ currentCategory+'('+jsoni['ICF Code']+')</b></p><p>Definition:' +jsoni['definition'] + '</div>');
+                      infoPopupWindow.append(infoCloseBtn).append(infoBox);
+                      
+                     
+					  if(jsoni['evaluationCategory'] == 'CAPACITY AND PERFORMANCE' && isCapacity ){
+					     tHeader = $('<th rowspan="2">');
+						 tHeader.append(infoPopupBtn);
+						 tHeader.append(infoPopupWindow);
+						 tRow.append(tHeader);
+					     tRow.append('<th rowspan="2"><h3>'+currentCategory.replace('-Capacity', '')+'</h3></th>');
+						 tRow.append('<th><h4>capacity</h4></th>');
+						 isCapacity = false;
+					  }
+					  else if(jsoni['evaluationCategory'] == 'CAPACITY AND PERFORMANCE' ){
+					    tRow.append('<th><h4>performance</h4></th>');
+						isCapacity = true;
+						}else{
+						 tHeader = $('<th>');
+						 tHeader.append(infoPopupBtn);
+						  tHeader.append(infoPopupWindow);
+						  tRow.append(tHeader);
+						  tRow.append('<th valing="bottom"><h3>'+currentCategory+'</h3></th>');
+						}
+			
+                      tBody.append(tRow);
+                    }
+					var cat = currentCategory.replace(/\W+/g,'_');
+					if(jsoni['comment']!= '' && jsoni['comment'] != 'null'){
+                        commentText = jsoni['comment'];
+                     }
+                    tData = $('<td>');
+                    var radioDom = $('<input id= "' + fillObj.id + i + '" name="' + cat+ '" type="radio" value=' + jsoni[keyColumnName] + ' />');
+                    if (jsoni.selected == 'selected') {
+                        radioDom.attr('checked', 'checked');
+						$(radioDom).data("currentState", "true");
+                    }
+					$(radioDom).click(function(){
+						if($(this).prop('checked') && $(this).data("currentState") =="true"){
+							$(this).prop('checked',false);
+							$(this).data("currentState", "false");
+							$(this).trigger('change');
+						}else{
+						$(this).data("currentState", "true");
+						}
+					});
+                    tData.append(radioDom);
+                    tData.append($('<label for="' + fillObj.id + i + '">' + jsoni[fillObj.qfLabelCols] + '</label>'));
+                    tRow.append(tData);
+                    var checkObj = new quickforms.CheckboxElement(radioDom, fillObj.parentForm, jsoni[fillObj.qfLabelCols], fillObj.lookup);
+                    fillObj.addedData.push(checkObj);
+                    if (jsoni.selected) {
+                        fillObj.selectedField = jsoni.id;
+                        checkObj.changeSelection(radioDom);
+                    }
+                    if (i == json.length - 1){
+                        var qualifiedCat = currentCategory.replace(/\W+/g,'_');
+                        var closeButton = $('<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>')
+                        var popupButton = $('<a id="'+ qualifiedCat+'_popupButton" href="#' + qualifiedCat+'_popup" data-rel="popup" data-role="button" data-transition="pop">Add</a>');
+                        var popupWindow = $('<div style="width:800px" data-role="popup" id= "'+qualifiedCat+'_popup">');
+                        var comment= $('<textarea autofocus name="comment"  type="comment" id="'+ qualifiedCat +'_text" placeholder="">');
+                        commentDom = new quickforms.TextElement(comment, fillObj.parentForm);
+                        popupButton.mousedown(function(e){
+                          e.preventDefault();
+                          comment.focus();
+                        })
+						
+						if(commentText != '' && commentText != 'null'){
+					      
+                          popupButton = $('<a id="'+ qualifiedCat+'_popupButton" href="#' + qualifiedCat+'_popup" data-rel="popup" data-role="button" data-transition="pop">..</a>');
+                       
+                         comment.val(commentText);
+						 commentText = '';
+						}
+						
+						comment.change(function(evt){
+                          var popupId = $(this).attr('id').replace('text','popupButton');
+                          if($(this).val() != ''){
+                            $('#'+popupId+' .ui-btn-text').text('..');
+                          }else{
+                            $('#'+popupId+' .ui-btn-text').text('Add');
+                          }
+                        })
+                        popupWindow.append(closeButton).append(comment);
+                        td = $('<td align="center">');
+                        td.append(popupButton);td.append(popupWindow);
+                        tRow.append(td);
+                        fillObj.addedData.push(commentDom);
+                    }
+                }
+                table.append(tBody);
+                fillObj.dom.append(table);
+            }
         }
         quickforms.convertJSONtoFillCheckbox = function (fillObj, data) {
             if (isJSONString(data)) {
@@ -131,8 +355,15 @@ define(['dom/form/form',
                         checkDom.attr('checked', 'checked');
                     }
                     fillObj.dom.append(checkDom);
-                    fillObj.dom.append($('<label for="' + fillObj.id + i + '">' + jsoni[fillObj.qfLabelCols] + '</label>'));
-                    var checkObj = new quickforms.CheckboxElement(checkDom, fillObj.parentForm, jsoni[fillObj.qfLabelCols]);
+					var labels = fillObj.qfLabelCols.split('\,');
+					var concatenatedLabel = '';
+					for(var j in labels){
+					    if(j != 0)
+						    concatenatedLabel += '--';
+						concatenatedLabel += jsoni[labels[j]];
+					}
+                    fillObj.dom.append($('<label for="' + fillObj.id + i + '">' + concatenatedLabel + '</label>'));
+                    var checkObj = new quickforms.CheckboxElement(checkDom, fillObj.parentForm,concatenatedLabel);
                     fillObj.addedData.push(checkObj);
                     if (jsoni.selected) {
                         fillObj.selectedField = jsoni.id;
@@ -174,8 +405,7 @@ define(['dom/form/form',
                         fillObj.addedData.push(selectObj);
                     }
 
-                    selectDom.append('<option value=' + jsoni[keyColumnName] + ' ' + jsoni.selected + '>' + jsoni[fillObj.qfLabelCols] + '</option>');
-
+                    selectDom.append('<option value=' + jsoni[keyColumnName] + ' ' + jsoni.selected + '>' + currentCategory + ":" + jsoni[fillObj.qfLabelCols] + '</option>');
                     if (jsoni.selected) {
                         fillObj.selectedField = jsoni.id;
                         selectObj.changeSelection();

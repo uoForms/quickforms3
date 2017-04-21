@@ -52,11 +52,9 @@ public class PutFact extends HttpServlet
 		
 		String application = request.getParameter("app");
 		String factTable = request.getParameter("factTable");
-		
 		Database db = null;
 		String json = null;
 		PrintWriter out = response.getWriter();
-		
 		try
 		{
 			InitialContext cxt = new InitialContext();

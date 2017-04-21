@@ -1,0 +1,34 @@
+
+#footer{
+    position:fixed;
+    height:50px;
+    background-color:red;
+    bottom:0px;
+    left:0px;
+    right:0px;
+    margin-bottom:0px;
+}
+
+#patient-button {
+	width: 30%
+}
+
+#patientInfo {
+	position:relative;
+	top: -50px;
+	left:40%;
+}
+
+#reportNav {
+	width: 30%;
+}
+
+#reportInfo {
+	position:relative;
+	top: -50px;
+	left:40%;
+}
+
+#patient-button span span.ui-btn-text{
+	width: 155px
+}

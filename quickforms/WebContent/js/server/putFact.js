@@ -18,6 +18,6 @@ quickforms.putFactServer = function(data,callback){
 	serverQuery.run();
 	quickforms.serverQueries.push(serverQuery);
 	return serverQuery;
-	
+
 };
 });

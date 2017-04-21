@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -545,6 +546,9 @@ public class Database implements Serializable
 			LookupPair pair = new LookupPair();
 			pair.left = rs.getString(1);
 			pair.right = rs.getString(2);
+			if(app.equals("cws")&&lkupName.equals("evaluationMulti")){
+				pair.right2 = rs.getString(3);
+			}
 			pairs.add(pair);
 		}
 		rs.close();
@@ -552,7 +556,8 @@ public class Database implements Serializable
 		return pairs;
 	}
 	
-	public void putManyToMany(String app, String lookup, String[] vals, String oldId, String multiId) throws Exception
+	public void putManyToMany(String app, String lookup, String[] vals, 
+			                  Map<String, String> thirdColumns, String oldId, String multiId) throws Exception
 	{
 		connect();
 		{
@@ -572,7 +577,11 @@ public class Database implements Serializable
 				{
 					sql += ",";
 				}
-				sql += "(" + multiId + "," + val + ")";
+				if(thirdColumns != null){
+					sql += "(" + multiId + "," + val + ",\'" + thirdColumns.get(val)+"\')";
+				}else{
+					sql += "(" + multiId + "," + val + ")";
+				}
 				i++;
 			}
 			Logger.log(app, sql);
@@ -836,7 +845,21 @@ public class Database implements Serializable
 								oldId = col.right;
 						}
 					}
-					db.putManyToMany(app, param_key, params.get(param_key), oldId, multiId);
+					
+					Map<String, String> commentMap = new HashMap<>();
+					boolean hasThirdColumn = false;
+					for(String key: params.keySet()){
+						if(key.contains("comment_")){
+							hasThirdColumn = true;
+							String comment = params.get(key)[0];
+							String id = key.substring(8);
+							commentMap.put(id, comment);
+						}
+					}
+					if(hasThirdColumn)
+						db.putManyToMany(app, param_key, params.get(param_key), commentMap, oldId, multiId);
+					else
+						db.putManyToMany(app, param_key, params.get(param_key), null, oldId, multiId);
 				}
 				catch (Exception e)
 				{

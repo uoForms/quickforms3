@@ -26,8 +26,8 @@ define(['dom/form/form'],function(){
 			var parentPageId = this.parentPage.attr("id");
 			var qformId = 'currentForm'+this.formId;
 			var buttonsDiv = $('<div class="buttons design"></div>');
-			buttonsDiv.append('<a href="#'+parentPageId+'" data-role="button" data-inline="true" data-icon="back">Back</a>');
-			buttonsDiv.append('<a href="#'+parentPageId+'" onclick="quickforms[\''+qformId+'\'].updateSummary()" data-role="button" data-inline="true" data-theme="b" data-icon="check">Submit</a>');
+			buttonsDiv.append('<a class="cancelBtn" href="#'+parentPageId+'" data-role="button" data-inline="true" data-icon="back" data-theme="b">Close</a>');
+			buttonsDiv.append('<a class = "confirm" href="#'+parentPageId+'" onclick="quickforms[\''+qformId+'\'].updateSummary()" data-role="button" data-inline="true" data-theme="b" data-icon="check">Save</a>');
 			newPageChild.append(buttonsDiv);
 			newPageChild.prepend(buttonsDiv.clone(true));
 			//newPageChild.prepend('<a href="#'+parentPageId+'" onclick="quickforms[\''+qformId+'\'].updateSummary()" data-role="button" data-inline="true" data-theme="b" data-icon="check">Submit</a>');
@@ -72,19 +72,18 @@ define(['dom/form/form'],function(){
 	quickforms.form.domParsers.push(function(formObj){
 		formObj.dom.find('.tabPopup').each(function(i,dom){
 			dom = $(dom);
-			
 			var tabPopup = new quickforms.TabPopupElement(dom,formObj);
 			formObj.addChild(tabPopup);
-			tabPopup.href = dom.attr("href"); 
+			tabPopup.href = dom.attr("href");
 			tabPopup.id = tabPopup.href.substring(0,tabPopup.href.indexOf("."));
 			tabPopup.parentPage = dom.parents('[data-role="page"],[data-role="dialog"]');
 			tabPopup.pageId = "#"+tabPopup.id;
 			tabPopup.formId = tabPopup.id+"_form";
 			$(document).one('pageinit', tabPopup.pageId, function(){
 				tabPopup.newPage = $(tabPopup.pageId);
-				
+
 				var newPageChild = tabPopup.newPage.children().first();
-				
+
 				//newPageChild.css('background','white');
 				//newPageChild.css('max-width' ,'700px');
 				newPageChild.addClass('ui-body-c')
@@ -94,17 +93,17 @@ define(['dom/form/form'],function(){
 				quickforms.parseForm({"formId":tabPopup.formId,
 									"app":formObj.app,
 									"fact":formObj.fact});
-				
+
 				var newFormObj = quickforms['currentForm'+tabPopup.formId];
 				newFormObj.summaryId = tabPopup.id+'_summary';
 				newFormObj.type="dialogForm";
 				formObj.finishedParsing();
 				tabPopup.newPage.trigger('create',true);
 				tabPopup.newPage.unbind('pageinit');
-				
+
 			});
 			$.mobile.loadPage(tabPopup.href,{prefetch:true});
-			
+
 			dom.after('<div id="'+tabPopup.id+'_summary" class="ui-body ui-body-b"></div>');
 			dom.attr("href","");
 			dom.on("click",function(){

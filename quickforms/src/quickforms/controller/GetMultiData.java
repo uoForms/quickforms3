@@ -91,6 +91,7 @@ public class GetMultiData extends HttpServlet {
             for(List<LookupPair> id : lookup)
             {
                 String selected = "";
+                String comment = "";
                 jsonField.append("{");
                 String rowId = "";
                 for(int j=0;j<id.size();j++)
@@ -109,10 +110,14 @@ public class GetMultiData extends HttpServlet {
                        {
                            selected = "selected";
                        }
+                       if(pair.right.equals(rowId)&&pair.right2 != null){
+                    	   comment = pair.right2;
+                       }
                    }
                 }
                 
-                jsonField.append("\"selected\":\"").append(selected).append("\"");
+                jsonField.append("\"selected\":\"").append(selected).append("\",");
+                jsonField.append("\"comment\":\"").append(comment).append("\"");
                 jsonField.append("},");
                 //out.println("<option  value= "+id+" "+selected+">"+lookup.get(id) +"</option>");
                 i++;

@@ -13,7 +13,7 @@ function (){
                 {
                     this.currentVal = dom.val();
                     dom.on('change',function(eventData){
-                            me.currentVal = $(this).val();     
+                            me.currentVal = $(this).val();
                     });
                 }
 		this.serialize = function()
@@ -22,9 +22,27 @@ function (){
 			{
 				return this.name+"="+md5(this.currentVal);
 			}
-			else
+			else if(this.name =='comment'){
+				var radioButtonName = this.dom.attr('id').replace('_text', '');
+				var candidates = $('input[name*="'+ radioButtonName+'"]');
+				if (candidates.length == 0){
+					candidates = $('input[name*="'+ radioButtonName.replace(' Capacity', '-Capacity').replace(' Performance', '-Performance')+'"]');
+				}
+
+				var selected;
+				candidates.each(function(index){
+					if($(this).is(':checked')){
+						selected = $(this).attr("value");
+					}
+				})
+				return this.name+"_"+selected+"="+encodeURIComponent(this.currentVal);
+			}
+			else if (this.currentVal != undefined && this.currentVal != '')
 			{
 				return this.name +"="+encodeURIComponent(this.currentVal);
+			}
+			else {
+				return '';
 			}
 		};
 		this.summary = function()
@@ -67,10 +85,10 @@ function (){
 		var texts = formObj.dom.find('input[type=text],input[type=hidden],textarea,input[type=password]');
 		texts.each(function(i,tex){
 			tex = $(tex);
-			
+
 			var texObj = new quickforms.TextElement(tex,formObj);
 			texObj.parseDom(formObj);
 		});
 	});
-	
+
 });

@@ -26,6 +26,7 @@ define(['dom/form/form',
                 }
                 me.dom.find(":selected").each(function () {
                     if (me.multiple == false) {
+						            var category = me.category;
                         me.selectedField = $(this).val();
                         me.label += $(this).text();
                     }
@@ -106,9 +107,14 @@ define(['dom/form/form',
             var parent = selectField.parent;
             selectField.remembered = getCookie(quickforms.getRememberID(this));
             quickforms.convertJSONtoSelect(selectField, data);
+			
+			if(selectField.id == 'patient') {
+				selectField.dom.val(localStorage.getItem('selected'));
+				selectField.dom.selectmenu('refresh');
+			}
 
             selectField.dom.attr("data-native-menu", quickforms.dataNativeMenu);
-            selectField.dom.selectmenu('refresh');
+            selectField.dom.selectmenu('refresh').trigger('change');
             parent.finishedParsing();
         }
         quickforms.convertJSONtoSelect = function (field, data) {
