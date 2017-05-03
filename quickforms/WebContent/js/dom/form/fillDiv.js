@@ -103,6 +103,8 @@ define(['dom/form/form',
         quickforms.addAttributes = function (data) {
             var fillObj = this; // fillObj
             var qfType = fillObj.dom.attr('qf-type');
+			if(qfType === 'radio')
+				fillObj.qfHeaders = fillObj.dom.attr('qf-radio-headers')
             fillObj.type = qfType;
             fillObj.qfLabelCols = fillObj.dom.attr('qf-label-cols');
             fillObj.lookup = fillObj.dom.attr('qf-lookup');
@@ -141,41 +143,34 @@ define(['dom/form/form',
                 tHead = $("<thead>");
                 tRow = $("<tr>");
                 tRow.append($("<th>"));
-                var firstRowsecondHeader = $("<th>");
-                var markPopupWindow = $('<div style="width:400px;position:relative;left:200px" data-position-to="origin" data-role="popup" id= "mark_description">');
-                var markInfoPopupBtn = $('<a style="position:relative;left:40%" href="#mark_description" data-role="button" data-rel="popup" data-icon="info" data-iconpos="notext" data-inline="true"></a>');
-                var markInfoBox = $('<ul><li>No Impairment:</li><li>Mild Impairment</li><li>Moderate Impairment</li><li>Complete Impairment</li></ul>');
-                markPopupWindow.append(markInfoBox);
-                firstRowsecondHeader.append(markInfoPopupBtn);
-                firstRowsecondHeader.append(markPopupWindow);
-                tRow.append(firstRowsecondHeader);
-				if(json[0]['evaluationCategory'] == 'CAPACITY AND PERFORMANCE'){
-				     tRow.append('<th></th>');
-				}	 
-                if (json[0]['evaluationCategory'] == 'ENVIRONMENT'){
-                  tRow.append('<th class="rotate"><div><span>Complete barrier</span></div></th>'+
-                              '<th class="rotate"><div><span>Severe barrier</span></div></th>'+
-                              '<th class="rotate"><div><span>Moderate barrier</span></div></th>'+
-                              '<th class="rotate"><div><span>Mild barrier</span></div></th>'+
-                              '<th class="rotate"><div><span>No barrier facilitartor</span></div></th>'+
-                              '<th class="rotate"><div><span>Mild facilitartor</span></div></th>' +
-                              '<th class="rotate"><div><span>Moderate facilitartor</span></div></th>'+
-                              '<th class="rotate"><div><span>Substantial facilitator</span></div></th>'+
-                              '<th class="rotate"><div><span>Complete facilitator</span></div></th>'+
-                              '<th class="rotate"><div><span>Not applicable</span></div></th>'+
-                              '<th class="rotate"><div><span>Comment</span></div></th>');
-                              ;
-                }else{
-                tRow.append('<th class="rotate"><div><span>No Impairment</span></div></th>'+
-                            '<th class="rotate"><div><span>Mild Impairment</span></div></th>'+
-                            '<th class="rotate"><div><span>Moderate Impairment</span></div></th>'+
-                            '<th class="rotate"><div><span>Severe Impairment</span></div></th>'+
-                            '<th class="rotate"><div><span>Complete Impairment</span></div></th>'+
-                            '<th class="rotate"><div><span>Not Applicable</span></div></th>'+
-                          '<th class="rotate"><div><span>Comment</span></div></th>');
-                }
+				
+				if(this.app == 'cws'){
+					var markInfoHeader;
+					if(json[0]['evaluationCategory'] == 'IMPAIRMENTS OF BODY FUNCTIONS'){
+						markInfoHeader= createCWSBodyMarkInfoHeader(json[0]['evaluationCategory'].substring(1,4));
+					}else if(json[0]['evaluationCategory'] == 'CAPACITY AND PERFORMANCE'){
+						markInfoHeader= createCWSCapacityMarkInfoHeader(json[0]['evaluationCategory'].substring(1,4));
+					}else{
+						markInfoHeader= createCWSEnvironmentMarkInfoHeader(json[0]['evaluationCategory'].substring(1,4));
+					}
+					 tRow.append(markInfoHeader);
+					if(json[0]['evaluationCategory'] == 'CAPACITY AND PERFORMANCE'){
+						 tRow.append('<th></th>');
+					}	 
+				}
+                
+				//add table headers 
+				var headerList;
+				if(fillObj.qfHeaders){
+					 headerList = fillObj.qfHeaders.split(",");
+					headerList.forEach(function(item){
+						tRow.append('<th><div><span>'+item+'</span></div></th>');
+					})
+				}			 
                 tHead.append(tRow);
                 table.append(tHead);
+				
+				//add table body
                 tBody = $("<tbody>");
                 var commentText = "";
 				var isCapacity = true;
@@ -191,77 +186,78 @@ define(['dom/form/form',
                     }
 
                     if (fillObj.category != null && jsoni[fillObj.category] != currentCategory) {
-                      if(currentCategory != ''){
-					    // add the comment pop up botton at the end of the last row
-                        var qualifiedCat =  currentCategory .replace('\'',' ').replace(/\W+/g,'_');
-                        var closeButton = $('<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>')
-                        var popupButton = $('<a id="'+ qualifiedCat+'_popupButton" href="#' + qualifiedCat+'_popup" data-rel="popup" data-role="button" data-transition="pop">Add</a>');
-                        var popupWindow = $('<div style="width:500px;left:400px" data-position-to="origin" data-role="popup" id= "'+qualifiedCat+'_popup">');
-                        var comment= $('<textarea type="comment" id="'+ qualifiedCat +'_text" name="comment">');
+                      if(currentCategory != ''){				    
+						if(this.app == 'cws'){
+							// add the comment pop up botton at the end of the last row
+							var qualifiedCat =  currentCategory .replace('\'',' ').replace(/\W+/g,'_');
+							var closeButton = $('<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>')
+							var popupButton = $('<a id="'+ qualifiedCat+'_popupButton" href="#' + qualifiedCat+'_popup" data-rel="popup" data-role="button" data-transition="pop">Add</a>');
+							var popupWindow = $('<div style="width:500px;left:400px" data-position-to="origin" data-role="popup" id= "'+qualifiedCat+'_popup">');
+							var comment= $('<textarea type="comment" id="'+ qualifiedCat +'_text" name="comment">');
 
-                        comment.change(function(evt){
-                          var popupId = $(this).attr('id').replace('text','popupButton');
-                          if($(this).val() != ''){
-                            $('#'+popupId+' .ui-btn-text').text('..');
-                          }else{
-                            $('#'+popupId+' .ui-btn-text').text('Add');
-                          }
-                        })
-                        
-						if(commentText != '' && commentText != 'null'){
-					      
-                          popupButton = $('<a id="'+ qualifiedCat+'_popupButton" href="#' + qualifiedCat+'_popup" data-rel="popup" data-role="button" data-transition="pop">..</a>');
-                       
-                         comment.val(commentText);
-						 commentText = '';
-						}
-                        popupButton.blur(function(e) {
-                          $('textarea').focus();
-                        });
-                        popupWindow.append(closeButton).append(comment);
-                        var commentDom = new quickforms.TextElement(comment, fillObj.parentForm);
+							comment.change(function(evt){
+							  var popupId = $(this).attr('id').replace('text','popupButton');
+							  if($(this).val() != ''){
+								$('#'+popupId+' .ui-btn-text').text('..');
+							  }else{
+								$('#'+popupId+' .ui-btn-text').text('Add');
+							  }
+							})
+							
+							if(commentText != '' && commentText != 'null'){
+							  
+							  popupButton = $('<a id="'+ qualifiedCat+'_popupButton" href="#' + qualifiedCat+'_popup" data-rel="popup" data-role="button" data-transition="pop">..</a>');
+						   
+							 comment.val(commentText);
+							 commentText = '';
+							}
+							popupButton.blur(function(e) {
+							  $('textarea').focus();
+							});
+							popupWindow.append(closeButton).append(comment);
+							var commentDom = new quickforms.TextElement(comment, fillObj.parentForm);
 
-                        td = $('<td align="center">');
-                        td.append(popupButton);
-                        td.append(popupWindow);
-                        fillObj.addedData.push(commentDom);
-                        tRow.append(td);
+							td = $('<td align="center">');
+							td.append(popupButton);
+							td.append(popupWindow);
+							fillObj.addedData.push(commentDom);
+							tRow.append(td);
+						} // end of cws comment block                     
                       }           
 
                       tRow = $('<tr>');
 					  
-                     
-                      currentCategory = jsoni[fillObj.category];
-                      currentKey = jsoni[fillObj.keyColumnName];
-					  qualifiedCat = currentCategory.replace(/\W+/g,'_');
-                      //tHeader.append('<a href="" data-role="button" data-rel="popup" data-icon="info" data-iconpos="notext" data-inline="true"></a><h3>'+currentCategory+'</h3>');
-                      var infoPopupWindow = $('<div style="width:800px" data-position-to="origin" data-role="popup" id= "'+qualifiedCat+'_description">');
-                      var infoCloseBtn = $('<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>')
-                      var infoPopupBtn = $('<a href="#'+qualifiedCat+'_description" data-role="button" data-rel="popup" data-icon="info" data-iconpos="notext" data-inline="true"></a>');
-                      var infoBox = $('<div><p><b>'+ currentCategory+'('+jsoni['ICF Code']+')</b></p><p>Definition:' +jsoni['definition'] + '</div>');
-                      infoPopupWindow.append(infoCloseBtn).append(infoBox);
-                      
-                     
-					  if(jsoni['evaluationCategory'] == 'CAPACITY AND PERFORMANCE' && isCapacity ){
-					     tHeader = $('<th rowspan="2">');
-						 tHeader.append(infoPopupBtn);
-						 tHeader.append(infoPopupWindow);
-						 tRow.append(tHeader);
-					     tRow.append('<th rowspan="2"><h3>'+currentCategory.replace('-Capacity', '')+'</h3></th>');
-						 tRow.append('<th><h4>capacity</h4></th>');
-						 isCapacity = false;
+					  if(this.app = 'cws'){
+						  // create definition elements for cws
+						  currentCategory = jsoni[fillObj.category];
+						  currentKey = jsoni[fillObj.keyColumnName];
+						  qualifiedCat = currentCategory.replace(/\W+/g,'_');
+						  var infoPopupWindow = $('<div style="width:800px" data-position-to="origin" data-role="popup" id= "'+qualifiedCat+'_description">');
+						  var infoCloseBtn = $('<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>')
+						  var infoPopupBtn = $('<a href="#'+qualifiedCat+'_description" data-role="button" data-rel="popup" data-icon="info" data-iconpos="notext" data-inline="true"></a>');
+						  var infoBox = $('<div><p><b>'+ currentCategory+'('+jsoni['ICF Code']+')</b></p><p>Definition:' +jsoni['definition'] + '</div>');
+						  infoPopupWindow.append(infoCloseBtn).append(infoBox);
+						  if(jsoni['evaluationCategory'] == 'CAPACITY AND PERFORMANCE' && isCapacity ){
+							 tHeader = $('<th rowspan="2">');
+							 tHeader.append(infoPopupBtn);
+							 tHeader.append(infoPopupWindow);
+							 tRow.append(tHeader);
+							 tRow.append('<th rowspan="2"><h3>'+currentCategory.replace('-Capacity', '')+'</h3></th>');
+							 tRow.append('<th><h4>capacity</h4></th>');
+							 isCapacity = false;
+						  }
+						  else if(jsoni['evaluationCategory'] == 'CAPACITY AND PERFORMANCE' ){
+							tRow.append('<th><h4>performance</h4></th>');
+							isCapacity = true;
+						  }else{
+							  tHeader = $('<th>');
+							  tHeader.append(infoPopupBtn);
+							  tHeader.append(infoPopupWindow);
+							  tRow.append(tHeader);
+							  tRow.append('<th valing="bottom"><h3>'+currentCategory+'</h3></th>');
+						  }
 					  }
-					  else if(jsoni['evaluationCategory'] == 'CAPACITY AND PERFORMANCE' ){
-					    tRow.append('<th><h4>performance</h4></th>');
-						isCapacity = true;
-						}else{
-						 tHeader = $('<th>');
-						 tHeader.append(infoPopupBtn);
-						  tHeader.append(infoPopupWindow);
-						  tRow.append(tHeader);
-						  tRow.append('<th valing="bottom"><h3>'+currentCategory+'</h3></th>');
-						}
-			
+                      
                       tBody.append(tRow);
                     }
 					var cat = currentCategory.replace(/\W+/g,'_');
@@ -286,46 +282,50 @@ define(['dom/form/form',
                     tData.append(radioDom);
                     tData.append($('<label for="' + fillObj.id + i + '">' + jsoni[fillObj.qfLabelCols] + '</label>'));
                     tRow.append(tData);
-                    var checkObj = new quickforms.CheckboxElement(radioDom, fillObj.parentForm, jsoni[fillObj.qfLabelCols], fillObj.lookup);
-                    fillObj.addedData.push(checkObj);
+                    var radioObj = new quickforms.CheckboxElement(radioDom, fillObj.parentForm, jsoni[fillObj.qfLabelCols], fillObj.lookup);
+                    fillObj.addedData.push(radioObj);
                     if (jsoni.selected) {
                         fillObj.selectedField = jsoni.id;
-                        checkObj.changeSelection(radioDom);
+                        radioObj.changeSelection(radioDom);
                     }
-                    if (i == json.length - 1){
-                        var qualifiedCat = currentCategory.replace(/\W+/g,'_');
-                        var closeButton = $('<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>')
-                        var popupButton = $('<a id="'+ qualifiedCat+'_popupButton" href="#' + qualifiedCat+'_popup" data-rel="popup" data-role="button" data-transition="pop">Add</a>');
-                        var popupWindow = $('<div style="width:800px" data-role="popup" id= "'+qualifiedCat+'_popup">');
-                        var comment= $('<textarea autofocus name="comment"  type="comment" id="'+ qualifiedCat +'_text" placeholder="">');
-                        commentDom = new quickforms.TextElement(comment, fillObj.parentForm);
-                        popupButton.mousedown(function(e){
-                          e.preventDefault();
-                          comment.focus();
-                        })
-						
-						if(commentText != '' && commentText != 'null'){
-					      
-                          popupButton = $('<a id="'+ qualifiedCat+'_popupButton" href="#' + qualifiedCat+'_popup" data-rel="popup" data-role="button" data-transition="pop">..</a>');
-                       
-                         comment.val(commentText);
-						 commentText = '';
+					if(this.app == 'cws'){
+					     // add comment block for the last row.
+						 if (i == json.length - 1){
+							var qualifiedCat = currentCategory.replace(/\W+/g,'_');
+							var closeButton = $('<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>')
+							var popupButton = $('<a id="'+ qualifiedCat+'_popupButton" href="#' + qualifiedCat+'_popup" data-rel="popup" data-role="button" data-transition="pop">Add</a>');
+							var popupWindow = $('<div style="width:800px" data-role="popup" id= "'+qualifiedCat+'_popup">');
+							var comment= $('<textarea autofocus name="comment"  type="comment" id="'+ qualifiedCat +'_text" placeholder="">');
+							commentDom = new quickforms.TextElement(comment, fillObj.parentForm);
+							popupButton.mousedown(function(e){
+							  e.preventDefault();
+							  comment.focus();
+							})
+							
+							if(commentText != '' && commentText != 'null'){
+							  
+							  popupButton = $('<a id="'+ qualifiedCat+'_popupButton" href="#' + qualifiedCat+'_popup" data-rel="popup" data-role="button" data-transition="pop">..</a>');
+						   
+							 comment.val(commentText);
+							 commentText = '';
+							}
+							
+							comment.change(function(evt){
+							  var popupId = $(this).attr('id').replace('text','popupButton');
+							  if($(this).val() != ''){
+								$('#'+popupId+' .ui-btn-text').text('..');
+							  }else{
+								$('#'+popupId+' .ui-btn-text').text('Add');
+							  }
+							})
+							popupWindow.append(closeButton).append(comment);
+							td = $('<td align="center">');
+							td.append(popupButton);td.append(popupWindow);
+							tRow.append(td);
+							fillObj.addedData.push(commentDom);
 						}
-						
-						comment.change(function(evt){
-                          var popupId = $(this).attr('id').replace('text','popupButton');
-                          if($(this).val() != ''){
-                            $('#'+popupId+' .ui-btn-text').text('..');
-                          }else{
-                            $('#'+popupId+' .ui-btn-text').text('Add');
-                          }
-                        })
-                        popupWindow.append(closeButton).append(comment);
-                        td = $('<td align="center">');
-                        td.append(popupButton);td.append(popupWindow);
-                        tRow.append(td);
-                        fillObj.addedData.push(commentDom);
-                    }
+					}
+                   
                 }
                 table.append(tBody);
                 fillObj.dom.append(table);
@@ -416,4 +416,57 @@ define(['dom/form/form',
                 console.log("Error : " + data);
             }
         }
+		
+		createCWSBodyMarkInfoHeader = function(domain_id){
+				var firstRowsecondHeader = $("<th>");
+                var markPopupWindow = $('<div style="width:400px;position:relative;left:200px" data-position-to="origin" data-role="popup" id= "mark_description_'+domain_id+'">');
+                var markInfoPopupBtn = $('<a style="position:relative;left:40%" href="#mark_description_'+domain_id+'" data-role="button" data-rel="popup" data-icon="info" data-iconpos="notext" data-inline="true"></a>');
+                var markInfoBox = $('<ul><li>No impairment (Score 0) means the person has no problem</li>'+
+				                                  '<li>Mild impairment (Score 1) means a problem that is present less than 25% of the time, with an intensity the person can tolerate and which occurred rarely over the last 30 days</li>'+
+												  '<li>Moderate impairment (Score 2) means a problem that is present less than 50% of the time, with an intensity that is interfering with the person’s day to day life and which occurred occasionally over the last 30 days</li>'+
+												  '<li>Severe impairment (Score 3) means a problem that is present more than 50% of the time, with an intensity that is partially disrupting the person’s day to day life and which occurred frequently over the last 30 days</li>'+
+												  '<li>Complete impairment (Score 4) means a problem that is present more than 95% of the time, with an intensity that is totally disrupting the person’s day to day life and which occurred every day over the last 30 days</li></ul>');
+                markPopupWindow.append(markInfoBox);
+                firstRowsecondHeader.append(markInfoPopupBtn);
+                firstRowsecondHeader.append(markPopupWindow);
+				return firstRowsecondHeader;
+		}
+		
+		createCWSEnvironmentMarkInfoHeader = function(domain_id){
+				var firstRowsecondHeader = $("<th>");
+                var markPopupWindow = $('<div style="width:400px;position:relative;left:200px" data-position-to="origin" data-role="popup" id= "mark_description_'+domain_id+'">');
+                var markInfoPopupBtn = $('<a style="position:relative;left:40%" href="#mark_description_'+domain_id+'" data-role="button" data-rel="popup" data-icon="info" data-iconpos="notext" data-inline="true"></a>');
+                var markInfoBox = $('<ul><li>No Barriers : 0</li>'+
+				                                  '<li>Mild Barriers : 1 </li>'+
+												  '<li>Moderate Barriers : 2</li>'+
+												  '<li>Severe Barriers : 3</li>'+
+												  '<li>Complete impairment : 4</li>'+
+												  '<li>No Facilitator : 0</li>'+
+				                                  '<li>Mild Facilitator : -1 </li>'+
+												  '<li>Moderate Facilitator : -2</li>'+
+												  '<li>Severe Facilitator : -3</li>'+
+												  '<li>Complete Facilitator : -4</li>'+
+												  '</ul>');
+                markPopupWindow.append(markInfoBox);
+                firstRowsecondHeader.append(markInfoPopupBtn);
+                firstRowsecondHeader.append(markPopupWindow);
+				return firstRowsecondHeader;
+		}
+		
+		createCWSCapacityMarkInfoHeader = function(domain_id){
+				var firstRowsecondHeader = $("<th>");
+                var markPopupWindow = $('<div style="width:600px;position:relative;left:200px" data-position-to="origin" data-role="popup" id= "mark_description_'+domain_id+'">');
+                var markInfoPopupBtn = $('<a style="position:relative;left:40%" href="#mark_description_'+domain_id+'" data-role="button" data-rel="popup" data-icon="info" data-iconpos="notext" data-inline="true"></a>');
+                var markInfoBox = $('<div><b>The Capacity score</b> indicates the extent of activity limitation by describing the person’s ability to execute a task or an action.  The Capacity score focusses on limitations that are inherent or intrinsic features of the person themselves.  These limitations should be direct manifestations of the respondent’s health state, without assistance.  Assistance may include the help of another person or assistance provided by an adapted or specially designed tool or vehicle, or any form of environmental modification to a room, home, workplace, etc.  The level of capacity should be judged relative to that normally expected of the person, or the person’s capacity before they acquired their health condition.'+
+                                                  '<br><b>The Performance score</b> indicates the extent of participation restriction by describing the person’s actual performance of a task or action in his or her current environment.  Because the current environment brings in the societal context, performance can also be understood as “involvement in a life situation” or “the lived experience” of people in the actual context in which they live.  This context includes the environmental factors – all aspects of the physical, social and attitudinal world that can be coded using the Environment section.  The Performance score measures the difficulty the respondent experiences in doing things, assuming that they want to do them.</div>'+
+				                                  '<ul><li>No impairment (Score 0) means the person has no problem</li>'+
+				                                  '<li>Mild impairment (Score 1) means a problem that is present less than 25% of the time, with an intensity the person can tolerate and which occurred rarely over the last 30 days</li>'+
+												  '<li>Moderate impairment (Score 2) means a problem that is present less than 50% of the time, with an intensity that is interfering with the person’s day to day life and which occurred occasionally over the last 30 days</li>'+
+												  '<li>Severe impairment (Score 3) means a problem that is present more than 50% of the time, with an intensity that is partially disrupting the person’s day to day life and which occurred frequently over the last 30 days</li>'+
+												  '<li>Complete impairment (Score 4) means a problem that is present more than 95% of the time, with an intensity that is totally disrupting the person’s day to day life and which occurred every day over the last 30 days</li></ul>');
+                markPopupWindow.append(markInfoBox);
+                firstRowsecondHeader.append(markInfoPopupBtn);
+                firstRowsecondHeader.append(markPopupWindow);
+				return firstRowsecondHeader;
+		}
     });

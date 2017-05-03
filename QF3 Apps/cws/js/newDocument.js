@@ -17,19 +17,6 @@ define(['dom/form/form','server/executeQuery','dom/form/text','dom/form/date','d
 var colors = {'4':'e0100c' , '3':'ff6b00', '2':'ffeb04','1':'a8f110', '0':'08a503', '9':null};
 var environmentColors = {'4':'08a503' , '3':'00da63', '2':'a8f110','1':'d9f999', '0':'016eff', '-1':'ffffcc','-2':'ffeb04', '-3':'ff6b00', '-4':'e0100c','9':'ffffff'};
 
-// var resetRadios = function(formId){
-			// $('form[id^="'+formId+'"]').find('input[type="radio"]').each(function(){
-					// if($(this).attr('checked') == 'checked' && !$(this).prop('checked')){
-					  // //reset to previously checked
-						// $(this).prop('checked', true);
-						// $(this).trigger('change');
-					// }else if($(this).attr('checked') != 'checked'&&$(this).prop('checked')){
-					  // //uncheck all the radios in the radiogroup where none was selected last time
-						// $(this).prop('checked', false);
-						// $(this).trigger('change');
-					// }			
-			// })
-// }
 
 var validateCapacityDual = function(){
 		var radios = $('#capacity_form').find('input[type="radio"]');
@@ -56,30 +43,34 @@ var validateCapacityDual = function(){
 
 var saveSubform = function(subformId, redirectUrl){
 	quickforms['currentForm'+subformId].updateSummary();
-	quickforms.putFact($('#saveclose'),redirectUrl, false);		
+	quickforms.putFact($('#saveclose'),redirectUrl, false);
 }
 
 $('#assessmentLink').on('click',function(){
+	quickforms.initLoadingGif();
 	var info = $('#patient').find(':selected').text();
 	  $('#assessment').find('.buttons.design').each(function(){
 		if(info){
 			$(this).append('<div class="personalInfo"><div style="font-weight:600"><span>'+info + '</span></div></div>');
 		}
-		
+
 	  });
-		
-  
+
+
 	  //when tab is clicked, load jquery mobile elements and populate colors
-	  $('#assessment').find('div[qf-type="radio"]').each(function(){
+	 setTimeout(function(){
+			$('#assessment').find('div[qf-type="radio"]').each(function(){
 			$(this).trigger("create");
 			$(this).find('input[type=radio]').each(function(){
-        var span =  $(this).next('label')
-                           .children('span');
-        var num = span.children('span').html().match(/\d+/)[0];
-        span.css('background-color',colors[num]);
+				var span =  $(this).next('label')
+								   .children('span');
+				var num = span.children('span').html().match(/\d+/)[0];
+				span.css('background-color',colors[num]);
+				 })
+			  });
+			 quickforms.hideLoadingGif();
+	  }, 1000)
 
-      })
-	  });
 
 	  $('#assessment_form').find('a[class^="cancel"]').each(function(){
 	        $(this).find('.ui-btn-text').each(function(){
@@ -87,9 +78,9 @@ $('#assessmentLink').on('click',function(){
 			 });
 			 $(this).on('click', function(e){
 				saveSubform('assessment_form', null);
-			}); 
+			});
 	  });
-	  
+
 	   $('#assessment_form').find('a[class^="confirm"]').each(function(){
 		$(this).removeProp('onclick');
 		$(this).attr('href','#');
@@ -100,16 +91,16 @@ $('#assessmentLink').on('click',function(){
 })
 
 $('#capacityLink').on('click',function(){
-
+	quickforms.initLoadingGif();
 	var info = $('#patient').find(':selected').text();
 	  $('#capacity').find('.buttons.design').each(function(){
 		if(info){
 			$(this).append('<div class="personalInfo"><div style="font-weight:600"><span>'+info + '</span></div></div>');
 		}
-		
+
 	  });
 
-   
+
      $('#capacity_form').find('a[class^="cancel"]').each(function(){
 	    $(this).find('.ui-btn-text').each(function(){
 				$(this).text('Save & Close');
@@ -117,66 +108,78 @@ $('#capacityLink').on('click',function(){
 		$(this).on('click', function(){
 			var isvalid = validateCapacityDual();
 			if(isvalid){
-				quickforms.putFact($('#saveclose'),null, false);		
+			    $(this).attr('href','#newVisitPage');
+				quickforms.putFact($('#saveclose'),null, false);
+			}else{
+				$(this).attr('href','#');
 			}
 	    });
 	});
-	   //when clicking OK, validate if both capacity and performance is selected or neither  
+	   //when clicking OK, validate if both capacity and performance is selected or neither
     $('#capacity_form').find('a[class^="confirm"]').each(function(){
 		$(this).removeProp('onclick');
 		$(this).attr('href','#');
 		$(this).on('click', function(){
 			var isvalid = validateCapacityDual();
 			if(isvalid){
-				quickforms.putFact($('#saveclose'),null, false);		
+				quickforms.putFact($('#saveclose'),null, false);
 			}
 	    });
 	});
-	
-	//populate colors
-   $('#capacity').find('div[qf-type="radio"]').each(function(){
-			$(this).trigger("create");
-			$(this).find('input[type=radio]').each(function(){
-        var span =  $(this).next('label')
-                           .children('span');
-        var num = span.children('span').html().match(/\d+/)[0];
-        span.css('background-color',colors[num]);
 
-      })
-	  });
+	//populate colors
+	setTimeout(function(){
+		$('#capacity').find('div[qf-type="radio"]').each(function(){
+				$(this).trigger("create");
+				$(this).find('input[type=radio]').each(function(){
+			var span =  $(this).next('label')
+							   .children('span');
+			var num = span.children('span').html().match(/\d+/)[0];
+			span.css('background-color',colors[num]);
+
+		  })
+		  });
+		 quickforms.hideLoadingGif();
+	}, 1500)
+
 })
 
 $('#environmentLink').on('click',function(){
+        quickforms.initLoadingGif();
 		var info = $('#patient').find(':selected').text();
 		$('#environment').find('.buttons.design').each(function(){
 		if(info){
 			$(this).append('<div class="personalInfo"><div style="font-weight:600"><span>'+info + '</span></div></div>');
 		}
-		
+
 	  });
 
-	  $('#environment').find('div[qf-type="radio"]').each(function(){
+		setTimeout(function(){
+			 $('#environment').find('div[qf-type="radio"]').each(function(){
 				$(this).trigger("create");
 				$(this).find('input[type=radio]').each(function(){
-			var span =  $(this).next('label')
-							   .children('span');
-			var num = span.children('span').html().match(/-?\d+(\.\d+)?$/)[0];
-			if(num == undefined)
-			  num = span.children('span').html().match(/\d+/)[0];
-			span.css('background-color',environmentColors[num]);
-			span.css('padding-right','0px');
-		  })
-		  });
-		  
+					var span =  $(this).next('label')
+									   .children('span');
+					var num = span.children('span').html().match(/-?\d+(\.\d+)?$/)[0];
+					if(num == undefined)
+					     num = span.children('span').html().match(/\d+/)[0];
+					span.css('background-color',environmentColors[num]);
+					span.css('padding-right','0px');
+				  })
+			  });
+			 quickforms.hideLoadingGif();
+		}, 1000);
+
+
 		 $('#environment_form').find('a[class^="cancel"]').each(function(){
 		     $(this).find('.ui-btn-text').each(function(){
 				$(this).text('Save & Close');
 			 });
 			$(this).on('click', function(){
-				saveSubform('environment_form', null);	
+				saveSubform('environment_form', null);
 			});
 	   });
-	   
+
 		$('#environment_form').find('a[class^="confirm"]').each(function(){
 			$(this).removeProp('onclick');
 			$(this).attr('href','#');
@@ -209,25 +212,27 @@ $('#environmentLink').on('click',function(){
 						$('a[href="#sensory"]').addClass('ui-btn-active ui-state-persist');
 					});
 
-
 				});
 			});
 		}
 	});
-	
-	
+
+
 
 	//Redirect Submit Button
-		window.redirectSaveClose=function(button){
-      var url = 'documents.html?id='+$('#patient').val();
+	window.redirectSaveClose=function(button){
+
+    var url = 'documents.html?id='+$('#patient').val();
 		if($("#isSigned").prop("checked") == false){
 			 quickforms.putFact(button,url, false);
-      }
+    }
 
-		}
+
+	}
 	//End Redirect Submit Button
 
   window.signDocument=function(button){
+
     if($("#isSigned").prop("checked") == false){
       $("#isSigned").prop('checked',true).checkboxradio('refresh');
       $("#isSigned").val('on').trigger('change');
@@ -237,30 +242,25 @@ $('#environmentLink').on('click',function(){
 
       var url = 'documents.html?id='+$('#patient').val();
       quickforms.putFact(button,url, false);
+
     };
 
   }
 
 	//Redirect Delete Button
     window.redirectDeleteButton=function(button){
-	   var id = getParameterByName('id')
-       quickforms.confirm("Are you sure you want to delete this record?", function(){
+	    var id = getParameterByName('id');
+      quickforms.confirm("Are you sure you want to delete this record?", function(){
 			quickforms.executeQuery('cws', 'documents_delete_row', 'id='+id, function(){window.location = 'documents.html';});
 	    });
 	}
 	// End Delete Button
-	
+
 	window.redirectCancelButton=function(){
-      var url = 'documents.html';
-			window.location = url;
+
+    var url = 'documents.html';
+		window.location = url;
 	}
 
-	//make #edit elements position fixed on x-axis only.
-	$(window).scroll(function(){
-		$('#edit').css({
-			'left': $(this).scrollLeft() + 60
-			 //Why this 15, because in the CSS, we have set left 15, so as we scroll, we would want this to remain at 15px left
-		});
-	});
 
 });

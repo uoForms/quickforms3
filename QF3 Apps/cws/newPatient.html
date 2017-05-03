@@ -13,44 +13,42 @@
 			quickforms.registerReadyFunction(function()
 			{
 				require(['dom/form/text','dom/form/date','dom/form/tabPopup',
-						'dom/form/fillDiv', 'js/newPatient'], 
+						'dom/form/fillDiv', 'js/newPatient'],
 					function(){
 						quickforms.parseForm( //formId, app*, fact
 							{formId:'patientsForm',
 							fact:'patients',
 							});
-							
+
 					    $('#teamMembersLink').click(function(){
 							quickforms.getFactData({
-						                    app:quickforms.app,
-			                                 queryName:'getTeamMembers',
-											 params: null,
-											 whereclause:'userRole = 1',
-											 callback: function(data){console.log(data);
-											    var jsonData = JSON.parse(data);
+	                    app:quickforms.app,
+                      queryName:'getTeamMembers',
+											params: null,
+											whereclause:'userRole = 1',
+											callback: function(data){
+											  var jsonData = JSON.parse(data);
 												$('#tm').find('.ui-btn-text').each(function(i){
-													var me = null;
-												    for(var j in jsonData){
-														if(jsonData[j]['User Name'] == $(this).text()){
-															me = jsonData[j];					
-														}
-													} 
-													$(this).text(me['User Name'] + ' (' +  me['Position'] + ')');
-												
+												var me = null;
+												for(var j in jsonData){
+													if(jsonData[j]['User Name'] == $(this).text()){
+															me = jsonData[j];
+													}
+												}
+												$(this).text(me['User Name'] + ' (' +  me['Position'] + ')');
 												})
 											 }
-											 });
-							});
+								});// end of getFactData
+						});
 
+		   });
 		});
-			});
-		});
+	});
 
 	</script>
 	<div data-role="header"><h1>CWS</h1></div>
 	<div data-role = "content">
 		<form id="patientsForm">
-
 
       <label for="label">Label:</label>
       <input type="text" id="label" name="label" maxlength = "200"/>

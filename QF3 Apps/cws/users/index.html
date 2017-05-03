@@ -14,14 +14,14 @@
             quickforms.registerReadyFunction(function()
             {
                 require(['../js/patientDropdown','dom/tableControl','dom/navControl'],
-                        function(){						
-								quickforms.loadNav('nav.html','navDiv');
-								quickforms.loadTable(//appName*, queryName, parameterList*, callback*
+                        function(){
+													quickforms.loadNav('nav.html','navDiv');
+													quickforms.loadTable(//appName*, queryName, parameterList*, callback*
 	                            {
 	                            queryName:'getTeamMembers',
-	                            parameterList:''     						
-								})
-
+	                            parameterList:''
+								              }
+													)
                     });
             });
         });
@@ -33,7 +33,7 @@
 	<div data-role="content">
 
 		<form id="tableTemplate">
-			<h1>Team Members</h1> 
+			<h1>Team Members</h1>
 			<a class='newTeamMember' onclick="window.location='teamMember.html'" rel="external" data-theme="b" data-icon="plus" data-role="button" >New Team Account</a>
 
 			<table id ="mainData"></table>

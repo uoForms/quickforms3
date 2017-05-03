@@ -16,7 +16,7 @@
 				require(['js/patientDropdown','dom/tableControl','dom/navControl','dom/filterControl',
 						'dom/form/date','dom/form/select'],
 					function(){
-						
+
 						var selected = localStorage.getItem('selected');
 						if(selected != -100 && selected != null){
 						  $('#newDoc1').show();
@@ -25,16 +25,19 @@
 						  //$('#newDoc2').show();
 						}
 						var whereclause = 'deleteFlag =0 AND patient='+ selected;
-						
+
 						quickforms.loadTable(
-						      {queryName:'getDocumentsInfo',
-							   whereclause:whereclause,
-							   callback:function(){
-									$('.top').hide();
-									$('.bottom').hide();
-									$('#patientInfo').text($('#patient').find(':selected').text());
-									$($('#patient-button').children('span').children('span')[0]).text('SELECT A PATIENT');
-							   }});
+					    {queryName:'getDocumentsInfo',
+						   whereclause:whereclause,
+						   callback:function(){
+								$('.top').hide();
+								$('.bottom').hide();
+								$('#patientInfo').text($('#patient').find(':selected').text());
+								$($('#patient-button').children('span').children('span')[0]).text('SELECT A PATIENT');
+					    }}
+						);
+						$('#newDoc1').click(function(){localStorage.removeItem('currentId');});
+						$('#newDoc2').click(function(){localStorage.removeItem('currentId');});
 					});
 			});
 		});
@@ -44,8 +47,8 @@
 	<div id = "nav"></div>
 	<div data-role="content">
 		<form id="tableTemplate" >
-		
-	            <div><select  data-theme="b" data-icon ="plus" data-iconpos = "left" name = "patient" id="patient"></select><h2 id="patientInfo"></h2></div>
+
+	      <div><select  data-theme="b" data-icon ="plus" data-iconpos = "left" name = "patient" id="patient"></select><h2 id="patientInfo"></h2></div>
 				<div id='documentlist' hidden>
 					<div id= 'newDoc1' hidden><a class="newPatient" href="document.html" data-theme="b" data-icon="plus" data-role="button" rel="external">New Functional Score</a></div>
 					<h3 align = "center">Click a row below to view or modify its score</h3>
@@ -56,7 +59,7 @@
 				</div>
 
 		</form>
-		
+
 	</div>
 	<div id="footer" data-role="footer"><h1>uOttawa</h1></div>
 </div>

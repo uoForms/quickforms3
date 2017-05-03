@@ -422,8 +422,14 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
         quickforms.redirectUrl = redirect;
         if(append)
           quickforms.append = append;
-
-        formSerialized += "factTable=" + formObj.fact + "&updateid=" + formObj.updateId + "&";
+		
+		var updateId;
+		if(this.app == 'cws'&&getParameterByName('id')==null){
+			updateId = localStorage.getItem('currentId')
+		}else{
+			updateId = formObj.updateId;
+		}
+        formSerialized += "factTable=" + formObj.fact + "&updateid=" + updateId + "&";
         formSerialized += formObj.serialize();
         formSerialized = formObj.scrubFormDataString(formSerialized);
 
@@ -548,6 +554,9 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
         }
     };
     quickforms.formRedirect = function (data) {
+		if(this.app == 'cws' && getParameterByName('id') ==null){
+			localStorage.setItem('currentId', JSON.parse(data)[0].id);
+		}
         if (quickforms.redirectUrl != null) {
             var json = JSON.parse(data);
             if(quickforms.append)

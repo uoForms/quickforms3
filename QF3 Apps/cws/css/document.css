@@ -9,7 +9,7 @@
 
 h3 {color:black}
 h4 {color:black}
-.rotate div span {color:black;font-size:10px}
+th div span {color:black;font-size:10px}
 
 textarea {
   width: 300px;
@@ -48,9 +48,21 @@ table[id^="CAPACITY AND PERFORMANCE"] tr:nth-of-type(2n) th {
 	color:white;
 }
 
-#edit {
-	position:fixed;
-	left:60px;
+.tabPopup .ui-btn-inner {
+	text-align:left;
+}
+
+#imp {
+	position:relative;
+	left:35%;
+}
+#cap {
+	position:relative;
+	left:37%;
+}
+#env {
+	position:relative;
+	left:40%;
 }
 
 #footer{
