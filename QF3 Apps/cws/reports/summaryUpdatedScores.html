@@ -1,0 +1,51 @@
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class = "ui-mobile-rendering">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../../quickforms/css/quickforms/quickforms.css" />
+	<link rel="stylesheet" href="css/reports.css" />
+	<script src = "../../quickforms/js/require.min.js" ></script>
+</head>
+<body>
+<div data-role="page" id="loadQuickformsTemplate">
+	<script type="text/javascript">		
+
+	require(['../../quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+				require(['dom/navControl','dom/report/graph','dom/report/table','dom/filterControl',
+						'dom/form/date','dom/form/select',  'dom/form/checkbox','../js/patientDropdown'],
+					function(){
+					    var whereclause="";
+						whereclause += "patientsKey = " + localStorage.getItem('selected')
+					    quickforms.loadTableReport(
+						  {queryName:'getSummaryOfUpdatedScoresByPatient',
+						     whereclause: whereclause,
+							 configFile: 'js/fsTable',
+							 callback:function(){
+									$('#patientInfo').text($('#patient').find(':selected').text());
+									$($('#patient-button').children('span').children('span')[0]).text('SELECT A PATIENT:');
+									console.log("call back called");
+							   }
+							})
+		      })
+			});
+		});
+	</script>
+	<div data-role="header"><h1>CWS</h1></div>
+	<div id = "nav"></div>
+	<div data-role="content">
+		<form id="tableTemplate">
+			<select  data-theme="b" data-icon ="plus" data-iconpos = "left" name = "patient" id="patient"></select><h2 id="patientInfo"></h2>
+			<div id = "reportNav"></div> <h2 id="reportInfo"></h2>
+
+			<table id ="mainData"></table>
+
+
+		</form>
+	</div>
+	<div data-role="footer"><h1>uOttawa</h1></div>
+</div>
+</body>
+</html>

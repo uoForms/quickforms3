@@ -1,6 +1,5 @@
 define(['dom/form/form','server/executeQuery'],function(){
 
-
 		$('#patient-button').click(function(){
 			$('#patient').change(function(){
 				 localStorage.setItem('selected',$('#patient').val());
@@ -21,8 +20,6 @@ define(['dom/form/form','server/executeQuery'],function(){
 
 				$('#patientInfo').text($('#patient').find(':selected').text());
 				$($('#patient-button').children('span').children('span')[0]).text('SELECT A PATIENT');
-
-
 				if(document.URL.indexOf('documents.html') >= 0){
 					var whereclause = 'deleteFlag = 0 AND patient='+ localStorage.getItem('selected');
 					quickforms.loadTable(
@@ -61,6 +58,13 @@ define(['dom/form/form','server/executeQuery'],function(){
 							whereclause: whereclause,
 							configFile: 'js/summaryTable'
 							})
+				}else if (document.URL.indexOf('summaryUpdatedScores.html#&ui-state=dialog')  >= 0){
+						var whereclause =  "patientsKey = " + localStorage.getItem('selected') ;
+						quickforms.loadTableReport(
+						  {queryName:'getSummaryOfUpdatedScoresByPatient',
+							whereclause: whereclause,
+							configFile: 'js/fsTable'
+							})			
 				}else if (document.URL.indexOf('team.html')  >= 0){
 					var whereclause = "p.patientsKey = " + localStorage.getItem('selected');
 					quickforms.loadTable(
@@ -78,10 +82,38 @@ define(['dom/form/form','server/executeQuery'],function(){
 
 
 	 if(getCookie('userRole') != 'Administrator' && getCookie('userRole') != null) {
+		 
      quickforms.getFactData({app:quickforms.app,
 			                       queryName:'getPatientsByProvider',
 														 params: null,
 														 whereclause:'teamMembersMultiValue='+getCookie('userid'),
+														 callback: function(data){
+															 var obj = jQuery.parseJSON(data);
+																if(!localStorage.getItem('selected')){
+																	$('#patient').append('<option value="-100" selected= "selected">SELECT A PATIENT</option>');
+																	$(obj).each(function(i, val){
+																		$('#patient').append('<option value="' + val['patientsKey']  + '">' + val['info'] + '</option>');
+
+																})
+																}else{
+																    //$('#patient').append('<option value="-100">SELECT A PATIENT</option>');
+																	$(obj).each(function(i, val){
+																	     if(localStorage.getItem('selected') == val['patientsKey'] )
+																			$('#patient').append('<option value="' + val['patientsKey']  + '" selected = "selected">' + val['info'] + '</option>');
+																		 else
+																			$('#patient').append('<option value="' + val['patientsKey']  + '">' + val['info'] + '</option>');
+																  })
+																}
+
+																$('#patient').selectmenu('refresh');
+														 }// end of callback
+													 })// end of getFactData
+	}
+	
+	 if(getCookie('userRole') == 'Administrator' && getCookie('userRole') != null) {
+     quickforms.getFactData({app:quickforms.app,
+			                       queryName:'getAllPatientsWithFunctionalScores',
+														 params: null,
 														 callback: function(data){
 															 var obj = jQuery.parseJSON(data);
 																if(!localStorage.getItem('selected')){
