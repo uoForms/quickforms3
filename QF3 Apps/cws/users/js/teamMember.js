@@ -15,7 +15,7 @@ define(['dom/form/form'],function(){
 		{
 			var message = "Fill in last name.";
 			quickforms.toast(message);
-		} 
+		}
 		else if (! /^[a-zA-Z]+$/.test($("#lastName").val()))
 		{
 			var message = "Use only letters in last name.";

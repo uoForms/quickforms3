@@ -232,15 +232,20 @@ $('#environmentLink').on('click',function(){
 	//End Redirect Submit Button
 
   window.signDocument=function(button){
-
-    if($("#isSigned").prop("checked") == false){
+	  if($("#isSigned").prop("checked") == false){
+		
+	  /*document.getElementById("assessmentDate").style.visibility = "hidden";
+	  document.getElementById("date").innerHTML = $("#assessmentDate").val();*/
       $("#isSigned").prop('checked',true).checkboxradio('refresh');
       $("#isSigned").val('on').trigger('change');
       var userName = getCookie('username');
       var userId = getCookie('userid');
       $("#signedBy").val(userName).trigger('change');
+	  
 
       var url = 'documents.html?id='+$('#patient').val();
+	  console.log($("#patient").val()+", " + $("#addedBy").val()+", " + $("#evaluationMulti").val()+", "+ $("#template").val()+", "+ $("#createdDate").val()+", "+ $("#updatedDate").val()+", "
+	  + $("#isSigned").val()+", "+ $("#signedBy").val()+", "+ $("#deleteFlag").val()+", "+ $("#assessmentDate").val());
       quickforms.putFact(button,url, false);
 
     };

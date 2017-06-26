@@ -6,10 +6,14 @@
 	<link rel="stylesheet" href="../quickforms/css/quickforms/quickforms.css" />
 	<link rel="stylesheet" href="css/document.css" />
 	<script src = "../quickforms/js/require.min.js" ></script>
+	
+	
+
 </head>
 <body>
 <div data-role="page" id="newVisitPage">
 	<script type="text/javascript">
+
 	require(['../quickforms/js/quickforms.js'],function(){
 			quickforms.registerReadyFunction(function()
 			{
@@ -40,12 +44,15 @@
 									$("a[id=capacityLink]").addClass('ui-disabled');
 									$("a[id=environmentLink]").addClass('ui-disabled');
 									$("#signature").html("<h2>Signed by: " + $("#signedBy").val() + ' at ' + $('#updatedDate').val()+'</h2>');
+									$("input[id=assessmentDate]").addClass('ui-disabled');
+									$("input[id=assessmentDate]").datepicker('disable');
 								} else{
 								    // if document is not signed, but viewer is not the creator, then disable all tabs
 									$("a[id=cancel]").removeClass('ui-hidden-accessible');
 									$("a[id=assessmentLink]").addClass('ui-disabled');
 									$("a[id=capacityLink]").addClass('ui-disabled');
 									$("a[id=environmentLink]").addClass('ui-disabled');
+									
 								}
 							}
 						});
@@ -54,6 +61,9 @@
 		});
 
 	</script>
+	<script>
+         
+    </script>
 
 	<div data-role="header"><h1>Functional Score Document</h1></div>
 
@@ -69,8 +79,13 @@
 
 
       <br>
-      <br>
-	    <a id="assessmentLink" href="assessment.html" data-rel="dialog" data-theme="b" data-icon="plus" data-role="button" class="tabPopup" >Edit: <span id="imp">IMPAIRMENTS OF BODY FUNCTIONS</span>    </a>
+	  <br>
+		<div>
+			<label for="assessmentDate">Date of Assessment:</label>
+			<input type="text" class="date" id="assessmentDate" name="assessmentDate" />
+		</div
+	  <br>
+	  <a id="assessmentLink" href="assessment.html" data-rel="dialog" data-theme="b" data-icon="plus" data-role="button" class="tabPopup" >Edit: <span id="imp">IMPAIRMENTS OF BODY FUNCTIONS</span>    </a>
       <a id="capacityLink" href="capacity.html" data-rel="dialog" data-theme="b" data-icon="plus" data-role="button" class="tabPopup" > Edit:  <span id="cap">CAPACITY AND PERFORMANCE </span> </a>
       <a id="environmentLink" href="environment.html" data-rel="dialog" data-theme="b" data-icon="plus" data-role="button" class="tabPopup" > Edit:  <span id="env">ENVIRONMENT</span>  </a>
 
