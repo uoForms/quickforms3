@@ -4,9 +4,6 @@
 define(function(){
 quickforms.getMultiData = function (appName,fact, field, lookup,updateId, callback, templateID) {
 	var me = this; // caller
-	if(appName == 'CWS' && templateID != undefined){
-		lookup = 'templates =' + templateID + "," + lookup ;
-	}
 	var serverQuery = new quickforms.ServerQuery({
 		method: "GET",
 		url: quickforms.quickformsUrl+'getMultiData'+quickforms.quickformsEnding,

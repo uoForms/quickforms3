@@ -546,8 +546,9 @@ public class Database implements Serializable
 			LookupPair pair = new LookupPair();
 			pair.left = rs.getString(1);
 			pair.right = rs.getString(2);
-			if(app.equals("cws")&&lkupName.equals("evaluationMulti")){
-				pair.right2 = rs.getString(3);
+			// To support CWS - This should need to be refactored
+			if(rs.getString(3) != null){
+			   pair.right2 = rs.getString(3);
 			}
 			pairs.add(pair);
 		}
