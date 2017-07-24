@@ -15,24 +15,8 @@
 			{
 				require(['dom/navControl','dom/form/select',],
 					function(){
-						//var type=getCookie('userposition');
-						//document.getElementById("role").innerHTML = type;
-					  var domain = getParameterByName('domain');
-						if(domain === 'capacity'){
-							document.getElementById("reportFrame").src='https://app.klipfolio.com/published/07ddead8ddb9692b6f84e07f3ab52668/cws-reports';
-							$('#reportFrame').removeClass('ui-hidden-accessible');
-						}
-						else if(domain === 'environment'){
-							document.getElementById("reportFrame").src='https://app.klipfolio.com/published/07ddead8ddb9692b6f84e07f3ab52668/cws-reports';	 
-							$('#reportFrame').removeClass('ui-hidden-accessible');
-						}
-						else if (domain=='body'){
-							document.getElementById("reportFrame").src='https://app.klipfolio.com/published/07ddead8ddb9692b6f84e07f3ab52668/cws-reports';
-							$('#reportFrame').removeClass('ui-hidden-accessible');	
-						}
-						quickforms.loadNav('nav.html','nav');
-						quickforms.loadNav('reportNav.html','reportNav');
-					   
+					    document.getElementById("reportFrame").src='https://app.klipfolio.com/published/07ddead8ddb9692b6f84e07f3ab52668/cws-reports';	
+						quickforms.loadNav('nav.html','nav');					   
 		          })
 			});
 		});
@@ -48,7 +32,7 @@
 			<br>
 			<!--p id="role"></p-->
 			<br>
-			<iframe id="reportFrame" height="80%" width="100%" class="ui-hidden-accessible"></iframe>
+			<iframe id="reportFrame" height="80%" width="100%" ></iframe>
 			<!--<div id="chart"></div>-->
 			<!--<table id ="mainData"></table>-->
 		</form>
