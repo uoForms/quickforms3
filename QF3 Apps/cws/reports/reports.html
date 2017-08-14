@@ -32,7 +32,20 @@
 			<br>
 			<!--p id="role"></p-->
 			<br>
-			<iframe id="reportFrame" height="80%" width="100%" ></iframe>
+			<iframe id="reportFrame" class="ui-hidden-accessible"></iframe>
+			<script type="text/javascript">
+				function resizeIframe() {
+					var height = document.documentElement.clientHeight;
+					height -= document.getElementById('reportFrame').offsetTop;
+						
+					height -= 20; /* whatever you set your body bottom margin/padding to be */
+					
+					document.getElementById('reportFrame').style.height = height +"px";
+					
+				};
+				document.getElementById('reportFrame').onload = resizeIframe;
+				window.onresize = resizeIframe;
+			</script> 
 			<!--<div id="chart"></div>-->
 			<!--<table id ="mainData"></table>-->
 		</form>
