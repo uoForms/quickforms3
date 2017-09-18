@@ -34,9 +34,8 @@
 									$('#addedBy').val(getCookie('username'));
 									$("a[id=saveclose]").removeClass('ui-hidden-accessible');
 									$("a[id=sign]").removeClass('ui-hidden-accessible');
-									if(getParameterByName('id')){
-										$("a[id=delete]").removeClass('ui-hidden-accessible');
-									}
+								    $("a[id=delete]").removeClass('ui-hidden-accessible');
+								
 								}else if($("#isSigned").prop("checked")){
 								    // if document is signed, disable all tab popups and display a 'signed by XX ' message
 									$("a[id=cancel]").removeClass('ui-hidden-accessible');
