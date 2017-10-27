@@ -386,7 +386,6 @@ public class Database implements Serializable
 		field = field.replace("Multi", "");
 		StringBuilder sql = new StringBuilder("select * from lkup_").append(field).append(" where ").append(field).append("Order > -1 ")
 				.append(catAndClause).append(" order by ").append(field).append("Order");
-		System.out.println(sql);
 		ResultSet rs = st.executeQuery(sql.toString());
 		ResultSetMetaData rsmd = rs.getMetaData();
 		while (rs.next())
@@ -539,15 +538,17 @@ public class Database implements Serializable
 		rs.close();
 		
 		sql = "select * from " + "LKUP_" + lkupName + " where " + lkupName + "Key = " + multiKey + ";";
+		System.out.println(sql);
 		rs = st.executeQuery(sql);
-		
+		ResultSetMetaData rsmd = rs.getMetaData();
+		int columnCount = rsmd.getColumnCount();
 		while (rs.next()) // / add all results to JSON string
 		{
 			LookupPair pair = new LookupPair();
 			pair.left = rs.getString(1);
 			pair.right = rs.getString(2);
 			// To support CWS - This should need to be refactored
-			if(rs.getString(3) != null){
+			if(columnCount >= 3 && null!=rs.getString(3)){
 			   pair.right2 = rs.getString(3);
 			}
 			pairs.add(pair);
