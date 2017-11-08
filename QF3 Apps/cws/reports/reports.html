@@ -15,8 +15,24 @@
 			{
 				require(['dom/navControl','dom/form/select',],
 					function(){
-					    document.getElementById("reportFrame").src='https://app.klipfolio.com/published/07ddead8ddb9692b6f84e07f3ab52668/cws-reports';	
-						quickforms.loadNav('nav.html','nav');					   
+						//var type=getCookie('userposition');
+						//document.getElementById("role").innerHTML = type;
+					  var domain = getParameterByName('domain');
+						if(domain === 'capacity'){
+							document.getElementById("reportFrame").src='https://app.klipfolio.com/published/07ddead8ddb9692b6f84e07f3ab52668/cws-reports';
+							$('#reportFrame').removeClass('ui-hidden-accessible');
+						}
+						else if(domain === 'environment'){
+							document.getElementById("reportFrame").src='https://app.klipfolio.com/published/07ddead8ddb9692b6f84e07f3ab52668/cws-reports';	 
+							$('#reportFrame').removeClass('ui-hidden-accessible');
+						}
+						else if (domain=='body'){
+							document.getElementById("reportFrame").src='https://app.klipfolio.com/published/07ddead8ddb9692b6f84e07f3ab52668/cws-reports';
+							$('#reportFrame').removeClass('ui-hidden-accessible');	
+						}
+						quickforms.loadNav('nav.html','nav');
+						quickforms.loadNav('reportNav.html','reportNav');
+					   
 		          })
 			});
 		});
@@ -32,20 +48,7 @@
 			<br>
 			<!--p id="role"></p-->
 			<br>
-			<iframe id="reportFrame"></iframe>
-			<script type="text/javascript">
-				function resizeIframe() {
-					var height = document.documentElement.clientHeight;
-					height -= document.getElementById('reportFrame').offsetTop;
-						
-					height -= 20; /* whatever you set your body bottom margin/padding to be */
-					
-					document.getElementById('reportFrame').style.height = height +"px";
-					
-				};
-				document.getElementById('reportFrame').onload = resizeIframe;
-				window.onresize = resizeIframe;
-			</script> 
+			<iframe id="reportFrame" height="80%" width="100%" class="ui-hidden-accessible"></iframe>
 			<!--<div id="chart"></div>-->
 			<!--<table id ="mainData"></table>-->
 		</form>

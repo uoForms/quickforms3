@@ -43,7 +43,13 @@ var validateCapacityDual = function(){
 
 var saveSubform = function(subformId, redirectUrl){
 	quickforms['currentForm'+subformId].updateSummary();
+	//ranjodh changes start
+	var documentid = getParameterByName('id');
+	alert("documentid = "+documentid);
+	if(null != documentid){
 	quickforms.putFact($('#saveclose'),redirectUrl, false);
+	}
+	//ranjodh changes end
 }
 
 $('#assessmentLink').on('click',function(){
@@ -221,7 +227,12 @@ $('#environmentLink').on('click',function(){
 
 	//Redirect Submit Button
 	window.redirectSaveClose=function(button){
-
+var assessdate = $('#assessmentDate').val();
+if(assessdate.length == 0){
+	quickforms.toastnew("Date of Assessment field cannot be left empty");
+				return false;
+	}	
+	
     var url = 'documents.html?id='+$('#patient').val();
 		if($("#isSigned").prop("checked") == false){
 			 quickforms.putFact(button,url, false);
@@ -232,6 +243,13 @@ $('#environmentLink').on('click',function(){
 	//End Redirect Submit Button
 
   window.signDocument=function(button){
+	  
+	  //write code here Ranjodh
+var assessdate = $('#assessmentDate').val();
+if(assessdate.length == 0){
+	quickforms.toastnew("Date of Assessment field cannot be left empty");
+				return false;
+	}	
 	  if($("#isSigned").prop("checked") == false){
 		
 	  /*document.getElementById("assessmentDate").style.visibility = "hidden";
@@ -255,6 +273,7 @@ $('#environmentLink').on('click',function(){
 	//Redirect Delete Button
     window.redirectDeleteButton=function(button){
 	    var id = getParameterByName('id');
+		alert(id);alert("waheguru");
       quickforms.confirm("Are you sure you want to delete this record?", function(){
 			quickforms.executeQuery('cws', 'documents_delete_row', 'id='+id, function(){window.location = 'documents.html';});
 	    });

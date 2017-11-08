@@ -34,8 +34,11 @@
 									$('#addedBy').val(getCookie('username'));
 									$("a[id=saveclose]").removeClass('ui-hidden-accessible');
 									$("a[id=sign]").removeClass('ui-hidden-accessible');
-								    $("a[id=delete]").removeClass('ui-hidden-accessible');
-								
+							//changes to solve issue 79 starts
+								//	if(getParameterByName('id')){
+										$("a[id=delete]").removeClass('ui-hidden-accessible');
+								//	}
+							//changes to solve issue 79 ends
 								}else if($("#isSigned").prop("checked")){
 								    // if document is signed, disable all tab popups and display a 'signed by XX ' message
 									$("a[id=cancel]").removeClass('ui-hidden-accessible');
@@ -80,7 +83,8 @@
       <br>
 	  <br>
 		<div>
-			<label for="assessmentDate">Date of Assessment:</label>
+			<label for="assessmentDate">Date of Assessment<span style="color:red">*</span>:</label>
+			
 			<input type="text" class="date" id="assessmentDate" name="assessmentDate" />
 		</div
 	  <br>

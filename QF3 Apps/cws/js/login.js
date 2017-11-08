@@ -36,13 +36,16 @@ function (){
 				this.md5edPass = cookiePass;
 			this.username = $('#username').val();
 			var prms = "username='"+this.username+"' and password='"+this.md5edPass+"'";
+			alert(prms);
 			quickforms.getFactData({queryName:'getUserByPassword',
                                                 whereclause:prms,
                                                 callback:this.loginSuccess
                                             });
+			//alert(JSON.stringify(abb));
 		};
 		this.loginSuccess = function(data)
-		{
+		{	
+			
 			var rememberChecked = $('#rememberMe').attr('checked');
 			if(isJSONString(data))
 			{
