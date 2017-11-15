@@ -39,27 +39,6 @@
 						$('#newDoc1').click(function(){localStorage.removeItem('currentId');});
 						$('#newDoc2').click(function(){localStorage.removeItem('currentId');});
 
-						$.ajax({
-							headers: {
-								"kf-api-key": "213a14d1e6e39c078bdecc0a6ae128d2749cef5c"
-  							},
-  							contentType: "application/json", 
-            				dataType: "json",
-							method: "PUT",
-							url: "https://app.klipfolio.com/api/1/datasources/f4fe3331f22c309aa31d3f69bfd1a0df/properties", 
-							data: { 
-								 properties: {
-								 	endpoint_url: "urlTest"
-								 }
-							},
-							success:function(msg){
-									alert(msg);
-								},
-							error:function(msg){
-								alert(msg);
-								}
-						});
-
 					});
 			});
 		});
