@@ -27,7 +27,7 @@ define(['dom/form/form'],function(){
 			var qformId = 'currentForm'+this.formId;
 			var buttonsDiv = $('<div class="buttons design"></div>');
 			buttonsDiv.append('<a class="cancelBtn" href="#'+parentPageId+'" data-role="button" data-inline="true" data-icon="back" data-theme="b">Close</a>');
-			buttonsDiv.append('<a class = "confirm" href="#'+parentPageId+'" onclick="quickforms[\''+qformId+'\'].updateSummary()" data-role="button" data-inline="true" data-theme="b" data-icon="check">Save</a>');
+			//buttonsDiv.append('<a class = "confirm" href="#'+parentPageId+'" onclick="quickforms[\''+qformId+'\'].updateSummary()" data-role="button" data-inline="true" data-theme="b" data-icon="check">Save</a>');
 			newPageChild.append(buttonsDiv);
 			newPageChild.prepend(buttonsDiv.clone(true));
 			//newPageChild.prepend('<a href="#'+parentPageId+'" onclick="quickforms[\''+qformId+'\'].updateSummary()" data-role="button" data-inline="true" data-theme="b" data-icon="check">Submit</a>');
