@@ -23,29 +23,23 @@ define(['dom/form/form','server/executeQuery'],function(){
 
 				if(document.URL.indexOf('documents.html') >= 0){
 					var whereclause = 'deleteFlag = 0 AND patient='+ localStorage.getItem('selected');
-					$.ajax({
-							headers: {
-								"kf-api-key": "213a14d1e6e39c078bdecc0a6ae128d2749cef5c"
-  							},
-  							contentType: "application/json", 
-            				dataType: "json",
-							method: "PUT",
-							xhrFields: {
-        						withCredentials: true
-    						},
-							url: "https://app.klipfolio.com/api/1/datasources/f4fe3331f22c309aa31d3f69bfd1a0df/properties", 
-							data: { 
-								 properties: {
-								 	endpoint_url: "urlTest"
-								 }
-							},
-							success:function(msg){
-									alert(msg);
-								},
-							error:function(msg){
-								alert(msg);
-								}
-						});
+
+					var xhr = new XMLHttpRequest();
+					var proxyURL = "https://cryptic-headland-94862.herokuapp.com/";
+					var url = "https://app.klipfolio.com/api/1/datasources/f4fe3331f22c309aa31d3f69bfd1a0df/properties";
+					var json = "{'properties':{'endpoint_url':'http:/s3.eecs.uottawa.ca/quickforms/getResultSet?app=cws&queryLabel=getSummaryDataForKlipfolio&params='}}"
+					xhr.open("PUT", proxyURL + url, true);
+					xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
+					xhr.setRequestHeader('kf-api-key', "213a14d1e6e39c078bdecc0a6ae128d2749cef5c");
+					//xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+					xhr.onreadystatechange = function() {//Call a function when the state changes.
+				    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+				        // Request finished. Do processing here.
+				        alert("Changed key");
+   	 					}
+					}
+					xhr.send(json);
+
 					quickforms.loadTable(
 					{queryName:'getDocumentsInfo',whereclause:whereclause, callback:function(){$('.top').hide();  $('.bottom').hide();}});
 				}else if(document.URL.indexOf('reports.html')  >= 0){
