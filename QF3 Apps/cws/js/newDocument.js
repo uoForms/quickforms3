@@ -74,7 +74,7 @@ $('#assessmentLink').on('click',function(){
 
 	  $('#assessment_form').find('a[class^="cancel"]').each(function(){
 	        $(this).find('.ui-btn-text').each(function(){
-				$(this).text('Save & Close');
+				$(this).text('Close');
 			 });
 			 $(this).on('click', function(e){
 				saveSubform('assessment_form', null);
@@ -103,7 +103,7 @@ $('#capacityLink').on('click',function(){
 
      $('#capacity_form').find('a[class^="cancel"]').each(function(){
 	    $(this).find('.ui-btn-text').each(function(){
-				$(this).text('Save & Close');
+				$(this).text('Close');
 		});
 		$(this).on('click', function(){
 			var isvalid = validateCapacityDual();
@@ -173,7 +173,7 @@ $('#environmentLink').on('click',function(){
 
 		 $('#environment_form').find('a[class^="cancel"]').each(function(){
 		     $(this).find('.ui-btn-text').each(function(){
-				$(this).text('Save & Close');
+				$(this).text('Close');
 			 });
 			$(this).on('click', function(){
 				saveSubform('environment_form', null);
