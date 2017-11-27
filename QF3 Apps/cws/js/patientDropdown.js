@@ -31,7 +31,6 @@ define(['dom/form/form','server/executeQuery'],function(){
 					xhr.open("PUT", proxyURL + url, true);
 					xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
 					xhr.setRequestHeader('kf-api-key', "213a14d1e6e39c078bdecc0a6ae128d2749cef5c");
-					//xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
 					xhr.onreadystatechange = function() {//Call a function when the state changes.
 				    if(xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
 				        // Request finished. Do processing here.
