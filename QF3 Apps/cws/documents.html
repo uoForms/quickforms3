@@ -23,8 +23,8 @@
 						  quickforms.loadNav('nav.html','nav');
 						  $('#documentlist').show();
 						  //$('#newDoc2').show();
-						}
-						var whereclause = 'deleteFlag =0 AND patient='+ selected;
+						
+}						var whereclause = 'deleteFlag =0 AND patient='+ selected;
 
 						quickforms.loadTable(
 					    {queryName:'getDocumentsInfo',
@@ -38,6 +38,7 @@
 						);
 						$('#newDoc1').click(function(){localStorage.removeItem('currentId');});
 						$('#newDoc2').click(function(){localStorage.removeItem('currentId');});
+
 					});
 			});
 		});
