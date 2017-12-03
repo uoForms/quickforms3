@@ -221,32 +221,42 @@ $('#environmentLink').on('click',function(){
 
 	//Redirect Submit Button
 	window.redirectSaveClose=function(button){
-
+	if ($('#assessmentDate').val() == ""){
+		quickforms.toast("Date of Assessment field cannot be left empty");
+		return false;
+	}
     var url = 'documents.html?id='+$('#patient').val();
 		if($("#isSigned").prop("checked") == false){
 			 quickforms.putFact(button,url, false);
     }
 
 
+
 	}
 	//End Redirect Submit Button
 
   window.signDocument=function(button){
-	  if($("#isSigned").prop("checked") == false){
-		
-	  /*document.getElementById("assessmentDate").style.visibility = "hidden";
-	  document.getElementById("date").innerHTML = $("#assessmentDate").val();*/
-      $("#isSigned").prop('checked',true).checkboxradio('refresh');
-      $("#isSigned").val('on').trigger('change');
-      var userName = getCookie('username');
-      var userId = getCookie('userid');
-      $("#signedBy").val(userName).trigger('change');
-	  
 
-      var url = 'documents.html?id='+$('#patient').val();
-	  console.log($("#patient").val()+", " + $("#addedBy").val()+", " + $("#evaluationMulti").val()+", "+ $("#template").val()+", "+ $("#createdDate").val()+", "+ $("#updatedDate").val()+", "
-	  + $("#isSigned").val()+", "+ $("#signedBy").val()+", "+ $("#deleteFlag").val()+", "+ $("#assessmentDate").val());
-      quickforms.putFact(button,url, false);
+	if ($('#assessmentDate').val() == ""){
+		quickforms.toast("Date of Assessment field cannot be left empty");
+		return false;
+	}
+
+	 if($("#isSigned").prop("checked") == false){
+		
+		 /*document.getElementById("assessmentDate").style.visibility = "hidden";
+		  document.getElementById("date").innerHTML = $("#assessmentDate").val();*/
+	     $("#isSigned").prop('checked',true).checkboxradio('refresh');
+	     $("#isSigned").val('on').trigger('change');
+	     var userName = getCookie('username');
+	     var userId = getCookie('userid');
+	     $("#signedBy").val(userName).trigger('change');
+		  
+
+	     var url = 'documents.html?id='+$('#patient').val();
+		 console.log($("#patient").val()+", " + $("#addedBy").val()+", " + $("#evaluationMulti").val()+", "+ $("#template").val()+", "+ $("#createdDate").val()+", "+ $("#updatedDate").val()+", "
+		 + $("#isSigned").val()+", "+ $("#signedBy").val()+", "+ $("#deleteFlag").val()+", "+ $("#assessmentDate").val());
+	     quickforms.putFact(button,url, false);
 
     };
 
@@ -255,7 +265,7 @@ $('#environmentLink').on('click',function(){
 	//Redirect Delete Button
     window.redirectDeleteButton=function(button){
 	    var id = getParameterByName('id');
-      quickforms.confirm("Are you sure you want to delete this record?", function(){
+       		quickforms.confirm("Are you sure you want to delete this record?", function(){
 			quickforms.executeQuery('cws', 'documents_delete_row', 'id='+id, function(){window.location = 'documents.html';});
 	    });
 	}
@@ -263,7 +273,7 @@ $('#environmentLink').on('click',function(){
 
 	window.redirectCancelButton=function(){
 
-    var url = 'documents.html';
+    	var url = 'documents.html';
 		window.location = url;
 	}
 
