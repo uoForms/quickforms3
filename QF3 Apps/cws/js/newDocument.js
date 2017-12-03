@@ -221,12 +221,15 @@ $('#environmentLink').on('click',function(){
 
 	//Redirect Submit Button
 	window.redirectSaveClose=function(button){
-
+	if ($('#assessmentDate').val() == ""){
+		quickforms.toast("Date of Assessment field cannot be left empty");
+		return false;
+	}
     var url = 'documents.html?id='+$('#patient').val();
 		if($("#isSigned").prop("checked") == false){
 			 quickforms.putFact(button,url, false);
     }
-    window.location=url;
+
 
 
 	}
