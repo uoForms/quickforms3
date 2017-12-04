@@ -29,16 +29,13 @@ var validateCapacityDual = function(){
 				}
 			})
 			if(count !=0 && count!=2){
-				quickforms.toast("Error: Capacity and Performance must both be selected");
 				valid = false;
-				return false;
 			}
 		}
-		if(valid){
-			quickforms['currentFormcapacity_form'].updateSummary();
-			return true;
-		}
-		return false;
+		
+		quickforms['currentFormcapacity_form'].updateSummary();
+		
+		return valid;
 }
 
 var saveSubform = function(subformId, redirectUrl){
@@ -107,12 +104,12 @@ $('#capacityLink').on('click',function(){
 		});
 		$(this).on('click', function(){
 			var isvalid = validateCapacityDual();
-			if(isvalid){
+			//if(isvalid){
 			    $(this).attr('href','#newVisitPage');
 				quickforms.putFact($('#saveclose'),null, false);
-			}else{
-				$(this).attr('href','#');
-			}
+			// }else{
+			// 	$(this).attr('href','#');
+			// }
 	    });
 	});
 	   //when clicking OK, validate if both capacity and performance is selected or neither
@@ -121,9 +118,9 @@ $('#capacityLink').on('click',function(){
 		$(this).attr('href','#');
 		$(this).on('click', function(){
 			var isvalid = validateCapacityDual();
-			if(isvalid){
+			//if(isvalid){
 				quickforms.putFact($('#saveclose'),null, false);
-			}
+			//}
 	    });
 	});
 
