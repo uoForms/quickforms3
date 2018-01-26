@@ -1,0 +1,120 @@
+
+<meta http-equiv="X-UA-Compatible" content="IE=Edge">
+<html class = "ui-mobile-rendering">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="../quickforms/css/quickforms/quickforms.css" />
+	<link rel="stylesheet" href="css/document.css" />
+	<script src = "../quickforms/js/require.min.js" ></script>
+	
+	
+
+</head>
+<body>
+<div data-role="page" id="newVisitPage">
+	<script type="text/javascript">
+
+	require(['../quickforms/js/quickforms.js'],function(){
+			quickforms.registerReadyFunction(function()
+			{
+				require(['js/newDocument','dom/form/text','dom/form/date','dom/form/tabPopup',
+						'dom/form/fillDiv', /*'dom/form/design'*/], //disable design button
+					function(){
+						quickforms.parseForm( //formId, app*, fact
+							{formId:'documentsForm',
+							fact:'documents',
+              callback:function(){
+
+								$('[id=patient-button]').removeClass('ui-disabled');
+								if(getParameterByName('id')){
+									$('#authorSignature').html('<h2>Created by: ' + $('#addedBy').val());
+								}
+								if(!$("#isSigned").prop("checked") && ($('#addedBy').val() == '' || $('#addedBy').val() == getCookie('username')) ){
+								    //if document is not signed, and the viewer is the creator of the document, enable SAVE CLOSE, Sign and Delete buttons
+									$('#addedBy').val(getCookie('username'));
+									$("a[id=saveclose]").removeClass('ui-hidden-accessible');
+									$("a[id=sign]").removeClass('ui-hidden-accessible');
+								    $("a[id=delete]").removeClass('ui-hidden-accessible');
+								
+								}else if($("#isSigned").prop("checked")){
+								    // if document is signed, disable all tab popups and display a 'signed by XX ' message
+									$("a[id=cancel]").removeClass('ui-hidden-accessible');
+									$("a[id=assessmentLink]").addClass('ui-disabled');
+									$("a[id=capacityLink]").addClass('ui-disabled');
+									$("a[id=environmentLink]").addClass('ui-disabled');
+									$("#signature").html("<h2>Signed by: " + $("#signedBy").val() + ' at ' + $('#updatedDate').val()+'</h2>');
+									$("input[id=assessmentDate]").addClass('ui-disabled');
+									$("input[id=assessmentDate]").datepicker('disable');
+								} else{
+								    // if document is not signed, but viewer is not the creator, then disable all tabs
+									$("a[id=cancel]").removeClass('ui-hidden-accessible');
+									$("a[id=assessmentLink]").addClass('ui-disabled');
+									$("a[id=capacityLink]").addClass('ui-disabled');
+									$("a[id=environmentLink]").addClass('ui-disabled');
+									
+								}
+							}
+						});
+					});
+			});
+		});
+
+	</script>
+	<script>
+         
+    </script>
+
+	<div data-role="header"><h1>Functional Score Document</h1></div>
+
+	<div data-role = "content">
+		<form id="documentsForm">
+
+      <select data-icon = 'false' name="patient" id = "patient" disabled></select>
+			<br> <br> <br>
+			<a href = "" onclick="redirectCancelButton()" id="cancel" rel="external" data-role="button" data-icon="minus" data-theme="b" data-inline="true"  class="ui-hidden-accessible">Close</a>
+			<a href = "" onclick="redirectSaveClose(this)" id="saveclose" rel="external" data-role="button" data-icon="check" data-theme="b" data-inline="true" class="ui-hidden-accessible">Close</a>
+			<a href = "" onclick="signDocument(this)" id="sign" data-role="button" data-icon="check" data-theme="b" data-inline="true" class="ui-hidden-accessible">Sign</a>
+			<a href = "" onclick="redirectDeleteButton(this)" id="delete" data-role="button" data-icon="delete" data-theme="b" data-inline="true" class="ui-hidden-accessible">Delete</a>
+
+
+      <br>
+	  <br>
+		<div>
+			<label for="assessmentDate">Date of Assessment<span style="color:red">*</span>:</label>
+			<input type="text" class="date" id="assessmentDate" name="assessmentDate" />
+		</div
+	  <br>
+	  <a id="assessmentLink" href="assessment.html" data-rel="dialog" data-theme="b" data-icon="plus" data-role="button" class="tabPopup" >Edit: <span id="imp">IMPAIRMENTS OF BODY FUNCTIONS</span>    </a>
+      <a id="capacityLink" href="capacity.html" data-rel="dialog" data-theme="b" data-icon="plus" data-role="button" class="tabPopup" > Edit:  <span id="cap">CAPACITY AND PERFORMANCE </span> </a>
+      <a id="environmentLink" href="environment.html" data-rel="dialog" data-theme="b" data-icon="plus" data-role="button" class="tabPopup" > Edit:  <span id="env">ENVIRONMENT</span>  </a>
+
+			<div id="signed" hidden>
+				<label for="isSigned">Signed?</label>
+	      <input id = "isSigned" type="checkbox"  name="isSigned" value="1"></input>
+		  </div>
+
+			<div id="signedName" hidden>
+				<label for="signedBy">Signed?</label>
+				<input id = "signedBy" type="text"  name="signedBy"></input>
+			</div>
+
+	    <div id="creator" hidden>
+				<label for="addedBy">Created By:</label>
+				<input id = "addedBy" type="text"  name="addedBy"></input>
+			</div>
+
+	    <div hidden><input id = "updatedDate" type="text"  name="updatedDate" class='datetime' hidden></input></div>
+	    <br> <br>
+	    <div id='authorSignature'></div><br>
+      <div id='signature'></div> <br>
+			<a href = "" onclick="redirectCancelButton()" id="cancel" rel="external" data-role="button" data-icon="minus" data-theme="b" data-inline="true"  class="ui-hidden-accessible">Close</a>
+			<a href = "" onclick="redirectSaveClose(this)" id="saveclose" rel="external" data-role="button" data-icon="check" data-theme="b" data-inline="true" class="ui-hidden-accessible">Close</a>
+			<a href = "" onclick="signDocument(this)" id="sign" data-role="button" data-icon="check" data-theme="b" data-inline="true" class="ui-hidden-accessible">Sign</a>
+			<a href = "" onclick="redirectDeleteButton(this)" id="delete" data-role="button" data-icon="delete" data-theme="b" data-inline="true" class="ui-hidden-accessible">Delete</a>
+
+		</form>
+	</div>
+	<div id="footer" data-role="footer"><h1>uOttawa</h1></div>
+</div>
+</body>
+</html>

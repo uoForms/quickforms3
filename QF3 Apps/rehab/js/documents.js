@@ -1,0 +1,2 @@
+$('.top').hide();
+$('.bottom').hide();
