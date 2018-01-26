@@ -4,6 +4,7 @@ define(['dom/form/form','server/executeQuery'],function(){
 		$('#patient-button').click(function(){
 			$('#patient').change(function(){
 				 localStorage.setItem('selected',$('#patient').val());
+				 localStorage.setItem('selectedpatientLabel',$('#patient').find(':selected').text());
 				 if(localStorage.getItem('selected')!= -100 && localStorage.getItem('selected')!= null){
 						$('#newDoc1').show();
 
@@ -17,8 +18,8 @@ define(['dom/form/form','server/executeQuery'],function(){
 						$('#newDoc1').hide();
 						//$('#newDoc2').hide();
 				 }
-
-				$('#patientInfo').text($('#patient').find(':selected').text());
+				$('#documentheader').text($('#patient').find(':selected').text());
+				//$('#patientInfo').text($('#patient').find(':selected').text());
 				$($('#patient-button').children('span').children('span')[0]).text('SELECT A PATIENT');
 
 				if(document.URL.indexOf('documents.html') >= 0){

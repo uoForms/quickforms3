@@ -17,6 +17,14 @@
                         function(){
 								    quickforms.loadNav('nav.html','navDiv');
 									var selected = localStorage.getItem('selected');
+									var selectedpatientLabel = localStorage.getItem('selectedpatientLabel');
+									if(selected != -100 && selected != null){
+						  
+						  if(selectedpatientLabel != -100 && selectedpatientLabel != null){
+						  $('#documentheader').text(selectedpatientLabel);
+						  }
+						  
+						}
 									var whereclause = "p.patientsKey = " + selected;
 									quickforms.loadTable(
 										{
@@ -25,7 +33,7 @@
 											callback: function(){
 											   $('.top').hide();
 									       $('.bottom').hide();
-											   $('#patientInfo').text($('#patient').find(':selected').text());
+											  //$('#documentheader').text($('#patient').find(':selected').text()); //$('#patientInfo').text($('#patient').find(':selected').text());
 											   $($('#patient-button').children('span').children('span')[0]).text('Select a Patient:');
 												 $('#mainData').undelegate('tbody tr','click');
 											}
@@ -37,13 +45,13 @@
         });
 	</script>
 	<div data-role="header">
-	   <h1>CWS</h1>
+	   <h1  id="documentheader">CWS</h1>
 	</div>
 	<div id="navDiv"></div>
 	<div data-role="content">
 
 		<form id="tableTemplate">
-		  <select  data-theme="b" data-icon ="plus" data-iconpos = "left" name = "patient" id="patient"></select><h2 id="patientInfo"></h2>
+		  <select  data-theme="b" data-icon ="plus" data-iconpos = "left" name = "patient" id="patient"></select><!--<h2 id="patientInfo"></h2>-->
 			<h1>Team Members</h1>
 
 

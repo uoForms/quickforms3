@@ -15,6 +15,16 @@
 			{
 				require(['dom/navControl','dom/form/select',],
 					function(){
+					var selected = localStorage.getItem('selected');
+						var selected = localStorage.getItem('selected');
+						var selectedpatientLabel = localStorage.getItem('selectedpatientLabel');
+						if(selected != -100 && selected != null){
+						  
+						  if(selectedpatientLabel != -100 && selectedpatientLabel != null){
+						  $('#documentheader').text(selectedpatientLabel);
+						  }
+						  
+						}
 					    document.getElementById("reportFrame").src='https://app.klipfolio.com/published/07ddead8ddb9692b6f84e07f3ab52668/cws-reports';	
 						quickforms.loadNav('nav.html','nav');					   
 		          })
@@ -22,7 +32,7 @@
 		});
 	
 	</script>
-	<div data-role="header"><h1>CWS</h1></div>
+	<div data-role="header"><h1 id="documentheader">CWS</h1></div>
 	<div id = "nav"></div>
 	<div data-role="content">
 		<form id="tableTemplate">
