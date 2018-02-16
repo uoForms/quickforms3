@@ -424,8 +424,8 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
           quickforms.append = append;
 		
 		var updateId;
-		if(this.app == 'cws'&&getParameterByName('id')==null){
-			updateId = localStorage.getItem('currentId')
+		if((this.app == 'cws' || this.app == 'rehab') && getParameterByName('id')==null){
+			updateId = localStorage.getItem('currentId');
 		}else{
 			updateId = formObj.updateId;
 		}
@@ -554,7 +554,7 @@ define(['server/putFact', 'server/getFactData', 'server/executeQuery', 'server/u
         }
     };
     quickforms.formRedirect = function (data) {
-		if(this.app == 'cws' && getParameterByName('id') ==null){
+		if((this.app == 'cws' || this.app == 'rehab') && getParameterByName('id') ==null){
 			localStorage.setItem('currentId', JSON.parse(data)[0].id);
 		}
         if (quickforms.redirectUrl != null) {

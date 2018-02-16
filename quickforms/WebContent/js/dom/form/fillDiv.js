@@ -144,7 +144,7 @@ define(['dom/form/form',
                 tRow = $("<tr>");
                 tRow.append($("<th>"));
 				
-				if(this.app == 'cws'){
+				if(this.app == 'cws' || this.app == 'rehab'){
 					var markInfoHeader;
 					if(json[0]['evaluationCategory'] == 'IMPAIRMENTS OF BODY FUNCTIONS'){
 						markInfoHeader= createCWSBodyMarkInfoHeader(json[0]['evaluationCategory'].substring(1,4));
@@ -187,7 +187,7 @@ define(['dom/form/form',
 
                     if (fillObj.category != null && jsoni[fillObj.category] != currentCategory) {
                       if(currentCategory != ''){				    
-						if(this.app == 'cws'){
+						if(this.app == 'cws' || this.app == 'rehab'){
 							// add the comment pop up botton at the end of the last row
 							var qualifiedCat =  currentCategory .replace('\'',' ').replace(/\W+/g,'_');
 							var closeButton = $('<a href="#" data-rel="back" data-role="button" data-theme="a" data-icon="delete" data-iconpos="notext" class="ui-btn-right">Close</a>')
@@ -227,7 +227,7 @@ define(['dom/form/form',
 
                       tRow = $('<tr>');
 					  
-					  if(this.app = 'cws'){
+					  if(this.app == 'cws' || this.app == 'rehab'){
 						  // create definition elements for cws
 						  currentCategory = jsoni[fillObj.category];
 						  currentKey = jsoni[fillObj.keyColumnName];
@@ -288,7 +288,7 @@ define(['dom/form/form',
                         fillObj.selectedField = jsoni.id;
                         radioObj.changeSelection(radioDom);
                     }
-					if(this.app == 'cws'){
+					if(this.app == 'cws' || this.app == 'rehab'){
 					     // add comment block for the last row.
 						 if (i == json.length - 1){
 							var qualifiedCat = currentCategory.replace(/\W+/g,'_');
