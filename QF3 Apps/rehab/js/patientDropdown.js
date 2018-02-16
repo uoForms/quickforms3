@@ -18,7 +18,7 @@ define(['dom/form/form','server/executeQuery'],function(){
 						$('#newDoc1').hide();
 						//$('#newDoc2').hide();
 				 }
-				$('#documentheader').text($('#patient').find(':selected').text());
+				$('#documentheader').text($('#patient').find(':selected').val()+' : '+$('#patient').find(':selected').text());
 				//$('#patientInfo').text($('#patient').find(':selected').text());
 				$($('#patient-button').children('span').children('span')[0]).text('SELECT A PATIENT');
 
